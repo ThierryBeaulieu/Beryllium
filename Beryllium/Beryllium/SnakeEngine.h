@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <vector>
 #include <GLFW/glfw3.h>
 
 #pragma once
@@ -23,8 +24,37 @@ public:
     uint32_t* m_imageData;
 };
 
-class Food
+class TileContent
 {
 public:
-    Food(SnakeEngine& snakeEngine);
+    TileContent(SnakeEngine& snakeEngine)
+    : m_snakeEngine(snakeEngine)
+    {}
+    virtual void GetContent() = 0;
+protected:
+    SnakeEngine& m_snakeEngine;
 };
+
+class Food: TileContent
+{
+public:
+    Food(SnakeEngine& snakeEngine)
+    : TileContent(snakeEngine)
+    {}
+
+    void GetContent() override;
+};
+
+class Board
+{
+public:
+    Board(int boardWidth, int boardHeight)
+        : m_boardWidth(boardWidth)
+        , m_boardHeight(boardHeight)
+        {}
+private:
+    int m_boardWidth;
+    int m_boardHeight;
+    std::vector<TileContent> tiles;
+};
+

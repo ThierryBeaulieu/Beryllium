@@ -21,15 +21,16 @@ uint32_t SnakeEngine::GetPixel(int x, int y) {
     return m_imageData[m_imageWidth * y + x];
 }
 
-Food::Food(SnakeEngine& snakeEngine) {
+void Food::GetContent() {
     constexpr int width = 30;
     constexpr int height = 30;
-    int initPosX = (int)snakeEngine.m_imageWidth >> 1;
-    int initPosY = (int)snakeEngine.m_imageHeight >> 1;
+    int initPosX = (int)m_snakeEngine.m_imageWidth >> 1;
+    int initPosY = (int)m_snakeEngine.m_imageHeight >> 1;
 
     for (int i = 0; i < width; ++i) {
         for (int j = 0; j < height; ++j) {
-            snakeEngine.SetPixel(initPosX + i, initPosY + j, SnakeEngine::GetColor(255));
+            m_snakeEngine.SetPixel(initPosX + i, initPosY + j, SnakeEngine::GetColor(255));
         }
     }
 }
+
