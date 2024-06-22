@@ -57,7 +57,7 @@ int main(int, char**)
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
     //io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+    //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
     ImGui::StyleColorsDark();
 
@@ -127,6 +127,13 @@ int main(int, char**)
             ImGui::Begin("Render", &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
             ImGui::Image((void*)(intptr_t)imageTexture, ImVec2(fimageWidth, fimageHeight));
             ImGui::End();
+        }
+
+        {
+            bool showPerformanceWindow = true;
+            ImGui::SetNextWindowPos(ImVec2(fimageWidth + 30.0f, 20.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
+            ImGui::Begin("Performance", &showPerformanceWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+            ImGui::Text("Average Framerate: %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
         }
 
         // Rendering
