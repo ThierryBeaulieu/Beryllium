@@ -44,7 +44,7 @@ int main(int, char**)
 #endif
 
     // Create window with graphics context
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Dear ImGui GLFW+OpenGL3 example", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(1600, 980, "Snake", nullptr, nullptr);
     if (window == nullptr)
         return 1;
     glfwMakeContextCurrent(window);
@@ -96,6 +96,8 @@ int main(int, char**)
     size_t constexpr imageHeight = 900;
     float constexpr fimageWidth = static_cast<float>(imageWidth);
     float constexpr fimageHeight = static_cast<float>(imageHeight);
+    size_t constexpr imageSize = imageWidth * imageHeight;
+    uint32_t* imageData = static_cast<uint32_t*>(_aligned_malloc(imageSize * sizeof(uint32_t), 32));
 
     GLuint imageTexture;
     glGenTextures(1, &imageTexture);
@@ -123,6 +125,40 @@ int main(int, char**)
         std::chrono::microseconds renderUs;
         
         {
+
+            std::chrono::time_point<std::chrono::high_resolution_clock> const beginUpdate = std::chrono::high_resolution_clock::now();
+            //simulator.Update();
+            std::chrono::time_point<std::chrono::high_resolution_clock> const endUpdate = std::chrono::high_resolution_clock::now();
+            updateUs = std::chrono::duration_cast<std::chrono::microseconds>(endUpdate - beginUpdate);
+
+            std::chrono::time_point<std::chrono::high_resolution_clock> const beginRender = std::chrono::high_resolution_clock::now();
+            //simulator.Render();
+            std::chrono::time_point<std::chrono::high_resolution_clock> const endRender = std::chrono::high_resolution_clock::now();
+            renderUs = std::chrono::duration_cast<std::chrono::microseconds>(endRender - beginRender);
+
+            glBindTexture(GL_TEXTURE_2D, imageTexture);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+
+            bool showWindow = true;
+            ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
+            ImGui::Begin("Render", &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+            ImGui::Image((void*)(intptr_t)imageTexture, ImVec2(fimageWidth, fimageHeight));
+            ImGui::End();
+        }
+
+        {
+            bool showPerformanceWindow = true;
+            ImGui::SetNextWindowPos(ImVec2(fimageWidth + 30.0f, 20.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
+            ImGui::Begin("Performance", &showPerformanceWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+            ImGui::Text("Average Framerate: %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+
+            float constexpr ema_coefficient = 0.05f;
+            float const updateMs = static_cast<float>(updateUs.count()) / 1000.0f;
+            float const renderMs = static_cast<float>(renderUs.count()) / 1000.0f;
+
             ImGui::End();
         }
 
