@@ -124,19 +124,17 @@ int main(int, char**)
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-
         std::chrono::microseconds updateUs;
         std::chrono::microseconds renderUs;
-        
-        {
 
+        {
             std::chrono::time_point<std::chrono::high_resolution_clock> const beginUpdate = std::chrono::high_resolution_clock::now();
-            //simulator.Update();
+            snakeEngine.Update();
             std::chrono::time_point<std::chrono::high_resolution_clock> const endUpdate = std::chrono::high_resolution_clock::now();
             updateUs = std::chrono::duration_cast<std::chrono::microseconds>(endUpdate - beginUpdate);
 
             std::chrono::time_point<std::chrono::high_resolution_clock> const beginRender = std::chrono::high_resolution_clock::now();
-            //simulator.Render();
+            snakeEngine.Render();
             std::chrono::time_point<std::chrono::high_resolution_clock> const endRender = std::chrono::high_resolution_clock::now();
             renderUs = std::chrono::duration_cast<std::chrono::microseconds>(endRender - beginRender);
 
