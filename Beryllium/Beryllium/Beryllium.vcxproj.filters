@@ -23,7 +23,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SnakeEngine.h">
+    <ClInclude Include="snakeengine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
