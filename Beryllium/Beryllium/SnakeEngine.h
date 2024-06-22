@@ -1,6 +1,6 @@
-#pragma once
-
 #include <cstdint>
+
+#pragma once
 
 class SnakeEngine
 {
@@ -14,4 +14,3 @@ private:
     size_t m_imageHeight;
     uint32_t* m_imageData;
 };
-
