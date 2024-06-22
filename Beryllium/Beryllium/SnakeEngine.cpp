@@ -5,7 +5,7 @@ SnakeEngine::SnakeEngine(size_t imageWidth, size_t imageHeight, uint32_t* imageD
     , m_imageHeight(imageHeight)
     , m_imageData(imageData)
     {
-        SetPixel(m_imageWidth >> 1, m_imageHeight >> 1, SnakeEngine::MakeColor(255.0f));
+        SetPixel(m_imageWidth >> 1, m_imageHeight >> 1, 255.0f);
     }
 
 void SnakeEngine::Render() {}

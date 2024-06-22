@@ -12,8 +12,6 @@ public:
 
     void SetPixel(int x, int y, uint32_t color);
     uint32_t GetPixel(int x, int y);
-
-    static uint32_t MakeColor(uint8_t c) { return (c | c << 8 | c << 16 | c << 24); }
 private:
     size_t m_imageWidth;
     size_t m_imageHeight;
