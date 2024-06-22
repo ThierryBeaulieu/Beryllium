@@ -18,19 +18,11 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ImGui\ImGui.vcxproj">
-      <Project>{de8ca1e3-3a52-4d5e-ad38-bb3403a96008}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{7836ec5b-8781-4efa-b024-21eb026e4a9e}</ProjectGuid>
-    <RootNamespace>Beryllium</RootNamespace>
+    <ProjectGuid>{de8ca1e3-3a52-4d5e-ad38-bb3403a96008}</ProjectGuid>
+    <RootNamespace>ImGui</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -48,7 +40,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -112,13 +104,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor\GLFW\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)vendor\GLFW\lib-vc2022</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -137,6 +129,26 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Beryllium\imconfig.h" />
+    <ClInclude Include="..\Beryllium\imgui.h" />
+    <ClInclude Include="..\Beryllium\imgui_impl_glfw.h" />
+    <ClInclude Include="..\Beryllium\imgui_impl_opengl3.h" />
+    <ClInclude Include="..\Beryllium\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="..\Beryllium\imgui_internal.h" />
+    <ClInclude Include="..\Beryllium\imstb_rectpack.h" />
+    <ClInclude Include="..\Beryllium\imstb_textedit.h" />
+    <ClInclude Include="..\Beryllium\imstb_truetype.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Beryllium\imgui.cpp" />
+    <ClCompile Include="..\Beryllium\imgui_demo.cpp" />
+    <ClCompile Include="..\Beryllium\imgui_draw.cpp" />
+    <ClCompile Include="..\Beryllium\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\Beryllium\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\Beryllium\imgui_tables.cpp" />
+    <ClCompile Include="..\Beryllium\imgui_widgets.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
