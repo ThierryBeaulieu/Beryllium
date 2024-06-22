@@ -1,2 +1,2 @@
 # Beryllium
-OpenGL fun and stuff
+OpenGL and GLFW based game engine with rendering performance 
