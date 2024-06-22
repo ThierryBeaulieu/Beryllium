@@ -118,27 +118,18 @@ int main(int, char**)
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+
         std::chrono::microseconds updateUs;
         std::chrono::microseconds renderUs;
-
+        
         {
-            bool showWindow = true;
-            ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
-            ImGui::Begin("Render", &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
-            ImGui::Image((void*)(intptr_t)imageTexture, ImVec2(fimageWidth, fimageHeight));
             ImGui::End();
-        }
-
-        {
-            bool showPerformanceWindow = true;
-            ImGui::SetNextWindowPos(ImVec2(fimageWidth + 30.0f, 20.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
-            ImGui::Begin("Performance", &showPerformanceWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
-            ImGui::Text("Average Framerate: %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
         }
 
         // Rendering
         ImGui::Render();
         int display_w, display_h;
+        glfwGetWindowSize(window, &display_w, &display_h);
         glfwGetFramebufferSize(window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
         glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
