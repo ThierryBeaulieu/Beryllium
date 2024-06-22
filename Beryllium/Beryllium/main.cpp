@@ -5,6 +5,8 @@
 #include <GLFW/glfw3.h>
 #include <chrono>
 
+#include "SnakeEngine.h"
+
 // This example can also compile and run with Emscripten! See 'Makefile.emscripten' for details.
 #ifdef __EMSCRIPTEN__
 #include "../libs/emscripten/emscripten_mainloop_stub.h"
@@ -103,6 +105,8 @@ int main(int, char**)
     glGenTextures(1, &imageTexture);
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+    SnakeEngine snakeEngine(imageWidth, imageHeight, imageData);
 
     // Main loop
 #ifdef __EMSCRIPTEN__
