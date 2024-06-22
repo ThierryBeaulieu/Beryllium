@@ -5,7 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <chrono>
 
-#include "SnakeEngine.h"
+#include "snakeengine.h"
 
 // This example can also compile and run with Emscripten! See 'Makefile.emscripten' for details.
 #ifdef __EMSCRIPTEN__
