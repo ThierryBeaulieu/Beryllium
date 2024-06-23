@@ -52,6 +52,7 @@
         "variant": "cpp",
         "vector": "cpp",
         "algorithm": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "thread": "cpp"
     }
 }

@@ -6,6 +6,7 @@
 #include <chrono>
 #include <cstdlib>
 #include <cstdint>
+#include <thread>
 
 #include "engine.h"
 
@@ -127,6 +128,7 @@ int main(int, char **)
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     Engine engine(imageWidth, imageHeight, imageData, window);
+    auto next_update = std::chrono::steady_clock::now();
 
     // Main loop
 #ifdef __EMSCRIPTEN__
@@ -144,6 +146,8 @@ int main(int, char **)
 
         std::chrono::microseconds updateUs;
         std::chrono::microseconds renderUs;
+
+        next_update += std::chrono::milliseconds(150);
 
         {
             std::chrono::time_point<std::chrono::high_resolution_clock> const beginUpdate = std::chrono::high_resolution_clock::now();
@@ -202,6 +206,7 @@ int main(int, char **)
 
         glfwSwapBuffers(window);
         glfwPollEvents();
+        std::this_thread::sleep_until(next_update);
     }
 #ifdef __EMSCRIPTEN__
     EMSCRIPTEN_MAINLOOP_END;
