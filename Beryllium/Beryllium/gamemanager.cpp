@@ -8,6 +8,14 @@ GameManager::GameManager(int gridWidth, int gridHeight)
 std::vector<std::pair<int, int>> GameManager::GetFoodPosition() {
     return m_foodPosition;
 }
+
 std::vector<std::pair<int, int>> GameManager::GetSnakePosition() {
     return m_snakePosition;
+}
+
+int GameManager::GetGridWidth() {
+    return m_gridWidth;
+}
+int GameManager::GetGridHeight() {
+    return m_gridHeight;
 }

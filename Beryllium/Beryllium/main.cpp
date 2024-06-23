@@ -106,7 +106,7 @@ int main(int, char**)
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    Engine snakeEngine(imageWidth, imageHeight, imageData);
+    Engine engine(imageWidth, imageHeight, imageData);
 
     // Main loop
 #ifdef __EMSCRIPTEN__
@@ -129,12 +129,12 @@ int main(int, char**)
 
         {
             std::chrono::time_point<std::chrono::high_resolution_clock> const beginUpdate = std::chrono::high_resolution_clock::now();
-            snakeEngine.Update();
+            engine.Update();
             std::chrono::time_point<std::chrono::high_resolution_clock> const endUpdate = std::chrono::high_resolution_clock::now();
             updateUs = std::chrono::duration_cast<std::chrono::microseconds>(endUpdate - beginUpdate);
 
             std::chrono::time_point<std::chrono::high_resolution_clock> const beginRender = std::chrono::high_resolution_clock::now();
-            snakeEngine.Render();
+            engine.Render();
             std::chrono::time_point<std::chrono::high_resolution_clock> const endRender = std::chrono::high_resolution_clock::now();
             renderUs = std::chrono::duration_cast<std::chrono::microseconds>(endRender - beginRender);
 

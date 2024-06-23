@@ -1,8 +1,10 @@
 #pragma once
 
 #include <cstdint>
-#include <vector>
 #include <GLFW/glfw3.h>
+#include <vector>
+
+#include "gamemanager.h"
 
 class Engine
 {
@@ -19,6 +21,7 @@ public:
         return (brightness | brightness << 8 | brightness << 16 | brightness << 24);
     }
 
+    GameManager m_gameManager;
     size_t m_imageWidth;
     size_t m_imageHeight;
     uint32_t* m_imageData;
