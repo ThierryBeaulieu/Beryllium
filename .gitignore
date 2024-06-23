@@ -399,3 +399,5 @@ FodyWeavers.xsd
 
 # Cmake build
 Beryllium/build/*
+
+.DS_Store
