@@ -9,13 +9,16 @@
 class GameManager
 {
 public:
-    GameManager(int gridWidth, int gridHeight);
+    GameManager();
 
     std::vector<std::pair<int, int>> GetFoodPosition();
     std::vector<std::pair<int, int>> GetSnakePosition();
-    
+
     int GetGridWidth();
     int GetGridHeight();
+
+    void SetGridWidth(int gridWidth);
+    void SetGridHeight(int gridHeight);
 
     void Update();
 
@@ -28,4 +31,3 @@ private:
     std::vector<std::pair<int, int>> m_foodPosition;
     std::vector<std::pair<int, int>> m_snakePosition;
 };
-

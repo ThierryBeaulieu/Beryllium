@@ -1,7 +1,7 @@
 #include "gamemanager.h"
 
-GameManager::GameManager(int gridWidth, int gridHeight)
-    : m_gridWidth(gridWidth), m_gridHeight(gridHeight)
+GameManager::GameManager()
+    : m_gridWidth(0), m_gridHeight(0)
 {
     srand(time(0));
 }
@@ -21,9 +21,19 @@ int GameManager::GetGridWidth()
     return m_gridWidth;
 }
 
+void GameManager::SetGridWidth(int gridWidth)
+{
+    m_gridWidth = gridWidth;
+}
+
 int GameManager::GetGridHeight()
 {
     return m_gridHeight;
+}
+
+void GameManager::SetGridHeight(int gridHeight)
+{
+    m_gridHeight = gridHeight;
 }
 
 void GameManager::Update()

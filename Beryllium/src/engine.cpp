@@ -1,8 +1,13 @@
 #include "engine.h"
 
 Engine::Engine(size_t imageWidth, size_t imageHeight, uint32_t *imageData)
-    : m_imageWidth(imageWidth), m_imageHeight(imageHeight), m_imageData(imageData), m_gameManager(GameManager(30, 30)), m_pixelWidth(30), m_paddingWidth(2)
+    : m_imageWidth(imageWidth), m_imageHeight(imageHeight), m_imageData(imageData), m_gameManager(GameManager()), m_pixelWidth(30), m_paddingWidth(2)
 {
+    int nbPixelsWidth = (m_imageWidth - (m_imageWidth % m_pixelWidth)) / m_pixelWidth;
+    int nbPixelsHeight = (m_imageHeight - (m_imageHeight % m_pixelWidth)) / m_pixelWidth;
+
+    m_gameManager.SetGridHeight(nbPixelsHeight);
+    m_gameManager.SetGridWidth(nbPixelsWidth);
 }
 
 void Engine::RenderSquare(int x, int y, uint32_t color)
