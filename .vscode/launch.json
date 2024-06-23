@@ -2,10 +2,10 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "Debug QT6 Project",
+        "name": "Build Berrylium",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/build/Beryllium",
+        "program": "${workspaceFolder}/Beryllium/build/Beryllium",
         "args": [],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}",
