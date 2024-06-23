@@ -402,3 +402,6 @@ Beryllium/build/*
 
 # Mac Files
 .DS_Store
+
+# ImGui Stuff
+imgui.ini
