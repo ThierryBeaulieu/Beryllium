@@ -5,7 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <chrono>
 
-#include "snakeengine.h"
+#include "engine.h"
 
 // This example can also compile and run with Emscripten! See 'Makefile.emscripten' for details.
 #ifdef __EMSCRIPTEN__
@@ -106,7 +106,7 @@ int main(int, char**)
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    SnakeEngine snakeEngine(imageWidth, imageHeight, imageData);
+    Engine snakeEngine(imageWidth, imageHeight, imageData);
 
     // Main loop
 #ifdef __EMSCRIPTEN__

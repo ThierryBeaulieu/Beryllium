@@ -4,10 +4,10 @@
 
 #pragma once
 
-class SnakeEngine
+class Engine
 {
 public:
-    SnakeEngine(size_t imageWidth, size_t imageHeight, uint32_t* imageData);
+    Engine(size_t imageWidth, size_t imageHeight, uint32_t* imageData);
 
     void Render();
     void Update();
