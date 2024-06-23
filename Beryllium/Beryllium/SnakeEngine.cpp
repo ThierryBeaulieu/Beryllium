@@ -4,12 +4,12 @@ SnakeEngine::SnakeEngine(size_t imageWidth, size_t imageHeight, uint32_t* imageD
     : m_imageWidth(imageWidth)
     , m_imageHeight(imageHeight)
     , m_imageData(imageData)
-    {
-        SetPixel(m_imageWidth >> 1, m_imageHeight >> 1, static_cast<uint8_t>(100000));
-        Food food = Food(*this);
-    }
+{
 
-void SnakeEngine::Render() {}
+}
+
+void SnakeEngine::Render() {
+}
 
 void SnakeEngine::Update() {}
 
@@ -21,16 +21,4 @@ uint32_t SnakeEngine::GetPixel(int x, int y) {
     return m_imageData[m_imageWidth * y + x];
 }
 
-void Food::GetContent() {
-    constexpr int width = 30;
-    constexpr int height = 30;
-    int initPosX = (int)m_snakeEngine.m_imageWidth >> 1;
-    int initPosY = (int)m_snakeEngine.m_imageHeight >> 1;
-
-    for (int i = 0; i < width; ++i) {
-        for (int j = 0; j < height; ++j) {
-            m_snakeEngine.SetPixel(initPosX + i, initPosY + j, SnakeEngine::GetColor(255));
-        }
-    }
-}
 
