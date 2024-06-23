@@ -37,13 +37,13 @@ void Engine::Render()
     uint32_t foodColor = Engine::GetColorRed(255);
     for (std::pair<int, int> foodCoord : m_gameManager.GetFoodPosition())
     {
-        RenderSquare(foodCoord.first, foodCoord.second, foodColor);
+        RenderSquare(foodCoord.first * m_pixelWidth, foodCoord.second * m_pixelWidth, foodColor);
     }
 
     uint32_t snakeColor = Engine::GetColorWhite(255);
     for (std::pair<int, int> snakeCoord : m_gameManager.GetSnakePosition())
     {
-        RenderSquare(snakeCoord.first, snakeCoord.second, snakeColor);
+        RenderSquare(snakeCoord.first * m_pixelWidth, snakeCoord.second * m_pixelWidth, snakeColor);
     }
 }
 
