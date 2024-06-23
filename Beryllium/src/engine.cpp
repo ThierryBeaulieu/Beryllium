@@ -26,17 +26,25 @@ void Engine::RenderSquare(int x, int y, uint32_t color)
 
 void Engine::HandleInput()
 {
+    if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(m_window, true);
+
     if (glfwGetKey(m_window, GLFW_KEY_W) == GLFW_PRESS)
+    {
         m_gameManager.SetDirectionUp();
-
-    if (glfwGetKey(m_window, GLFW_KEY_S) == GLFW_PRESS)
+    }
+    else if (glfwGetKey(m_window, GLFW_KEY_S) == GLFW_PRESS)
+    {
         m_gameManager.SetDirectionDown();
-
-    if (glfwGetKey(m_window, GLFW_KEY_A) == GLFW_PRESS)
+    }
+    else if (glfwGetKey(m_window, GLFW_KEY_A) == GLFW_PRESS)
+    {
         m_gameManager.SetDirectionLeft();
-
-    if (glfwGetKey(m_window, GLFW_KEY_D) == GLFW_PRESS)
+    }
+    else if (glfwGetKey(m_window, GLFW_KEY_D) == GLFW_PRESS)
+    {
         m_gameManager.SetDirectionRight();
+    }
 }
 
 void Engine::Render()
@@ -66,6 +74,7 @@ void Engine::Render()
 
 void Engine::Update()
 {
+    HandleInput();
     m_gameManager.Update();
 }
 

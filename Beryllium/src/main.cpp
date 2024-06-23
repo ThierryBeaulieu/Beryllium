@@ -138,8 +138,6 @@ int main(int, char **)
     while (!glfwWindowShouldClose(window))
 #endif
     {
-        glfwPollEvents();
-
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
@@ -203,6 +201,7 @@ int main(int, char **)
         }
 
         glfwSwapBuffers(window);
+        glfwPollEvents();
     }
 #ifdef __EMSCRIPTEN__
     EMSCRIPTEN_MAINLOOP_END;

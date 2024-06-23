@@ -5,14 +5,15 @@
 #include <random>
 #include <utility>
 #include <vector>
+#include <list>
 
 class GameManager
 {
 public:
     GameManager();
 
-    std::vector<std::pair<int, int>> GetFoodPosition();
-    std::vector<std::pair<int, int>> GetSnakePosition();
+    std::list<std::pair<int, int>> GetFoodPosition();
+    std::list<std::pair<int, int>> GetSnakePosition();
 
     int GetGridWidth();
     int GetGridHeight();
@@ -33,6 +34,6 @@ private:
     int m_gridWidth;
     int m_gridHeight;
 
-    std::vector<std::pair<int, int>> m_foodPosition;
-    std::vector<std::pair<int, int>> m_snakePosition;
+    std::list<std::pair<int, int>> m_foodPosition;
+    std::list<std::pair<int, int>> m_snakePosition;
 };

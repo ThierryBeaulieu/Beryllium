@@ -6,12 +6,12 @@ GameManager::GameManager()
     srand(time(0));
 }
 
-std::vector<std::pair<int, int>> GameManager::GetFoodPosition()
+std::list<std::pair<int, int>> GameManager::GetFoodPosition()
 {
     return m_foodPosition;
 }
 
-std::vector<std::pair<int, int>> GameManager::GetSnakePosition()
+std::list<std::pair<int, int>> GameManager::GetSnakePosition()
 {
     return m_snakePosition;
 }
@@ -60,7 +60,46 @@ void GameManager::Initialize()
     m_snakePosition.push_back(std::make_pair(snakeInitWidth, snakeInitHeight));
 }
 
-void GameManager::SetDirectionUp() {}
-void GameManager::SetDirectionDown() {}
-void GameManager::SetDirectionLeft() {}
-void GameManager::SetDirectionRight() {}
+void GameManager::SetDirectionUp()
+{
+    std::pair<int, int> front = m_snakePosition.front();
+
+    if (front.second - 1 < 0)
+        return;
+
+    m_snakePosition.pop_back();
+    m_snakePosition.push_front(std::make_pair(front.first, front.second - 1));
+}
+
+void GameManager::SetDirectionDown()
+{
+    std::pair<int, int> front = m_snakePosition.front();
+
+    if (front.second + 1 >= m_gridHeight)
+        return;
+
+    m_snakePosition.pop_back();
+    m_snakePosition.push_front(std::make_pair(front.first, front.second + 1));
+}
+
+void GameManager::SetDirectionLeft()
+{
+    std::pair<int, int> front = m_snakePosition.front();
+
+    if (front.first - 1 < 0)
+        return;
+
+    m_snakePosition.pop_back();
+    m_snakePosition.push_front(std::make_pair(front.first - 1, front.second));
+}
+
+void GameManager::SetDirectionRight()
+{
+    std::pair<int, int> front = m_snakePosition.front();
+
+    if (front.first + 1 >= m_gridWidth)
+        return;
+
+    m_snakePosition.pop_back();
+    m_snakePosition.push_front(std::make_pair(front.first + 1, front.second));
+}
