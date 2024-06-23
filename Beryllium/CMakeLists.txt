@@ -43,8 +43,10 @@ set(HEADER_FILES
     ${CMAKE_SOURCE_DIR}/src/gamemanager.h
 )
 
-# Include directories for the main project
+# Include directories (avoid writing it every time)
 include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/GFLW/include)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/ImGui)
 
 # Add ImGui as a static library
 add_library(ImGui STATIC
@@ -58,8 +60,6 @@ add_library(ImGui STATIC
 
 # Include GLFW headers for ImGui
 target_include_directories(ImGui PRIVATE ${CMAKE_SOURCE_DIR}/vendor/GLFW/include)
-
-# Link GLFW library for ImGui
 target_link_libraries(ImGui PRIVATE ${CMAKE_SOURCE_DIR}/vendor/GLFW/lib-vc2022/glfw3.lib)
 
 # Add the main executable
