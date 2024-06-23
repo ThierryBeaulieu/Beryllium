@@ -3,7 +3,9 @@
 GameManager::GameManager(int gridWidth, int gridHeight)
     : m_gridWidth(gridWidth)
     , m_gridHeight(gridHeight)
-{}
+{
+    srand(time(0));
+}
 
 std::vector<std::pair<int, int>> GameManager::GetFoodPosition() {
     return m_foodPosition;
@@ -34,5 +36,4 @@ void GameManager::Initialize() {
     int snakeInitWidth = std::rand() % m_gridWidth;
     int snakeInitHeight = std::rand() % m_gridHeight;
     m_snakePosition.push_back(std::make_pair(snakeInitWidth, snakeInitHeight));
-
 }

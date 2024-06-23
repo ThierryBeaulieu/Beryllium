@@ -10,11 +10,22 @@ Engine::Engine(size_t imageWidth, size_t imageHeight, uint32_t* imageData)
 }
 
 void Engine::Render() {
+
+    
+
+    std::vector<std::pair<int, int>> foodPosition = m_gameManager.GetFoodPosition();
+
+    for (std::pair<int, int> foodCoord : foodPosition) {
+
+    }
+
+
+    std::vector<std::pair<int, int>> snakePosition = m_gameManager.GetSnakePosition();
     
 }
 
 void Engine::Update() {
-
+    m_gameManager.Update();
 }
 
 void Engine::SetPixel(int x, int y, uint32_t color) {

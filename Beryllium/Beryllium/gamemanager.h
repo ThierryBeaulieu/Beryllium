@@ -1,8 +1,10 @@
 #pragma once
 
+#include <cstdlib>
+#include <time.h>
+#include <random>
 #include <utility>
 #include <vector>
-#include <random>
 
 class GameManager
 {
