@@ -1,7 +1,7 @@
 #include "gamemanager.h"
 
 GameManager::GameManager()
-    : m_gridWidth(0), m_gridHeight(0)
+    : m_gridWidth(0), m_gridHeight(0), m_isGameOver(false)
 {
     srand(time(0));
 }
@@ -38,26 +38,63 @@ void GameManager::SetGridHeight(int gridHeight)
 
 void GameManager::Update()
 {
-    if (m_foodPosition.size() == 0 || m_snakePosition.size() == 0)
-        Initialize();
+    if (m_isGameOver)
+    {
+        // TODO : display start a game again
+        return;
+    }
+
+    if (m_foodPosition.size() == 0)
+        InitializeFood();
+
+    if (m_snakePosition.size() == 0)
+        InitializeSnake();
+
+    std::pair<int, int> foodPosition = m_foodPosition.front();
+    std::pair<int, int> snakeHead = m_snakePosition.front();
+
+    for (std::pair<int, int> snakePosition : m_snakePosition)
+    {
+        if (snakePosition == foodPosition)
+        {
+            m_foodPosition.pop_back();
+            m_snakePosition.push_back(foodPosition);
+            break;
+        }
+        // todo: handle the case where the snake can it itself
+        // todo: handle the case when the snake touch a border
+        // todo: handle game over state
+    }
 }
 
-void GameManager::Initialize()
+void GameManager::InitializeFood()
 {
     int foodInitWidth = std::rand() % m_gridWidth;
     int foodInitHeight = std::rand() % m_gridHeight;
-    m_foodPosition.push_back(std::make_pair(foodInitWidth, foodInitHeight));
 
+    m_foodPosition.push_back(std::make_pair(foodInitWidth, foodInitHeight));
+}
+
+void GameManager::InitializeSnake()
+{
     int snakeInitWidth = std::rand() % m_gridWidth;
     int snakeInitHeight = std::rand() % m_gridHeight;
 
-    while (snakeInitWidth == foodInitWidth && snakeInitHeight == foodInitHeight)
+    std::pair<int, int> foodPos = m_foodPosition.front();
+    while (foodPos == std::make_pair(snakeInitWidth, snakeInitHeight))
     {
         snakeInitWidth = std::rand() % m_gridWidth;
         snakeInitHeight = std::rand() % m_gridHeight;
     }
 
     m_snakePosition.push_back(std::make_pair(snakeInitWidth, snakeInitHeight));
+}
+
+void GameManager::GenerateFood()
+{
+    int foodInitWidth = std::rand() % m_gridWidth;
+    int foodInitHeight = std::rand() % m_gridHeight;
+    m_foodPosition.push_back(std::make_pair(foodInitWidth, foodInitHeight));
 }
 
 void GameManager::SetDirectionUp()

@@ -23,7 +23,10 @@ public:
 
     void Update();
 
-    void Initialize();
+    void InitializeFood();
+    void InitializeSnake();
+
+    void GenerateFood();
 
     void SetDirectionUp();
     void SetDirectionDown();
@@ -36,4 +39,6 @@ private:
 
     std::list<std::pair<int, int>> m_foodPosition;
     std::list<std::pair<int, int>> m_snakePosition;
+
+    bool m_isGameOver;
 };
