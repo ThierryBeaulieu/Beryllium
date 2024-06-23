@@ -40,8 +40,14 @@ void GameManager::Update()
 {
     if (m_isGameOver)
     {
-        m_snakePosition.clear();
-        m_foodPosition.clear();
+        if (m_snakePosition.size() > 0 || m_foodPosition.size() > 0)
+        {
+            m_snakePosition.clear();
+            m_foodPosition.clear();
+        }
+
+        // todo : Display UI to start the game again
+
         return;
     }
 
@@ -51,21 +57,7 @@ void GameManager::Update()
     if (m_snakePosition.size() == 0)
         InitializeSnake();
 
-    std::pair<int, int> foodPosition = m_foodPosition.front();
-    std::pair<int, int> snakeHead = m_snakePosition.front();
-
-    for (std::pair<int, int> snakePosition : m_snakePosition)
-    {
-        if (snakePosition == foodPosition)
-        {
-            m_foodPosition.pop_back();
-            m_snakePosition.push_back(foodPosition);
-            break;
-        }
-        // todo: handle the case where the snake can it itself
-        // todo: handle the case when the snake touch a border
-        // todo: handle game over state
-    }
+    EatFood();
 }
 
 void GameManager::InitializeFood()
@@ -98,10 +90,31 @@ void GameManager::GenerateFood()
     m_foodPosition.push_back(std::make_pair(foodInitWidth, foodInitHeight));
 }
 
+void GameManager::EatFood()
+{
+    std::pair<int, int> foodPosition = m_foodPosition.front();
+    std::pair<int, int> snakeHead = m_snakePosition.front();
+
+    for (std::pair<int, int> snakePosition : m_snakePosition)
+    {
+        if (snakePosition == foodPosition)
+        {
+            m_foodPosition.pop_back();
+            m_snakePosition.push_back(foodPosition);
+            break;
+        }
+
+        // todo: handle the case where the snake can it itself
+    }
+}
+
 void GameManager::SetDirectionUp()
 {
     if (m_snakePosition.size() == 0)
         return;
+
+    if (m_snakePosition.front().second <= 0)
+        m_isGameOver = true;
 
     std::pair<int, int> front = m_snakePosition.front();
 
@@ -117,6 +130,9 @@ void GameManager::SetDirectionDown()
     if (m_snakePosition.size() == 0)
         return;
 
+    if (m_snakePosition.front().second >= m_gridHeight - 1)
+        m_isGameOver = true;
+
     std::pair<int, int> front = m_snakePosition.front();
 
     if (front.second + 1 >= m_gridHeight)
@@ -131,6 +147,9 @@ void GameManager::SetDirectionLeft()
     if (m_snakePosition.size() == 0)
         return;
 
+    if (m_snakePosition.front().first <= 0)
+        m_isGameOver = true;
+
     std::pair<int, int> front = m_snakePosition.front();
 
     if (front.first - 1 < 0)
@@ -144,6 +163,9 @@ void GameManager::SetDirectionRight()
 {
     if (m_snakePosition.size() == 0)
         return;
+
+    if (m_snakePosition.front().first >= m_gridWidth - 1)
+        m_isGameOver = true;
 
     std::pair<int, int> front = m_snakePosition.front();
 

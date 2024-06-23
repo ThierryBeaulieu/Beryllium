@@ -27,6 +27,7 @@ public:
     void InitializeSnake();
 
     void GenerateFood();
+    void EatFood();
 
     void SetDirectionUp();
     void SetDirectionDown();
