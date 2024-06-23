@@ -7,9 +7,9 @@ Engine::Engine(size_t imageWidth, size_t imageHeight, uint32_t *imageData)
 
 void Engine::RenderSquare(int x, int y, uint32_t color)
 {
-    for (int i = 0; i < (m_pixelWidth + m_paddingWidth); ++i)
+    for (int i = 0; i < (m_pixelWidth); ++i)
     {
-        for (int j = 0; j < (m_pixelWidth + m_paddingWidth); ++j)
+        for (int j = 0; j < (m_pixelWidth); ++j)
         {
             SetPixel(x + i, y + j, color);
         }
