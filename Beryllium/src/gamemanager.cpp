@@ -38,10 +38,16 @@ void GameManager::SetGridHeight(int gridHeight)
 
 void GameManager::Update()
 {
-    // if (m_isGameBeginning)
+    if (m_isGameBeginning)
     {
-        // todo : display ui for a game beginning
-        // return;
+        bool showWindow = true;
+        {
+            ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
+            ImGui::Begin("Render", &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+            ImGui::End();
+        }
+
+        return;
     }
 
     if (m_snakePosition.size() == m_gridHeight * m_gridWidth)
@@ -86,6 +92,8 @@ void GameManager::Update()
             break;
         }
     }
+
+    // todo: handle the case when the snake eat itself
 }
 
 void GameManager::InitializeFood()

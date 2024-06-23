@@ -7,6 +7,8 @@
 #include <vector>
 #include <list>
 
+#include "imgui.h"
+
 class GameManager
 {
 public:
