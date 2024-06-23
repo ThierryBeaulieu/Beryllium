@@ -22,6 +22,8 @@ void Engine::RenderSquare(int x, int y, uint32_t color)
 
 void Engine::Render()
 {
+    
+
     uint32_t foodColor = Engine::GetColorRed(255);
 
     for (std::pair<int, int> foodCoord : m_gameManager.GetFoodPosition()) {
