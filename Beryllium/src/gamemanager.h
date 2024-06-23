@@ -24,6 +24,11 @@ public:
 
     void Initialize();
 
+    void SetDirectionUp();
+    void SetDirectionDown();
+    void SetDirectionLeft();
+    void SetDirectionRight();
+
 private:
     int m_gridWidth;
     int m_gridHeight;

@@ -97,7 +97,7 @@ int main(int, char **)
     // ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());
     // IM_ASSERT(font != nullptr);
 
-    size_t constexpr imageWidth = 810;
+    size_t constexpr imageWidth = 900;
     size_t constexpr imageHeight = 600;
     float constexpr fimageWidth = static_cast<float>(imageWidth);
     float constexpr fimageHeight = static_cast<float>(imageHeight);
@@ -126,7 +126,7 @@ int main(int, char **)
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    Engine engine(imageWidth, imageHeight, imageData);
+    Engine engine(imageWidth, imageHeight, imageData, window);
 
     // Main loop
 #ifdef __EMSCRIPTEN__

@@ -59,3 +59,8 @@ void GameManager::Initialize()
 
     m_snakePosition.push_back(std::make_pair(snakeInitWidth, snakeInitHeight));
 }
+
+void GameManager::SetDirectionUp() {}
+void GameManager::SetDirectionDown() {}
+void GameManager::SetDirectionLeft() {}
+void GameManager::SetDirectionRight() {}

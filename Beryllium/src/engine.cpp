@@ -1,7 +1,7 @@
 #include "engine.h"
 
-Engine::Engine(size_t imageWidth, size_t imageHeight, uint32_t *imageData)
-    : m_imageWidth(imageWidth), m_imageHeight(imageHeight), m_imageData(imageData), m_gameManager(GameManager()), m_pixelWidth(30), m_paddingWidth(2)
+Engine::Engine(size_t imageWidth, size_t imageHeight, uint32_t *imageData, GLFWwindow *window)
+    : m_imageWidth(imageWidth), m_imageHeight(imageHeight), m_imageData(imageData), m_gameManager(GameManager()), m_pixelWidth(30), m_paddingWidth(2), m_window(window)
 {
     int nbPixelsWidth = (m_imageWidth - (m_imageWidth % m_pixelWidth)) / m_pixelWidth;
     int nbPixelsHeight = (m_imageHeight - (m_imageHeight % m_pixelWidth)) / m_pixelWidth;
@@ -22,6 +22,21 @@ void Engine::RenderSquare(int x, int y, uint32_t color)
             SetPixel(x + i, y + j, color);
         }
     }
+}
+
+void Engine::HandleInput()
+{
+    if (glfwGetKey(m_window, GLFW_KEY_W) == GLFW_PRESS)
+        m_gameManager.SetDirectionUp();
+
+    if (glfwGetKey(m_window, GLFW_KEY_S) == GLFW_PRESS)
+        m_gameManager.SetDirectionDown();
+
+    if (glfwGetKey(m_window, GLFW_KEY_A) == GLFW_PRESS)
+        m_gameManager.SetDirectionLeft();
+
+    if (glfwGetKey(m_window, GLFW_KEY_D) == GLFW_PRESS)
+        m_gameManager.SetDirectionRight();
 }
 
 void Engine::Render()
