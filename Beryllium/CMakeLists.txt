@@ -20,7 +20,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(Beryllium)
 
-# Set C standard to the latest available (C11 or higher)
+# Set C standard
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
