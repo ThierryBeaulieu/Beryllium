@@ -8,9 +8,10 @@ mkdir -p build
 cd build
 
 # Run CMake
-cmake ..
+# cmake ..
+cmake -G Xcode ..
 
 # Build the project
-cmake --build .
+# cmake --build .
 
-./Beryllium
+# ./Beryllium
