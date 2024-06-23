@@ -56,6 +56,7 @@ add_library(ImGui STATIC
     ${CMAKE_SOURCE_DIR}/vendor/ImGui/imgui_tables.cpp
     ${CMAKE_SOURCE_DIR}/vendor/ImGui/imgui_widgets.cpp
     ${CMAKE_SOURCE_DIR}/vendor/ImGui/imgui_impl_glfw.cpp
+    ${CMAKE_SOURCE_DIR}/vendor/ImGui/imgui_impl_opengl3.cpp
 )
 
 # Add GLFW as a submodule
@@ -73,3 +74,7 @@ target_link_libraries(Beryllium PRIVATE glfw)
 
 # Specify additional include directories for the main executable
 target_include_directories(Beryllium PRIVATE ${CMAKE_SOURCE_DIR}/vendor/ImGui)
+
+# Link OpenGL (platform-dependent)
+find_package(OpenGL REQUIRED)
+target_link_libraries(Beryllium PRIVATE OpenGL::GL)
