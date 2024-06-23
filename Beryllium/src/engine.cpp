@@ -26,14 +26,11 @@ void Engine::RenderSquare(int x, int y, uint32_t color)
 
 void Engine::Render()
 {
-    int nbPixelsWidth = (m_imageWidth - (m_imageWidth % m_pixelWidth)) / m_pixelWidth;
-    int nbPixelsHeight = (m_imageHeight - (m_imageHeight % m_pixelWidth)) / m_pixelWidth;
-
     uint32_t tileColor = Engine::GetColorWhite(200);
 
-    for (int i = 0; i < nbPixelsWidth; ++i)
+    for (int i = 0; i < m_gameManager.GetGridWidth(); ++i)
     {
-        for (int j = 0; j < nbPixelsHeight; ++j)
+        for (int j = 0; j < m_gameManager.GetGridHeight(); ++j)
         {
             RenderSquare(i * m_pixelWidth, j * m_pixelWidth, tileColor);
         }
