@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include <cstdint>
 #include <GLFW/glfw3.h>
 #include <vector>
