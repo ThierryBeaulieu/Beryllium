@@ -31,9 +31,9 @@ void GameManager::Update() {
 void GameManager::Initialize() {
     int foodInitWidth = std::rand() % m_gridWidth;
     int foodInitHeight = std::rand() % m_gridHeight;
-    m_foodPosition.push_back(std::make_pair(foodInitWidth, foodInitHeight));
+    m_foodPosition.push_back(std::make_pair(300, 300));
 
     int snakeInitWidth = std::rand() % m_gridWidth;
     int snakeInitHeight = std::rand() % m_gridHeight;
-    m_snakePosition.push_back(std::make_pair(snakeInitWidth, snakeInitHeight));
+    m_snakePosition.push_back(std::make_pair(600, 600));
 }
