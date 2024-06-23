@@ -97,8 +97,8 @@ int main(int, char **)
     // ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());
     // IM_ASSERT(font != nullptr);
 
-    size_t constexpr imageWidth = 1000;
-    size_t constexpr imageHeight = 800;
+    size_t constexpr imageWidth = 800;
+    size_t constexpr imageHeight = 600;
     float constexpr fimageWidth = static_cast<float>(imageWidth);
     float constexpr fimageHeight = static_cast<float>(imageHeight);
     size_t constexpr imageSize = imageWidth * imageHeight;
