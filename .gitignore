@@ -400,4 +400,5 @@ FodyWeavers.xsd
 # Cmake build
 Beryllium/build/*
 
+# Mac Files
 .DS_Store
