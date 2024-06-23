@@ -85,8 +85,8 @@ void GameManager::InitializeSnake()
 
 void GameManager::GenerateFood()
 {
-    int foodInitWidth = std::rand() % m_gridWidth;
-    int foodInitHeight = std::rand() % m_gridHeight;
+    const int foodInitWidth = std::rand() % m_gridWidth;
+    const int foodInitHeight = std::rand() % m_gridHeight;
     m_foodPosition.push_back(std::make_pair(foodInitWidth, foodInitHeight));
 }
 
@@ -103,8 +103,6 @@ void GameManager::EatFood()
             m_snakePosition.push_back(foodPosition);
             break;
         }
-
-        // todo: handle the case where the snake can it itself
     }
 }
 
