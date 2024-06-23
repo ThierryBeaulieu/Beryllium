@@ -1,8 +1,8 @@
+#pragma once
+
 #include <cstdint>
 #include <vector>
 #include <GLFW/glfw3.h>
-
-#pragma once
 
 class Engine
 {
