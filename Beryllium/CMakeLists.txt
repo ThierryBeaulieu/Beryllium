@@ -9,19 +9,13 @@
 # │   └── gamemanager.h
 # └── vendor/
 #     ├── GLFW/
-#     │   ├── include/
-#     │   │   └── GLFW/
-#     │   │       ├── glfw3.h
-#     │   │       └── glfw3native.h
-#     │   └── lib-vc2022/
-#     │       └── glfw3.lib
 #     └── ImGui/
 #         ├── imgui_demo.cpp
 #         ├── imgui_draw.cpp
 #         ├── imgui_impl_glfw.cpp
 #         ├── imgui_impl_glfw.h
+#         ├── ...
 #         └── imgui_widgets.cpp
-
 
 cmake_minimum_required(VERSION 3.10)
 project(Beryllium)
