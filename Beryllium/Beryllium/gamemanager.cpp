@@ -16,6 +16,23 @@ std::vector<std::pair<int, int>> GameManager::GetSnakePosition() {
 int GameManager::GetGridWidth() {
     return m_gridWidth;
 }
+
 int GameManager::GetGridHeight() {
     return m_gridHeight;
+}
+
+void GameManager::Update() {
+    if (m_foodPosition.size() == 0 || m_snakePosition.size() == 0)
+        Initialize();
+}
+
+void GameManager::Initialize() {
+    int foodInitWidth = std::rand() % m_gridWidth;
+    int foodInitHeight = std::rand() % m_gridHeight;
+    m_foodPosition.push_back(std::make_pair(foodInitWidth, foodInitHeight));
+
+    int snakeInitWidth = std::rand() % m_gridWidth;
+    int snakeInitHeight = std::rand() % m_gridHeight;
+    m_snakePosition.push_back(std::make_pair(snakeInitWidth, snakeInitHeight));
+
 }

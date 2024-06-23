@@ -2,6 +2,7 @@
 
 #include <utility>
 #include <vector>
+#include <random>
 
 class GameManager
 {
@@ -13,6 +14,10 @@ public:
     
     int GetGridWidth();
     int GetGridHeight();
+
+    void Update();
+
+    void Initialize();
 
 private:
     int m_gridWidth;
