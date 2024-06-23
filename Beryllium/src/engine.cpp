@@ -18,7 +18,18 @@ void Engine::RenderSquare(int x, int y, uint32_t color)
 
 void Engine::Render()
 {
+    int nbPixelsWidth = (m_imageWidth - (m_imageWidth % m_pixelWidth)) / m_pixelWidth;
+    int nbPixelsHeight = (m_imageHeight - (m_imageHeight % m_pixelWidth)) / m_pixelWidth;
+
     uint32_t foodColor = Engine::GetColorRed(255);
+
+    for (int i = 0; i < nbPixelsWidth; ++i)
+    {
+        for (int j = 0; j < nbPixelsHeight / 2; ++j)
+        {
+            RenderSquare(i * m_pixelWidth, j * m_pixelWidth, foodColor);
+        }
+    }
 
     for (std::pair<int, int> foodCoord : m_gameManager.GetFoodPosition())
     {
