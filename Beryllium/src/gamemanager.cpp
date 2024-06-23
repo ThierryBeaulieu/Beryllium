@@ -100,6 +100,9 @@ void GameManager::GenerateFood()
 
 void GameManager::SetDirectionUp()
 {
+    if (m_snakePosition.size() == 0)
+        return;
+
     std::pair<int, int> front = m_snakePosition.front();
 
     if (front.second - 1 < 0)
@@ -111,6 +114,9 @@ void GameManager::SetDirectionUp()
 
 void GameManager::SetDirectionDown()
 {
+    if (m_snakePosition.size() == 0)
+        return;
+
     std::pair<int, int> front = m_snakePosition.front();
 
     if (front.second + 1 >= m_gridHeight)
@@ -122,6 +128,9 @@ void GameManager::SetDirectionDown()
 
 void GameManager::SetDirectionLeft()
 {
+    if (m_snakePosition.size() == 0)
+        return;
+
     std::pair<int, int> front = m_snakePosition.front();
 
     if (front.first - 1 < 0)
@@ -133,6 +142,9 @@ void GameManager::SetDirectionLeft()
 
 void GameManager::SetDirectionRight()
 {
+    if (m_snakePosition.size() == 0)
+        return;
+
     std::pair<int, int> front = m_snakePosition.front();
 
     if (front.first + 1 >= m_gridWidth)
