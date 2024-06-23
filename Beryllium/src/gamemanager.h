@@ -27,7 +27,6 @@ public:
     void InitializeSnake();
 
     void GenerateFood();
-    void EatFood();
 
     void SetDirectionUp();
     void SetDirectionDown();
@@ -42,4 +41,6 @@ private:
     std::list<std::pair<int, int>> m_snakePosition;
 
     bool m_isGameOver;
+    bool m_isGameWon;
+    bool m_isGameBeginning;
 };

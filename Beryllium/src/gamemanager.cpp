@@ -1,7 +1,7 @@
 #include "gamemanager.h"
 
 GameManager::GameManager()
-    : m_gridWidth(0), m_gridHeight(0), m_isGameOver(false)
+    : m_gridWidth(0), m_gridHeight(0), m_isGameOver(false), m_isGameWon(false), m_isGameBeginning(true)
 {
     srand(time(0));
 }
@@ -38,6 +38,23 @@ void GameManager::SetGridHeight(int gridHeight)
 
 void GameManager::Update()
 {
+    // if (m_isGameBeginning)
+    {
+        // todo : display ui for a game beginning
+        // return;
+    }
+
+    if (m_snakePosition.size() == m_gridHeight * m_gridWidth)
+    {
+        m_isGameWon = true;
+    }
+
+    if (m_isGameWon)
+    {
+        // todo: display ui
+        return;
+    }
+
     if (m_isGameOver)
     {
         if (m_snakePosition.size() > 0 || m_foodPosition.size() > 0)
@@ -57,7 +74,18 @@ void GameManager::Update()
     if (m_snakePosition.size() == 0)
         InitializeSnake();
 
-    EatFood();
+    std::pair<int, int> foodPosition = m_foodPosition.front();
+    std::pair<int, int> snakeHead = m_snakePosition.front();
+
+    for (std::pair<int, int> snakePosition : m_snakePosition)
+    {
+        if (snakePosition == foodPosition)
+        {
+            m_foodPosition.pop_back();
+            m_snakePosition.push_back(foodPosition);
+            break;
+        }
+    }
 }
 
 void GameManager::InitializeFood()
@@ -88,22 +116,6 @@ void GameManager::GenerateFood()
     const int foodInitWidth = std::rand() % m_gridWidth;
     const int foodInitHeight = std::rand() % m_gridHeight;
     m_foodPosition.push_back(std::make_pair(foodInitWidth, foodInitHeight));
-}
-
-void GameManager::EatFood()
-{
-    std::pair<int, int> foodPosition = m_foodPosition.front();
-    std::pair<int, int> snakeHead = m_snakePosition.front();
-
-    for (std::pair<int, int> snakePosition : m_snakePosition)
-    {
-        if (snakePosition == foodPosition)
-        {
-            m_foodPosition.pop_back();
-            m_snakePosition.push_back(foodPosition);
-            break;
-        }
-    }
 }
 
 void GameManager::SetDirectionUp()
