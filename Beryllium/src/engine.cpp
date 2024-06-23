@@ -29,19 +29,19 @@ void Engine::HandleInput()
     if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(m_window, true);
 
-    if (glfwGetKey(m_window, GLFW_KEY_W) == GLFW_PRESS)
+    if (glfwGetKey(m_window, GLFW_KEY_W) == GLFW_PRESS || glfwGetKey(m_window, GLFW_KEY_UP) == GLFW_PRESS)
     {
         m_gameManager.SetDirectionUp();
     }
-    else if (glfwGetKey(m_window, GLFW_KEY_S) == GLFW_PRESS)
+    else if (glfwGetKey(m_window, GLFW_KEY_S) == GLFW_PRESS || glfwGetKey(m_window, GLFW_KEY_DOWN) == GLFW_PRESS)
     {
         m_gameManager.SetDirectionDown();
     }
-    else if (glfwGetKey(m_window, GLFW_KEY_A) == GLFW_PRESS)
+    else if (glfwGetKey(m_window, GLFW_KEY_A) == GLFW_PRESS || glfwGetKey(m_window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {
         m_gameManager.SetDirectionLeft();
     }
-    else if (glfwGetKey(m_window, GLFW_KEY_D) == GLFW_PRESS)
+    else if (glfwGetKey(m_window, GLFW_KEY_D) == GLFW_PRESS || glfwGetKey(m_window, GLFW_KEY_RIGHT) == GLFW_PRESS)
     {
         m_gameManager.SetDirectionRight();
     }
