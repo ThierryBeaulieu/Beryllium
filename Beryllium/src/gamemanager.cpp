@@ -40,7 +40,8 @@ void GameManager::Update()
 {
     if (m_isGameOver)
     {
-        // TODO : display start a game again
+        m_snakePosition.clear();
+        m_foodPosition.clear();
         return;
     }
 
