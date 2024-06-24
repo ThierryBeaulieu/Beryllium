@@ -7,6 +7,9 @@
 # │   ├── engine.h
 # │   ├── gamemanager.cpp
 # │   └── gamemanager.h
+# ├── assets/
+# │   └── sounds/
+# │       └── wood_impact.wav
 # └── vendor/
 #     ├── GLFW/
 #     └── ImGui/
@@ -45,6 +48,7 @@ set(HEADER_FILES
 # Include directories (avoid writing it every time)
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/GFLW/include)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/AL/include)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/ImGui)
 
 # Add ImGui as a static library
@@ -60,6 +64,7 @@ add_library(ImGui STATIC
 
 # Add GLFW as a submodule
 add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/GLFW)
+add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/AL)
 
 # Link the GLFW to ImGui
 target_link_libraries(ImGui PRIVATE glfw)
@@ -70,6 +75,7 @@ add_executable(Beryllium ${SRC_FILES} ${HEADER_FILES})
 # Link the ImGui and GLFW library to the main executable
 target_link_libraries(Beryllium PRIVATE ImGui)
 target_link_libraries(Beryllium PRIVATE glfw)
+target_link_libraries(Beryllium PRIVATE OpenAL)
 
 # Specify additional include directories for the main executable
 target_include_directories(Beryllium PRIVATE ${CMAKE_SOURCE_DIR}/vendor/ImGui)

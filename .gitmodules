@@ -1,3 +1,6 @@
 [submodule "Beryllium/vendor/GLFW"]
 	path = Beryllium/vendor/GLFW
 	url = https://github.com/glfw/glfw
+[submodule "Beryllium/vendor/AL"]
+	path = Beryllium/vendor/AL
+	url = https://github.com/kcat/openal-soft.git
