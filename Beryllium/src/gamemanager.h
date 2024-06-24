@@ -9,7 +9,7 @@
 
 #include "imgui.h"
 
-enum class NextDirection
+enum class Direction
 {
     Right,
     Left,
@@ -55,5 +55,6 @@ private:
     bool m_isGameOver;
     bool m_isGameWon;
     bool m_isGameBeginning;
-    NextDirection m_nextDirection;
+
+    Direction m_currentDirection;
 };

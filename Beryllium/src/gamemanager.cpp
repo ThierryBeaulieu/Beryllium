@@ -1,7 +1,7 @@
 #include "gamemanager.h"
 
 GameManager::GameManager()
-    : m_gridWidth(0), m_gridHeight(0), m_isGameOver(false), m_isGameWon(false), m_isGameBeginning(true), m_nextDirection(NextDirection::None)
+    : m_gridWidth(0), m_gridHeight(0), m_isGameOver(false), m_isGameWon(false), m_isGameBeginning(true), m_currentDirection(Direction::None)
 {
     srand(time(0));
 }
@@ -108,44 +108,52 @@ void GameManager::HandleInput()
     if (front.second - 1 < 0)
         return;
 
-    switch (m_nextDirection)
+    switch (m_currentDirection)
     {
-    case NextDirection::Up:
-        if (m_snakePosition.front().second <= 0)
+    case Direction::Up:
+        if (front.second <= 0)
             m_isGameOver = true;
+
         if (front.second - 1 < 0)
             return;
 
         m_snakePosition.pop_back();
         m_snakePosition.push_front(std::make_pair(front.first, front.second - 1));
         break;
-    case NextDirection::Down:
-        if (m_snakePosition.front().second >= m_gridHeight - 1)
+
+    case Direction::Down:
+        if (front.second >= m_gridHeight - 1)
             m_isGameOver = true;
+
         if (front.second + 1 >= m_gridHeight)
             return;
 
         m_snakePosition.pop_back();
         m_snakePosition.push_front(std::make_pair(front.first, front.second + 1));
         break;
-    case NextDirection::Left:
-        if (m_snakePosition.front().first <= 0)
+
+    case Direction::Left:
+        if (front.first <= 0)
             m_isGameOver = true;
+
         if (front.first - 1 < 0)
             return;
 
         m_snakePosition.pop_back();
         m_snakePosition.push_front(std::make_pair(front.first - 1, front.second));
         break;
-    case NextDirection::Right:
-        if (m_snakePosition.front().first >= m_gridWidth - 1)
+
+    case Direction::Right:
+        if (front.first >= m_gridWidth - 1)
             m_isGameOver = true;
+
         if (front.first + 1 >= m_gridWidth)
             return;
 
         m_snakePosition.pop_back();
         m_snakePosition.push_front(std::make_pair(front.first + 1, front.second));
         break;
+
     default:
         break;
     }
@@ -183,20 +191,20 @@ void GameManager::GenerateFood()
 
 void GameManager::SetDirectionUp()
 {
-    m_nextDirection = NextDirection::Up;
+    m_currentDirection = Direction::Up;
 }
 
 void GameManager::SetDirectionDown()
 {
-    m_nextDirection = NextDirection::Down;
+    m_currentDirection = Direction::Down;
 }
 
 void GameManager::SetDirectionLeft()
 {
-    m_nextDirection = NextDirection::Left;
+    m_currentDirection = Direction::Left;
 }
 
 void GameManager::SetDirectionRight()
 {
-    m_nextDirection = NextDirection::Right;
+    m_currentDirection = Direction::Right;
 }
