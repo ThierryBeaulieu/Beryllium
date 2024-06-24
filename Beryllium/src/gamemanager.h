@@ -9,6 +9,15 @@
 
 #include "imgui.h"
 
+enum class NextDirection
+{
+    Right,
+    Left,
+    Up,
+    Down,
+    None
+};
+
 class GameManager
 {
 public:
@@ -24,6 +33,7 @@ public:
     void SetGridHeight(int gridHeight);
 
     void Update();
+    void HandleInput();
 
     void InitializeFood();
     void InitializeSnake();
@@ -45,4 +55,5 @@ private:
     bool m_isGameOver;
     bool m_isGameWon;
     bool m_isGameBeginning;
+    NextDirection m_nextDirection;
 };
