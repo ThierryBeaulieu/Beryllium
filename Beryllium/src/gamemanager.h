@@ -7,7 +7,7 @@
 #include <vector>
 #include <list>
 
-#include "imgui.h"
+#include "soundmanager.h"
 
 enum class Direction
 {
@@ -57,4 +57,5 @@ private:
     bool m_isGameBeginning;
 
     Direction m_currentDirection;
+    SoundManager m_soundManager;
 };

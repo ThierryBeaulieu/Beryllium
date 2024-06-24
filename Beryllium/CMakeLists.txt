@@ -37,12 +37,14 @@ set(SRC_FILES
     ${CMAKE_SOURCE_DIR}/src/main.cpp
     ${CMAKE_SOURCE_DIR}/src/engine.cpp
     ${CMAKE_SOURCE_DIR}/src/gamemanager.cpp
+    ${CMAKE_SOURCE_DIR}/src/soundmanager.cpp
 )
 
 # Add header files for the main project
 set(HEADER_FILES
     ${CMAKE_SOURCE_DIR}/src/engine.h
     ${CMAKE_SOURCE_DIR}/src/gamemanager.h
+    ${CMAKE_SOURCE_DIR}/src/soundmanager.h
 )
 
 # Include directories (avoid writing it every time)
@@ -83,3 +85,10 @@ target_include_directories(Beryllium PRIVATE ${CMAKE_SOURCE_DIR}/vendor/ImGui)
 # Link OpenGL (platform-dependent)
 find_package(OpenGL REQUIRED)
 target_link_libraries(Beryllium PRIVATE OpenGL::GL)
+
+# Add sound assets
+configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/wood_impact.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/wood_impact.wav COPYONLY)
+
+set(SOUNDS_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/sounds)
+file(MAKE_DIRECTORY ${SOUNDS_OUTPUT_DIR})
+configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/wood_impact.wav ${SOUNDS_OUTPUT_DIR}/wood_impact.wav COPYONLY)

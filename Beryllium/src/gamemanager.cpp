@@ -1,7 +1,7 @@
 #include "gamemanager.h"
 
 GameManager::GameManager()
-    : m_gridWidth(0), m_gridHeight(0), m_isGameOver(false), m_isGameWon(false), m_isGameBeginning(true), m_currentDirection(Direction::None)
+    : m_gridWidth(0), m_gridHeight(0), m_isGameOver(false), m_isGameWon(false), m_isGameBeginning(true), m_currentDirection(Direction::None), m_soundManager(SoundManager())
 {
     srand(time(0));
 }
@@ -84,6 +84,7 @@ void GameManager::Update()
     {
         if (snakePosition == foodPosition)
         {
+            m_soundManager.PlaySound("sounds/wood_impact.wav");
             m_foodPosition.pop_back();
             m_snakePosition.push_back(foodPosition);
             break;
