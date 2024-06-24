@@ -105,9 +105,6 @@ void GameManager::HandleInput()
 
     std::pair<int, int> front = m_snakePosition.front();
 
-    if (front.second - 1 < 0)
-        return;
-
     switch (m_currentDirection)
     {
     case Direction::Up:
