@@ -40,12 +40,7 @@ void GameManager::Update()
 {
     if (m_isGameBeginning)
     {
-        bool showWindow = true;
-        {
-            ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
-            ImGui::Begin("Render", &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
-            ImGui::End();
-        }
+ 
 
         return;
     }

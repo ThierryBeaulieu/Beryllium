@@ -152,6 +152,7 @@ int main(int, char **)
         {
             std::chrono::time_point<std::chrono::high_resolution_clock> const beginUpdate = std::chrono::high_resolution_clock::now();
             engine.Update();
+            // add a window here
             std::chrono::time_point<std::chrono::high_resolution_clock> const endUpdate = std::chrono::high_resolution_clock::now();
             updateUs = std::chrono::duration_cast<std::chrono::microseconds>(endUpdate - beginUpdate);
 
