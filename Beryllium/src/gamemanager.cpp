@@ -188,20 +188,36 @@ void GameManager::GenerateFood()
 
 void GameManager::SetDirectionUp()
 {
+    if (m_currentDirection == Direction::Down && m_snakePosition.size() > 1)
+    {
+        return;
+    }
     m_currentDirection = Direction::Up;
 }
 
 void GameManager::SetDirectionDown()
 {
+    if (m_currentDirection == Direction::Up && m_snakePosition.size() > 1)
+    {
+        return;
+    }
     m_currentDirection = Direction::Down;
 }
 
 void GameManager::SetDirectionLeft()
 {
+    if (m_currentDirection == Direction::Right && m_snakePosition.size() > 1)
+    {
+        return;
+    }
     m_currentDirection = Direction::Left;
 }
 
 void GameManager::SetDirectionRight()
 {
+    if (m_currentDirection == Direction::Left && m_snakePosition.size() > 1)
+    {
+        return;
+    }
     m_currentDirection = Direction::Right;
 }
