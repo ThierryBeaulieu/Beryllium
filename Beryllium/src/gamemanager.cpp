@@ -38,12 +38,12 @@ void GameManager::SetGridHeight(int gridHeight)
 
 void GameManager::Update()
 {
-    if (m_isGameBeginning)
-    {
- 
+    // if (m_isGameBeginning)
+    // {
+    //     // todo : display UI
 
-        return;
-    }
+    //     return;
+    // }
 
     if (m_snakePosition.size() == m_gridHeight * m_gridWidth)
     {
@@ -76,9 +76,9 @@ void GameManager::Update()
         InitializeSnake();
 
     std::pair<int, int> foodPosition = m_foodPosition.front();
-    std::pair<int, int> snakeHead = m_snakePosition.front();
+    const std::pair<int, int> &snakeHead = m_snakePosition.front();
 
-    for (std::pair<int, int> snakePosition : m_snakePosition)
+    for (const std::pair<int, int> &snakePosition : m_snakePosition)
     {
         if (snakePosition == foodPosition)
         {
@@ -86,9 +86,14 @@ void GameManager::Update()
             m_snakePosition.push_back(foodPosition);
             break;
         }
+        if (snakePosition == snakeHead && &snakePosition != &snakeHead)
+        {
+            m_isGameOver = true;
+        }
     }
 
-    // todo: handle the case when the snake eat itself
+    // todo: handle the case when the snake goes backward.
+    // todo: handle the snakes' speed
 }
 
 void GameManager::InitializeFood()
