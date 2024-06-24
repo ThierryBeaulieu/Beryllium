@@ -93,9 +93,6 @@ void GameManager::Update()
             m_isGameOver = true;
         }
     }
-
-    // todo: handle the case when the snake goes backward.
-    // todo: handle the snakes' speed
 }
 
 void GameManager::HandleInput()
