@@ -1,0 +1,3 @@
+[submodule "Beryllium/vendor/GLFW"]
+	path = Beryllium/vendor/GLFW
+	url = https://github.com/glfw/glfw
