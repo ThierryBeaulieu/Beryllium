@@ -34,12 +34,14 @@ set(SRC_FILES
     ${CMAKE_SOURCE_DIR}/src/main.cpp
     ${CMAKE_SOURCE_DIR}/src/engine.cpp
     ${CMAKE_SOURCE_DIR}/src/gamemanager.cpp
+    ${CMAKE_SOURCE_DIR}/src/soundmanager.cpp
 )
 
 # Add header files for the main project
 set(HEADER_FILES
     ${CMAKE_SOURCE_DIR}/src/engine.h
     ${CMAKE_SOURCE_DIR}/src/gamemanager.h
+    ${CMAKE_SOURCE_DIR}/src/soundmanager.h
 )
 
 # Include directories (avoid writing it every time)
