@@ -4,3 +4,7 @@
 [submodule "Beryllium/vendor/AL"]
 	path = Beryllium/vendor/AL
 	url = https://github.com/kcat/openal-soft.git
+[submodule "Beryllium/vendor/libsndfile"]
+	path = Beryllium/vendor/libsndfile
+	url = https://github.com/libsndfile/libsndfile.git
+	branch = release-1.2.1

@@ -34,20 +34,25 @@ set(SRC_FILES
     ${CMAKE_SOURCE_DIR}/src/main.cpp
     ${CMAKE_SOURCE_DIR}/src/engine.cpp
     ${CMAKE_SOURCE_DIR}/src/gamemanager.cpp
-    ${CMAKE_SOURCE_DIR}/src/soundmanager.cpp
+    ${CMAKE_SOURCE_DIR}/src/soundbuffer.cpp
+    ${CMAKE_SOURCE_DIR}/src/sounddevice.cpp
+    ${CMAKE_SOURCE_DIR}/src/soundsource.cpp
 )
 
 # Add header files for the main project
 set(HEADER_FILES
     ${CMAKE_SOURCE_DIR}/src/engine.h
     ${CMAKE_SOURCE_DIR}/src/gamemanager.h
-    ${CMAKE_SOURCE_DIR}/src/soundmanager.h
+    ${CMAKE_SOURCE_DIR}/src/soundbuffer.h
+    ${CMAKE_SOURCE_DIR}/src/sounddevice.h
+    ${CMAKE_SOURCE_DIR}/src/soundsource.h
 )
 
 # Include directories (avoid writing it every time)
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/GFLW/include)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/AL/include)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/libsndfile/include)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/ImGui)
 
 # Add ImGui as a static library
@@ -64,6 +69,7 @@ add_library(ImGui STATIC
 # Add GLFW as a submodule
 add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/GLFW)
 add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/AL)
+add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/libsndfile)
 
 # Link the GLFW to ImGui
 target_link_libraries(ImGui PRIVATE glfw)
@@ -75,6 +81,7 @@ add_executable(Beryllium ${SRC_FILES} ${HEADER_FILES})
 target_link_libraries(Beryllium PRIVATE ImGui)
 target_link_libraries(Beryllium PRIVATE glfw)
 target_link_libraries(Beryllium PRIVATE OpenAL)
+target_link_libraries(Beryllium PRIVATE sndfile)
 
 # Specify additional include directories for the main executable
 target_include_directories(Beryllium PRIVATE ${CMAKE_SOURCE_DIR}/vendor/ImGui)
