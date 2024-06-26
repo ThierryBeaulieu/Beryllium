@@ -1,7 +1,12 @@
 #include "gamemanager.h"
 
 GameManager::GameManager()
-    : m_gridWidth(0), m_gridHeight(0), m_isGameOver(false), m_isGameWon(false), m_isGameBeginning(true), m_currentDirection(Direction::None)
+    : m_gridWidth(0)
+    , m_gridHeight(0)
+    , m_isGameOver(false)
+    , m_isGameWon(false)
+    , m_isGameBeginning(true)
+    , m_currentDirection(Direction::None)
 {
     srand(time(0));
 }
@@ -84,6 +89,8 @@ void GameManager::Update()
     {
         if (snakePosition == foodPosition)
         {
+            SoundDevice * soundDevice = SoundDevice::get();
+            uint32_t sound1 = SoundBuffer::get()->addSoundEffect("assets\\sounds\\wood_impact.ogg");
             m_foodPosition.pop_back();
             m_snakePosition.push_back(foodPosition);
             break;

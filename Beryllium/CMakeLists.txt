@@ -89,3 +89,5 @@ target_include_directories(Beryllium PRIVATE ${CMAKE_SOURCE_DIR}/vendor/ImGui)
 # Link OpenGL (platform-dependent)
 find_package(OpenGL REQUIRED)
 target_link_libraries(Beryllium PRIVATE OpenGL::GL)
+
+configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/wood_impact.ogg ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/wood_impact.ogg COPYONLY)
