@@ -86,6 +86,15 @@ target_link_libraries(${PROJECT_NAME} PRIVATE sndfile)
 # Specify additional include directories for the main executable
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/vendor/ImGui)
 
+# Define the path to the OpenAL32.dll
+set(OPENAL_DLL_PATH "${CMAKE_BINARY_DIR}/vendor/AL/Release/OpenAL32.dll")
+
+# Add a post-build command to copy the DLL to the output directory
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                   "${OPENAL_DLL_PATH}"
+                   $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+
 # Link OpenGL (platform-dependent)
 find_package(OpenGL REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL)
