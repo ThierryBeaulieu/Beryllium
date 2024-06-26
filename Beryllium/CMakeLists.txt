@@ -75,20 +75,20 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/libsndfile)
 target_link_libraries(ImGui PRIVATE glfw)
 
 # Add the main executable
-add_executable(Beryllium ${SRC_FILES} ${HEADER_FILES})
+add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})
 
 # Link the ImGui and GLFW library to the main executable
-target_link_libraries(Beryllium PRIVATE ImGui)
-target_link_libraries(Beryllium PRIVATE glfw)
-target_link_libraries(Beryllium PRIVATE OpenAL)
-target_link_libraries(Beryllium PRIVATE sndfile)
+target_link_libraries(${PROJECT_NAME} PRIVATE ImGui)
+target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenAL)
+target_link_libraries(${PROJECT_NAME} PRIVATE sndfile)
 
 # Specify additional include directories for the main executable
-target_include_directories(Beryllium PRIVATE ${CMAKE_SOURCE_DIR}/vendor/ImGui)
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/vendor/ImGui)
 
 # Link OpenGL (platform-dependent)
 find_package(OpenGL REQUIRED)
-target_link_libraries(Beryllium PRIVATE OpenGL::GL)
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL)
 
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/wood_impact.ogg ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/wood_impact.ogg COPYONLY)
 
