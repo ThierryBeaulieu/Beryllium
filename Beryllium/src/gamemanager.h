@@ -10,6 +10,7 @@
 #include "imgui.h"
 #include "soundbuffer.h"
 #include "sounddevice.h"
+#include "soundsource.h"
 
 enum class Direction
 {
