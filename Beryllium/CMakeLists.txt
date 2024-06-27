@@ -86,29 +86,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE sndfile)
 # Specify additional include directories for the main executable
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/vendor/ImGui)
 
-function(copy_openal_dll target)
-    if (WIN32)
-        set(OPENAL_DLL_PATH "${CMAKE_BINARY_DIR}/vendor/AL/Release/OpenAL32.dll")
-        add_custom_command(TARGET ${target} POST_BUILD
-                           COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                           "${OPENAL_DLL_PATH}"
-                           $<TARGET_FILE_DIR:${target}>)
-    elseif (APPLE)
-        set(OPENAL_DLL_PATH "${CMAKE_BINARY_DIR}/vendor/AL/Release/libopenal.dylib")
-        add_custom_command(TARGET ${target} POST_BUILD
-                           COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                           "${OPENAL_DLL_PATH}"
-                           $<TARGET_FILE_DIR:${target}>)
-    elseif (UNIX)
-        set(OPENAL_DLL_PATH "${CMAKE_BINARY_DIR}/vendor/AL/Release/libopenal.so")
-        add_custom_command(TARGET ${target} POST_BUILD
-                           COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                           "${OPENAL_DLL_PATH}"
-                           $<TARGET_FILE_DIR:${target}>)
-    endif()
-endfunction()
-
-copy_openal_dll(${PROJECT_NAME})
+# https://cmake.org/cmake/help/latest/manual/cmake-generator-expressions.7.html#genex:TARGET_RUNTIME_DLLS
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:${PROJECT_NAME}> $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}>
+  COMMAND_EXPAND_LISTS
+)
                         
 # Link OpenGL (platform-dependent)
 find_package(OpenGL REQUIRED)
