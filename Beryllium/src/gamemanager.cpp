@@ -89,8 +89,8 @@ void GameManager::Update()
     {
         if (snakePosition == foodPosition)
         {
-            // SOUNDS SHOULD NOT BE BLOCKING
-            std::async(std::launch::async, &GameManager::PlaySound);
+            std::thread thread_obj(&GameManager::PlaySound);
+            thread_obj.detach();
 
             m_foodPosition.pop_back();
             m_snakePosition.push_back(foodPosition);
