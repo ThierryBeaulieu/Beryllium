@@ -89,13 +89,13 @@ void GameManager::Update()
     {
         if (snakePosition == foodPosition)
         {
-            // Problèmes auxquel j'ai fait face
-            // La dll de OpenAL32.dll n'est pas dans le même répertoire que l'exécutable par défault
-            // La nature de mon sons n'était pas décodable par sdnfile
+            // Problï¿½mes auxquel j'ai fait face
+            // La dll de OpenAL32.dll n'est pas dans le mï¿½me rï¿½pertoire que l'exï¿½cutable par dï¿½fault
+            // La nature de mon sons n'ï¿½tait pas dï¿½codable par sdnfile
             // Le son va occuper tout le thread, il faut multithread.
 
             SoundDevice * soundDevice = SoundDevice::get();
-            uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds\\wood_impact.ogg");
+            uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/wood_impact.ogg");
 
             SoundSource mySpeaker;
             mySpeaker.Play(sound1);
