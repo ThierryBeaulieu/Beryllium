@@ -1,4 +1,4 @@
-#include "SoundSource.h"
+#include "soundsource.h"
 #include <iostream>
 
 SoundSource::SoundSource()
@@ -26,7 +26,6 @@ void SoundSource::Play(const ALuint buffer_to_play)
 	}
 
 	alSourcePlay(p_Source);
-
 
 	ALint state = AL_PLAYING;
 	std::cout << "playing sound\n";

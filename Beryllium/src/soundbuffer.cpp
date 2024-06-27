@@ -1,22 +1,22 @@
-#include "SoundBuffer.h"
+#include "soundbuffer.h"
 #include <sndfile.h>
 #include <inttypes.h>
-#include <AL\alext.h>
+#include <AL/alext.h>
 
-SoundBuffer* SoundBuffer::get()
+SoundBuffer *SoundBuffer::get()
 {
-	static SoundBuffer* sndbuf = new SoundBuffer();
+	static SoundBuffer *sndbuf = new SoundBuffer();
 	return sndbuf;
 }
 
-ALuint SoundBuffer::addSoundEffect(const char* filename)
+ALuint SoundBuffer::addSoundEffect(const char *filename)
 {
 
 	ALenum err, format;
 	ALuint buffer;
-	SNDFILE* sndfile;
+	SNDFILE *sndfile;
 	SF_INFO sfinfo;
-	short* membuf;
+	short *membuf;
 	sf_count_t num_frames;
 	ALsizei num_bytes;
 
@@ -27,7 +27,7 @@ ALuint SoundBuffer::addSoundEffect(const char* filename)
 		fprintf(stderr, "Could not open audio in %s: %s\n", filename, sf_strerror(sndfile));
 		return 0;
 	}
-	if (sfinfo.frames < 1 || sfinfo.frames >(sf_count_t)(INT_MAX / sizeof(short)) / sfinfo.channels)
+	if (sfinfo.frames < 1 || sfinfo.frames > (sf_count_t)(INT_MAX / sizeof(short)) / sfinfo.channels)
 	{
 		fprintf(stderr, "Bad sample count in %s (%" PRId64 ")\n", filename, sfinfo.frames);
 		sf_close(sndfile);
@@ -58,7 +58,7 @@ ALuint SoundBuffer::addSoundEffect(const char* filename)
 	}
 
 	/* Decode the whole audio file to a buffer. */
-	membuf = static_cast<short*>(malloc((size_t)(sfinfo.frames * sfinfo.channels) * sizeof(short)));
+	membuf = static_cast<short *>(malloc((size_t)(sfinfo.frames * sfinfo.channels) * sizeof(short)));
 
 	num_frames = sf_readf_short(sndfile, membuf, sfinfo.frames);
 	if (num_frames < 1)
@@ -90,12 +90,12 @@ ALuint SoundBuffer::addSoundEffect(const char* filename)
 		return 0;
 	}
 
-	p_SoundEffectBuffers.push_back(buffer);  // add to the list of known buffers
+	p_SoundEffectBuffers.push_back(buffer); // add to the list of known buffers
 
 	return buffer;
 }
 
-bool SoundBuffer::removeSoundEffect(const ALuint& buffer)
+bool SoundBuffer::removeSoundEffect(const ALuint &buffer)
 {
 	auto it = p_SoundEffectBuffers.begin();
 	while (it != p_SoundEffectBuffers.end())
@@ -108,18 +108,17 @@ bool SoundBuffer::removeSoundEffect(const ALuint& buffer)
 
 			return true;
 		}
-		else {
+		else
+		{
 			++it;
 		}
 	}
-	return false;  // couldn't find to remove
+	return false; // couldn't find to remove
 }
-
 
 SoundBuffer::SoundBuffer()
 {
 	p_SoundEffectBuffers.clear();
-
 }
 
 SoundBuffer::~SoundBuffer()

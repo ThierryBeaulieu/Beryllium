@@ -1,10 +1,10 @@
-#include "SoundDevice.h"
-#include <AL\al.h>
+#include "sounddevice.h"
+#include <AL/al.h>
 #include <stdio.h>
 
-SoundDevice* SoundDevice::get()
+SoundDevice *SoundDevice::get()
 {
-	static SoundDevice* snd_device = new SoundDevice();
+	static SoundDevice *snd_device = new SoundDevice();
 	return snd_device;
 }
 
@@ -14,14 +14,14 @@ SoundDevice::SoundDevice()
 	if (!p_ALCDevice)
 		throw("failed to get sound device");
 
-	p_ALCContext = alcCreateContext(p_ALCDevice, nullptr);  // create context
+	p_ALCContext = alcCreateContext(p_ALCDevice, nullptr); // create context
 	if (!p_ALCContext)
 		throw("Failed to set sound context");
 
-	if (!alcMakeContextCurrent(p_ALCContext))   // make context current
+	if (!alcMakeContextCurrent(p_ALCContext)) // make context current
 		throw("failed to make context current");
 
-	const ALCchar* name = nullptr;
+	const ALCchar *name = nullptr;
 	if (alcIsExtensionPresent(p_ALCDevice, "ALC_ENUMERATE_ALL_EXT"))
 		name = alcGetString(p_ALCDevice, ALC_ALL_DEVICES_SPECIFIER);
 	if (!name || alcGetError(p_ALCDevice) != AL_NO_ERROR)
