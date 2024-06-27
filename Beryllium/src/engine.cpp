@@ -24,6 +24,17 @@ void Engine::RenderSquare(int x, int y, uint32_t color)
     }
 }
 
+void Engine::RenderBackground(uint32_t color)
+{
+    for (int i = 0; i < m_imageWidth; ++i)
+    {
+        for (int j = 0; j < m_imageHeight; ++j)
+        {
+            SetPixel(i, j, color);
+        }
+    }
+}
+
 void Engine::HandleInput()
 {
     if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -49,6 +60,9 @@ void Engine::HandleInput()
 
 void Engine::Render()
 {
+    uint32_t backgroundColor = Engine::GetColorBlack(255);
+    RenderBackground(backgroundColor);
+
     uint32_t tileColor = Engine::GetColorWhite(200);
 
     for (int i = 0; i < m_gameManager.GetGridWidth(); ++i)

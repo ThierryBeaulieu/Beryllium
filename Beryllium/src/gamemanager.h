@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdlib>
+#include <future>
 #include <time.h>
 #include <random>
 #include <utility>
@@ -47,6 +48,14 @@ public:
     void SetDirectionDown();
     void SetDirectionLeft();
     void SetDirectionRight();
+
+
+    static void GameManager::PlaySound() {
+        SoundDevice* soundDevice = SoundDevice::get();
+        uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/wood_impact.ogg");
+        SoundSource mySpeaker;
+        mySpeaker.Play(sound1);
+    }
 
 private:
     int m_gridWidth;

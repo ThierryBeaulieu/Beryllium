@@ -89,16 +89,8 @@ void GameManager::Update()
     {
         if (snakePosition == foodPosition)
         {
-            // Probl�mes auxquel j'ai fait face
-            // La dll de OpenAL32.dll n'est pas dans le m�me r�pertoire que l'ex�cutable par d�fault
-            // La nature de mon sons n'�tait pas d�codable par sdnfile
-            // Le son va occuper tout le thread, il faut multithread.
-
-            SoundDevice * soundDevice = SoundDevice::get();
-            uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/wood_impact.ogg");
-
-            SoundSource mySpeaker;
-            mySpeaker.Play(sound1);
+            // SOUNDS SHOULD NOT BE BLOCKING
+            std::async(std::launch::async, &GameManager::PlaySound);
 
             m_foodPosition.pop_back();
             m_snakePosition.push_back(foodPosition);

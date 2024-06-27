@@ -18,6 +18,7 @@ public:
     void HandleInput();
 
     void RenderSquare(int x, int y, uint32_t color);
+    void RenderBackground(uint32_t color);
 
     void SetPixel(int x, int y, uint32_t color);
     uint32_t GetPixel(int x, int y);
@@ -30,6 +31,11 @@ public:
     static uint32_t GetColorRed(uint8_t brightness)
     {
         return (255 | 0 << 8 | 0 << 16 | brightness << 24);
+    }
+
+    static uint32_t GetColorBlack(uint8_t brightness)
+    {
+        return (0 | 0 << 8 | 0 << 16 | brightness << 24);
     }
 
     GLFWwindow *m_window;
