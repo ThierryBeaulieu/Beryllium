@@ -50,12 +50,7 @@ public:
     void SetDirectionRight();
 
 
-    static void GameManager::PlaySound() {
-        SoundDevice* soundDevice = SoundDevice::get();
-        uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/wood_impact.ogg");
-        SoundSource mySpeaker;
-        mySpeaker.Play(sound1);
-    }
+    void PlaySound();
 
 private:
     int m_gridWidth;

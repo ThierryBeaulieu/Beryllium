@@ -89,7 +89,7 @@ void GameManager::Update()
     {
         if (snakePosition == foodPosition)
         {
-            std::thread thread_obj(&GameManager::PlaySound);
+            std::thread thread_obj(&GameManager::PlaySound, this);
             thread_obj.detach();
 
             m_foodPosition.pop_back();
@@ -225,4 +225,11 @@ void GameManager::SetDirectionRight()
         return;
     }
     m_currentDirection = Direction::Right;
+}
+
+void GameManager::PlaySound() {
+    SoundDevice* soundDevice = SoundDevice::get();
+    uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/wood_impact.ogg");
+    SoundSource mySpeaker;
+    mySpeaker.Play(sound1);
 }
