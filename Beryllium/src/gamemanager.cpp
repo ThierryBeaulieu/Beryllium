@@ -89,7 +89,7 @@ void GameManager::Update()
     {
         if (snakePosition == foodPosition)
         {
-            std::thread thread_obj(&GameManager::PlaySound, this);
+            std::thread thread_obj(&GameManager::PlayUpgradeSound, this);
             thread_obj.detach();
 
             m_foodPosition.pop_back();
@@ -99,6 +99,8 @@ void GameManager::Update()
         if (snakePosition == snakeHead && &snakePosition != &snakeHead)
         {
             m_isGameOver = true;
+            std::thread thread_obj(&GameManager::PlayGameOverSound, this);
+            thread_obj.detach();
         }
     }
 }
@@ -227,7 +229,14 @@ void GameManager::SetDirectionRight()
     m_currentDirection = Direction::Right;
 }
 
-void GameManager::PlaySound() {
+void GameManager::PlayUpgradeSound() {
+    SoundDevice* soundDevice = SoundDevice::get();
+    uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/power_up.wav");
+    SoundSource mySpeaker;
+    mySpeaker.Play(sound1);
+}
+
+void GameManager::PlayGameOverSound() {
     SoundDevice* soundDevice = SoundDevice::get();
     uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/power_up.wav");
     SoundSource mySpeaker;

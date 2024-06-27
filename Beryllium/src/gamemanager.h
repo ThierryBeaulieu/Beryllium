@@ -50,7 +50,9 @@ public:
     void SetDirectionRight();
 
 
-    void PlaySound();
+    void PlayUpgradeSound();
+    void PlayGameOverSound();
+    void PlayBeginSound();
 
 private:
     int m_gridWidth;
