@@ -229,7 +229,7 @@ void GameManager::SetDirectionRight()
 
 void GameManager::PlaySound() {
     SoundDevice* soundDevice = SoundDevice::get();
-    uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/wood_impact.ogg");
+    uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/power_up.wav");
     SoundSource mySpeaker;
     mySpeaker.Play(sound1);
 }

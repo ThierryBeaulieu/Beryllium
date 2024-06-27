@@ -101,3 +101,9 @@ configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/wood_impact.ogg ${CMAKE_CURRENT
 set(SOUNDS_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/sounds)
 file(MAKE_DIRECTORY ${SOUNDS_OUTPUT_DIR})
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/wood_impact.ogg ${SOUNDS_OUTPUT_DIR}/wood_impact.ogg COPYONLY)
+
+configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/power_up.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/power_up.wav COPYONLY)
+
+set(SOUNDS_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/sounds)
+file(MAKE_DIRECTORY ${SOUNDS_OUTPUT_DIR})
+configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/power_up.wav ${SOUNDS_OUTPUT_DIR}/power_up.wav COPYONLY)
