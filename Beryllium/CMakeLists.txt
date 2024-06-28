@@ -44,6 +44,7 @@ set(SRC_FILES
 set(HEADER_FILES
     ${CMAKE_SOURCE_DIR}/src/engine.h
     ${CMAKE_SOURCE_DIR}/src/button.h
+    ${CMAKE_SOURCE_DIR}/src/constants.h
     ${CMAKE_SOURCE_DIR}/src/gamemanager.h
     ${CMAKE_SOURCE_DIR}/src/soundbuffer.h
     ${CMAKE_SOURCE_DIR}/src/sounddevice.h

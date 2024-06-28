@@ -8,6 +8,7 @@
 #include <vector>
 #include <list>
 
+#include "constants.h"
 #include "imgui.h"
 #include "soundbuffer.h"
 #include "sounddevice.h"
@@ -32,6 +33,15 @@ enum class GameState
     Over,
 };
 
+struct UserInterface
+{
+    const char* name;
+    int coord_x;
+    int coord_y;
+    int width;
+    int height;
+};
+
 class GameManager
 {
 public:
@@ -54,17 +64,24 @@ public:
 
     void GenerateFood();
 
+    // tbeaulieu2 : handle the input in a different way?
     void SetDirectionUp();
     void SetDirectionDown();
     void SetDirectionLeft();
     void SetDirectionRight();
-
-
+    // tbeaulieu2
+    
+    // tbeaulieu2 : todo put in another place
     void PlayUpgradeSound();
     void PlayGameOverSound();
     void PlayBeginSound();
+    // end todo
+
+    const std::vector<UserInterface>& GetUserInterfaces();
 
 private:
+
+// tbeaulieu2 todo: change the norma from m_gridWidth to m_GridWidth
     int m_gridWidth;
     int m_gridHeight;
 
@@ -73,4 +90,8 @@ private:
 
     Direction m_currentDirection;
     GameState m_gameState;
+
+    std::vector<UserInterface> m_userInterfaces;
+
+// tbeaulieu 2 end;
 };
