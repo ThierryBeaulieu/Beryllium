@@ -22,6 +22,16 @@ enum class Direction
     None
 };
 
+enum class GameState
+{
+    MainMenu,
+    WaitingForGameStart,
+    Playing,
+    Victory,
+    Pause,
+    Over,
+};
+
 class GameManager
 {
 public:
@@ -61,9 +71,6 @@ private:
     std::list<std::pair<int, int>> m_foodPosition;
     std::list<std::pair<int, int>> m_snakePosition;
 
-    bool m_isGameOver;
-    bool m_isGameWon;
-    bool m_isGameBeginning;
-
     Direction m_currentDirection;
+    GameState m_gameState;
 };

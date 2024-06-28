@@ -3,10 +3,8 @@
 GameManager::GameManager()
     : m_gridWidth(0)
     , m_gridHeight(0)
-    , m_isGameOver(false)
-    , m_isGameWon(false)
-    , m_isGameBeginning(true)
     , m_currentDirection(Direction::None)
+    , m_gameState(GameState::MainMenu)
 {
     srand(time(0));
 }
@@ -43,25 +41,25 @@ void GameManager::SetGridHeight(int gridHeight)
 
 void GameManager::Update()
 {
-    // if (m_isGameBeginning)
-    // {
-    //     // todo : display UI
+    //if (m_gameState == GameState::MainMenu)
+    {
+        // todo : display UI
 
-    //     return;
-    // }
+        //return;
+    }
 
     if (m_snakePosition.size() == m_gridHeight * m_gridWidth)
     {
-        m_isGameWon = true;
+        m_gameState = GameState::Victory;
     }
 
-    if (m_isGameWon)
+    if (m_gameState == GameState::Victory)
     {
         // todo: display ui
         return;
     }
 
-    if (m_isGameOver)
+    if (m_gameState == GameState::Over)
     {
         if (m_snakePosition.size() > 0 || m_foodPosition.size() > 0)
         {
@@ -83,9 +81,9 @@ void GameManager::Update()
     HandleInput();
 
     std::pair<int, int> foodPosition = m_foodPosition.front();
-    const std::pair<int, int> &snakeHead = m_snakePosition.front();
+    const std::pair<int, int>& snakeHead = m_snakePosition.front();
 
-    for (const std::pair<int, int> &snakePosition : m_snakePosition)
+    for (const std::pair<int, int>& snakePosition : m_snakePosition)
     {
         if (snakePosition == foodPosition)
         {
@@ -98,9 +96,10 @@ void GameManager::Update()
         }
         if (snakePosition == snakeHead && &snakePosition != &snakeHead)
         {
-            m_isGameOver = true;
+            m_gameState = GameState::Over;
             std::thread thread_obj(&GameManager::PlayGameOverSound, this);
             thread_obj.detach();
+            break;
         }
     }
 }
@@ -116,7 +115,12 @@ void GameManager::HandleInput()
     {
     case Direction::Up:
         if (front.second <= 0)
-            m_isGameOver = true;
+        {
+            m_gameState = GameState::Over;
+            std::thread thread_obj(&GameManager::PlayGameOverSound, this);
+            thread_obj.detach();
+        }
+
 
         if (front.second - 1 < 0)
             return;
@@ -127,7 +131,11 @@ void GameManager::HandleInput()
 
     case Direction::Down:
         if (front.second >= m_gridHeight - 1)
-            m_isGameOver = true;
+        {
+            m_gameState = GameState::Over;
+            std::thread thread_obj(&GameManager::PlayGameOverSound, this);
+            thread_obj.detach();
+        }
 
         if (front.second + 1 >= m_gridHeight)
             return;
@@ -138,7 +146,11 @@ void GameManager::HandleInput()
 
     case Direction::Left:
         if (front.first <= 0)
-            m_isGameOver = true;
+        {
+            m_gameState = GameState::Over;
+            std::thread thread_obj(&GameManager::PlayGameOverSound, this);
+            thread_obj.detach();
+        }
 
         if (front.first - 1 < 0)
             return;
@@ -149,7 +161,11 @@ void GameManager::HandleInput()
 
     case Direction::Right:
         if (front.first >= m_gridWidth - 1)
-            m_isGameOver = true;
+        {
+            m_gameState = GameState::Over;
+            std::thread thread_obj(&GameManager::PlayGameOverSound, this);
+            thread_obj.detach();
+        }
 
         if (front.first + 1 >= m_gridWidth)
             return;
@@ -229,16 +245,18 @@ void GameManager::SetDirectionRight()
     m_currentDirection = Direction::Right;
 }
 
-void GameManager::PlayUpgradeSound() {
+void GameManager::PlayUpgradeSound()
+{
     SoundDevice* soundDevice = SoundDevice::get();
     uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/power_up.wav");
     SoundSource mySpeaker;
     mySpeaker.Play(sound1);
 }
 
-void GameManager::PlayGameOverSound() {
+void GameManager::PlayGameOverSound()
+{
     SoundDevice* soundDevice = SoundDevice::get();
-    uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/power_up.wav");
+    uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/death.wav");
     SoundSource mySpeaker;
     mySpeaker.Play(sound1);
 }
