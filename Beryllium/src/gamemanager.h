@@ -35,7 +35,7 @@ enum class GameState
 
 struct UserInterface
 {
-    const char* name;
+    const char *name;
     int coord_x;
     int coord_y;
     int width;
@@ -70,18 +70,19 @@ public:
     void SetDirectionLeft();
     void SetDirectionRight();
     // tbeaulieu2
-    
+
     // tbeaulieu2 : todo put in another place
     void PlayUpgradeSound();
     void PlayGameOverSound();
     void PlayBeginSound();
     // end todo
 
-    const std::vector<UserInterface>& GetUserInterfaces();
+    void ResetGame();
+
+    const std::vector<UserInterface> &GetUserInterfaces();
 
 private:
-
-// tbeaulieu2 todo: change the norma from m_gridWidth to m_GridWidth
+    // tbeaulieu2 todo: change the norma from m_gridWidth to m_GridWidth
     int m_gridWidth;
     int m_gridHeight;
 
@@ -93,5 +94,5 @@ private:
 
     std::vector<UserInterface> m_userInterfaces;
 
-// tbeaulieu 2 end;
+    // tbeaulieu 2 end;
 };

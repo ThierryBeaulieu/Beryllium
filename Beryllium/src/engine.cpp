@@ -1,11 +1,7 @@
 #include "engine.h"
 
 Engine::Engine(uint32_t *imageData, GLFWwindow *window)
-    : m_imageData(imageData)
-    , m_gameManager(GameManager())
-    , m_pixelWidth(30)
-    , m_paddingWidth(2)
-    , m_window(window)
+    : m_imageData(imageData), m_gameManager(GameManager()), m_pixelWidth(30), m_paddingWidth(2), m_window(window)
 {
     glGenTextures(1, &m_imageTexture);
     int nbPixelsWidth = (g_imageWidth - (g_imageWidth % m_pixelWidth)) / m_pixelWidth;
@@ -43,13 +39,13 @@ void Engine::RenderBackground(uint32_t color)
 void Engine::RenderUI()
 {
     bool showWindow = true;
-    for (const UserInterface& ui : m_gameManager.GetUserInterfaces()) {
+    for (const UserInterface &ui : m_gameManager.GetUserInterfaces())
+    {
         ImGui::SetNextWindowPos(ImVec2(ui.coord_x, ui.coord_y), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
         ImGui::Begin(ui.name, &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
         ImGui::Button("click me", ImVec2(200, 100));
         ImGui::End();
     }
-
 }
 
 void Engine::HandleInput()
@@ -72,6 +68,10 @@ void Engine::HandleInput()
     else if (glfwGetKey(m_window, GLFW_KEY_D) == GLFW_PRESS || glfwGetKey(m_window, GLFW_KEY_RIGHT) == GLFW_PRESS)
     {
         m_gameManager.SetDirectionRight();
+    }
+    else if (glfwGetKey(m_window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    {
+        m_gameManager.ResetGame();
     }
 }
 
@@ -112,7 +112,7 @@ void Engine::Render()
 
     ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
     ImGui::Begin("Render", &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
-    ImGui::Image((void*)(intptr_t)m_imageTexture, ImVec2(g_imageWidth, g_imageHeight));
+    ImGui::Image((void *)(intptr_t)m_imageTexture, ImVec2(g_imageWidth, g_imageHeight));
     ImGui::End();
 
     RenderUI();

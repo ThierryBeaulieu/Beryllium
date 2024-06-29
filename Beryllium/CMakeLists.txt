@@ -102,3 +102,10 @@ target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL)
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/power_up.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/power_up.wav COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/death.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/death.wav COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/begin_game.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/begin_game.wav COPYONLY)
+
+
+set(SOUNDS_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/sounds)
+file(MAKE_DIRECTORY ${SOUNDS_OUTPUT_DIR})
+configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/death.wav ${SOUNDS_OUTPUT_DIR}/death.wav COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/begin_game.wav ${SOUNDS_OUTPUT_DIR}/begin_game.wav COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/power_up.wav ${SOUNDS_OUTPUT_DIR}/power_up.wav COPYONLY)

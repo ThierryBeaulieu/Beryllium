@@ -1,10 +1,7 @@
 #include "gamemanager.h"
 
 GameManager::GameManager()
-    : m_gridWidth(0)
-    , m_gridHeight(0)
-    , m_currentDirection(Direction::None)
-    , m_gameState(GameState::MainMenu)
+    : m_gridWidth(0), m_gridHeight(0), m_currentDirection(Direction::None), m_gameState(GameState::MainMenu)
 {
     srand(time(0));
 }
@@ -42,12 +39,13 @@ void GameManager::SetGridHeight(int gridHeight)
 void GameManager::Update()
 {
     m_userInterfaces.clear();
-    if (m_gameState == GameState::MainMenu)
+    /*if (m_gameState == GameState::MainMenu)
     {
-        UserInterface mainMenu {"Main Menu", g_imageWidth/2, g_imageHeight, 200.0f, 200.0f};
-        m_userInterfaces.push_back(mainMenu);
+        //UserInterface mainMenu {"Main Menu", g_imageWidth/2, g_imageHeight, 200.0f, 200.0f};
+        //m_userInterfaces.push_back(mainMenu);
         return;
     }
+     */
 
     if (m_snakePosition.size() == m_gridHeight * m_gridWidth)
     {
@@ -82,9 +80,9 @@ void GameManager::Update()
     HandleInput();
 
     std::pair<int, int> foodPosition = m_foodPosition.front();
-    const std::pair<int, int>& snakeHead = m_snakePosition.front();
+    const std::pair<int, int> &snakeHead = m_snakePosition.front();
 
-    for (const std::pair<int, int>& snakePosition : m_snakePosition)
+    for (const std::pair<int, int> &snakePosition : m_snakePosition)
     {
         if (snakePosition == foodPosition)
         {
@@ -121,7 +119,6 @@ void GameManager::HandleInput()
             std::thread thread_obj(&GameManager::PlayGameOverSound, this);
             thread_obj.detach();
         }
-
 
         if (front.second - 1 < 0)
             return;
@@ -210,6 +207,14 @@ void GameManager::GenerateFood()
     m_foodPosition.push_back(std::make_pair(foodInitWidth, foodInitHeight));
 }
 
+void GameManager::ResetGame()
+{
+    m_gameState = GameState::MainMenu;
+    m_currentDirection = Direction::None;
+    m_foodPosition.clear();
+    m_snakePosition.clear();
+}
+
 void GameManager::SetDirectionUp()
 {
     if (m_currentDirection == Direction::Down && m_snakePosition.size() > 1)
@@ -248,7 +253,7 @@ void GameManager::SetDirectionRight()
 
 void GameManager::PlayUpgradeSound()
 {
-    SoundDevice* soundDevice = SoundDevice::get();
+    SoundDevice *soundDevice = SoundDevice::get();
     uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/power_up.wav");
     SoundSource mySpeaker;
     mySpeaker.Play(sound1);
@@ -256,12 +261,13 @@ void GameManager::PlayUpgradeSound()
 
 void GameManager::PlayGameOverSound()
 {
-    SoundDevice* soundDevice = SoundDevice::get();
+    SoundDevice *soundDevice = SoundDevice::get();
     uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/death.wav");
     SoundSource mySpeaker;
     mySpeaker.Play(sound1);
 }
 
-const std::vector<UserInterface>& GameManager::GetUserInterfaces() {
+const std::vector<UserInterface> &GameManager::GetUserInterfaces()
+{
     return m_userInterfaces;
 }
