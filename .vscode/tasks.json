@@ -7,7 +7,7 @@
             "command": "bash",
             "args": [
               "-c",
-              "cd Beryllium && cmake build && cd build && make",
+              "cd Beryllium/build && make",
             ],
             "group": {
                 "kind": "build",

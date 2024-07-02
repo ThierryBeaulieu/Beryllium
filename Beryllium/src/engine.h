@@ -13,8 +13,8 @@ class Engine
 public:
     Engine(uint32_t *imageData, GLFWwindow *m_window);
 
-    void Render();
-    void Update(const std::chrono::duration<double> &elapsedTime);
+    void Render(GameState &gameState);
+    void Update(GameState &gameState, const std::chrono::duration<double> &elapsedTime);
 
 private:
     void HandleInput();

@@ -75,7 +75,7 @@ void Engine::HandleInput()
     }
 }
 
-void Engine::Render()
+void Engine::Render(GameState& gameState)
 {
     uint32_t backgroundColor = Engine::GetColorBlack(255);
     RenderBackground(backgroundColor);
@@ -118,7 +118,7 @@ void Engine::Render()
     RenderUI();
 }
 
-void Engine::Update(const std::chrono::duration<double>& elapsedTime)
+void Engine::Update(GameState& gameState, const std::chrono::duration<double>& elapsedTime)
 {
     HandleInput();
     m_gameManager.Update();
