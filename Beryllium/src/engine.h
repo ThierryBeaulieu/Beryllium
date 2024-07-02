@@ -14,10 +14,9 @@ public:
     Engine(uint32_t *imageData, GLFWwindow *m_window);
 
     void Render();
-    void Update();
+    void Update(const std::chrono::duration<double> &elapsedTime);
 
 private:
-
     void HandleInput();
 
     void RenderSquare(int x, int y, uint32_t color);
@@ -49,5 +48,4 @@ private:
     uint32_t *m_imageData;
     int m_pixelWidth;
     int m_paddingWidth;
-
 };

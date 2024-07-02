@@ -118,7 +118,7 @@ void Engine::Render()
     RenderUI();
 }
 
-void Engine::Update()
+void Engine::Update(const std::chrono::duration<double>& elapsedTime)
 {
     HandleInput();
     m_gameManager.Update();
