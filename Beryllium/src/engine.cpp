@@ -1,10 +1,11 @@
 #include "engine.h"
 
-Engine::Engine(size_t imageWidth, size_t imageHeight, uint32_t *imageData, GLFWwindow *window)
-    : m_imageWidth(imageWidth), m_imageHeight(imageHeight), m_imageData(imageData), m_gameManager(GameManager()), m_pixelWidth(30), m_paddingWidth(2), m_window(window)
+Engine::Engine(uint32_t *imageData, GLFWwindow *window)
+    : m_imageData(imageData), m_gameManager(GameManager()), m_pixelWidth(30), m_paddingWidth(2), m_window(window)
 {
-    int nbPixelsWidth = (m_imageWidth - (m_imageWidth % m_pixelWidth)) / m_pixelWidth;
-    int nbPixelsHeight = (m_imageHeight - (m_imageHeight % m_pixelWidth)) / m_pixelWidth;
+    glGenTextures(1, &m_imageTexture);
+    int nbPixelsWidth = (g_imageWidth - (g_imageWidth % m_pixelWidth)) / m_pixelWidth;
+    int nbPixelsHeight = (g_imageHeight - (g_imageHeight % m_pixelWidth)) / m_pixelWidth;
 
     m_gameManager.SetGridHeight(nbPixelsHeight);
     m_gameManager.SetGridWidth(nbPixelsWidth);
@@ -21,6 +22,29 @@ void Engine::RenderSquare(int x, int y, uint32_t color)
                 continue;
             SetPixel(x + i, y + j, color);
         }
+    }
+}
+
+void Engine::RenderBackground(uint32_t color)
+{
+    for (int i = 0; i < g_imageWidth; ++i)
+    {
+        for (int j = 0; j < g_imageHeight; ++j)
+        {
+            SetPixel(i, j, color);
+        }
+    }
+}
+
+void Engine::RenderUI()
+{
+    bool showWindow = true;
+    for (const UserInterface &ui : m_gameManager.GetUserInterfaces())
+    {
+        ImGui::SetNextWindowPos(ImVec2(ui.coord_x, ui.coord_y), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
+        ImGui::Begin(ui.name, &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+        ImGui::Button("click me", ImVec2(200, 100));
+        ImGui::End();
     }
 }
 
@@ -45,10 +69,17 @@ void Engine::HandleInput()
     {
         m_gameManager.SetDirectionRight();
     }
+    else if (glfwGetKey(m_window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    {
+        m_gameManager.ResetGame();
+    }
 }
 
 void Engine::Render()
 {
+    uint32_t backgroundColor = Engine::GetColorBlack(255);
+    RenderBackground(backgroundColor);
+
     uint32_t tileColor = Engine::GetColorWhite(200);
 
     for (int i = 0; i < m_gameManager.GetGridWidth(); ++i)
@@ -70,6 +101,21 @@ void Engine::Render()
     {
         RenderSquare(snakeCoord.first * m_pixelWidth, snakeCoord.second * m_pixelWidth, snakeColor);
     }
+
+    bool showWindow = true;
+
+    glBindTexture(GL_TEXTURE_2D, m_imageTexture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, g_imageWidth, g_imageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_imageData);
+
+    ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
+    ImGui::Begin("Render", &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+    ImGui::Image((void *)(intptr_t)m_imageTexture, ImVec2(g_imageWidth, g_imageHeight));
+    ImGui::End();
+
+    RenderUI();
 }
 
 void Engine::Update()
@@ -80,10 +126,10 @@ void Engine::Update()
 
 void Engine::SetPixel(int x, int y, uint32_t color)
 {
-    m_imageData[m_imageWidth * y + x] = color;
+    m_imageData[g_imageWidth * y + x] = color;
 }
 
 uint32_t Engine::GetPixel(int x, int y)
 {
-    return m_imageData[m_imageWidth * y + x];
+    return m_imageData[g_imageWidth * y + x];
 }

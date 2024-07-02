@@ -33,18 +33,29 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(SRC_FILES
     ${CMAKE_SOURCE_DIR}/src/main.cpp
     ${CMAKE_SOURCE_DIR}/src/engine.cpp
+    ${CMAKE_SOURCE_DIR}/src/button.cpp
     ${CMAKE_SOURCE_DIR}/src/gamemanager.cpp
+    ${CMAKE_SOURCE_DIR}/src/soundbuffer.cpp
+    ${CMAKE_SOURCE_DIR}/src/sounddevice.cpp
+    ${CMAKE_SOURCE_DIR}/src/soundsource.cpp
 )
 
 # Add header files for the main project
 set(HEADER_FILES
     ${CMAKE_SOURCE_DIR}/src/engine.h
+    ${CMAKE_SOURCE_DIR}/src/button.h
+    ${CMAKE_SOURCE_DIR}/src/constants.h
     ${CMAKE_SOURCE_DIR}/src/gamemanager.h
+    ${CMAKE_SOURCE_DIR}/src/soundbuffer.h
+    ${CMAKE_SOURCE_DIR}/src/sounddevice.h
+    ${CMAKE_SOURCE_DIR}/src/soundsource.h
 )
 
 # Include directories (avoid writing it every time)
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/GFLW/include)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/AL/include)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/libsndfile/include)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/ImGui)
 
 # Add ImGui as a static library
@@ -60,20 +71,41 @@ add_library(ImGui STATIC
 
 # Add GLFW as a submodule
 add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/GLFW)
+add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/AL)
+add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/libsndfile)
 
 # Link the GLFW to ImGui
 target_link_libraries(ImGui PRIVATE glfw)
 
 # Add the main executable
-add_executable(Beryllium ${SRC_FILES} ${HEADER_FILES})
+add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})
 
 # Link the ImGui and GLFW library to the main executable
-target_link_libraries(Beryllium PRIVATE ImGui)
-target_link_libraries(Beryllium PRIVATE glfw)
+target_link_libraries(${PROJECT_NAME} PRIVATE ImGui)
+target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenAL)
+target_link_libraries(${PROJECT_NAME} PRIVATE sndfile)
 
 # Specify additional include directories for the main executable
-target_include_directories(Beryllium PRIVATE ${CMAKE_SOURCE_DIR}/vendor/ImGui)
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/vendor/ImGui)
 
+# https://cmake.org/cmake/help/latest/manual/cmake-generator-expressions.7.html#genex:TARGET_RUNTIME_DLLS
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:${PROJECT_NAME}> $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}>
+  COMMAND_EXPAND_LISTS
+)
+                        
 # Link OpenGL (platform-dependent)
 find_package(OpenGL REQUIRED)
-target_link_libraries(Beryllium PRIVATE OpenGL::GL)
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL)
+
+configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/power_up.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/power_up.wav COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/death.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/death.wav COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/begin_game.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/begin_game.wav COPYONLY)
+
+
+set(SOUNDS_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/sounds)
+file(MAKE_DIRECTORY ${SOUNDS_OUTPUT_DIR})
+configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/death.wav ${SOUNDS_OUTPUT_DIR}/death.wav COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/begin_game.wav ${SOUNDS_OUTPUT_DIR}/begin_game.wav COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/power_up.wav ${SOUNDS_OUTPUT_DIR}/power_up.wav COPYONLY)

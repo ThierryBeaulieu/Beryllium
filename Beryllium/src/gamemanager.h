@@ -1,13 +1,18 @@
 #pragma once
 
 #include <cstdlib>
+#include <future>
 #include <time.h>
 #include <random>
 #include <utility>
 #include <vector>
 #include <list>
 
+#include "constants.h"
 #include "imgui.h"
+#include "soundbuffer.h"
+#include "sounddevice.h"
+#include "soundsource.h"
 
 enum class Direction
 {
@@ -16,6 +21,25 @@ enum class Direction
     Up,
     Down,
     None
+};
+
+enum class GameState
+{
+    MainMenu,
+    WaitingForGameStart,
+    Playing,
+    Victory,
+    Pause,
+    Over,
+};
+
+struct UserInterface
+{
+    const char *name;
+    int coord_x;
+    int coord_y;
+    int width;
+    int height;
 };
 
 class GameManager
@@ -40,21 +64,35 @@ public:
 
     void GenerateFood();
 
+    // tbeaulieu2 : handle the input in a different way?
     void SetDirectionUp();
     void SetDirectionDown();
     void SetDirectionLeft();
     void SetDirectionRight();
+    // tbeaulieu2
+
+    // tbeaulieu2 : todo put in another place
+    void PlayUpgradeSound();
+    void PlayGameOverSound();
+    void PlayBeginSound();
+    // end todo
+
+    void ResetGame();
+
+    const std::vector<UserInterface> &GetUserInterfaces();
 
 private:
+    // tbeaulieu2 todo: change the norma from m_gridWidth to m_GridWidth
     int m_gridWidth;
     int m_gridHeight;
 
     std::list<std::pair<int, int>> m_foodPosition;
     std::list<std::pair<int, int>> m_snakePosition;
 
-    bool m_isGameOver;
-    bool m_isGameWon;
-    bool m_isGameBeginning;
-
     Direction m_currentDirection;
+    GameState m_gameState;
+
+    std::vector<UserInterface> m_userInterfaces;
+
+    // tbeaulieu 2 end;
 };

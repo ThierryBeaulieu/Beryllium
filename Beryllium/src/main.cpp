@@ -1,6 +1,3 @@
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
 #include <stdio.h>
 #include <GLFW/glfw3.h>
 #include <chrono>
@@ -9,6 +6,10 @@
 #include <thread>
 
 #include "engine.h"
+#include "constants.h"
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 // This example can also compile and run with Emscripten! See 'Makefile.emscripten' for details.
 #ifdef __EMSCRIPTEN__
@@ -98,11 +99,10 @@ int main(int, char **)
     // ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());
     // IM_ASSERT(font != nullptr);
 
-    size_t constexpr imageWidth = 900;
-    size_t constexpr imageHeight = 600;
-    float constexpr fimageWidth = static_cast<float>(imageWidth);
-    float constexpr fimageHeight = static_cast<float>(imageHeight);
-    size_t constexpr imageSize = imageWidth * imageHeight;
+
+    float constexpr fimageWidth = static_cast<float>(g_imageWidth);
+    float constexpr fimageHeight = static_cast<float>(g_imageHeight);
+    size_t constexpr imageSize = g_imageWidth * g_imageHeight;
     uint32_t *imageData = nullptr;
 
 #ifdef _WIN32
@@ -122,12 +122,9 @@ int main(int, char **)
     }
 #endif
 
-    GLuint imageTexture;
-    glGenTextures(1, &imageTexture);
-
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    Engine engine(imageWidth, imageHeight, imageData, window);
+    Engine engine(imageData, window);
     auto next_update = std::chrono::steady_clock::now();
 
     // Main loop
@@ -160,18 +157,6 @@ int main(int, char **)
             engine.Render();
             std::chrono::time_point<std::chrono::high_resolution_clock> const endRender = std::chrono::high_resolution_clock::now();
             renderUs = std::chrono::duration_cast<std::chrono::microseconds>(endRender - beginRender);
-
-            glBindTexture(GL_TEXTURE_2D, imageTexture);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
-
-            bool showWindow = true;
-            ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
-            ImGui::Begin("Render", &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
-            ImGui::Image((void *)(intptr_t)imageTexture, ImVec2(fimageWidth, fimageHeight));
-            ImGui::End();
         }
 
         {

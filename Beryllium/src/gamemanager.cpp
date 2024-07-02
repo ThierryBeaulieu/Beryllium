@@ -1,7 +1,7 @@
 #include "gamemanager.h"
 
 GameManager::GameManager()
-    : m_gridWidth(0), m_gridHeight(0), m_isGameOver(false), m_isGameWon(false), m_isGameBeginning(true), m_currentDirection(Direction::None)
+    : m_gridWidth(0), m_gridHeight(0), m_currentDirection(Direction::None), m_gameState(GameState::MainMenu)
 {
     srand(time(0));
 }
@@ -38,25 +38,27 @@ void GameManager::SetGridHeight(int gridHeight)
 
 void GameManager::Update()
 {
-    // if (m_isGameBeginning)
-    // {
-    //     // todo : display UI
-
-    //     return;
-    // }
+    m_userInterfaces.clear();
+    /*if (m_gameState == GameState::MainMenu)
+    {
+        //UserInterface mainMenu {"Main Menu", g_imageWidth/2, g_imageHeight, 200.0f, 200.0f};
+        //m_userInterfaces.push_back(mainMenu);
+        return;
+    }
+     */
 
     if (m_snakePosition.size() == m_gridHeight * m_gridWidth)
     {
-        m_isGameWon = true;
+        m_gameState = GameState::Victory;
     }
 
-    if (m_isGameWon)
+    if (m_gameState == GameState::Victory)
     {
         // todo: display ui
         return;
     }
 
-    if (m_isGameOver)
+    if (m_gameState == GameState::Over)
     {
         if (m_snakePosition.size() > 0 || m_foodPosition.size() > 0)
         {
@@ -84,13 +86,19 @@ void GameManager::Update()
     {
         if (snakePosition == foodPosition)
         {
+            std::thread thread_obj(&GameManager::PlayUpgradeSound, this);
+            thread_obj.detach();
+
             m_foodPosition.pop_back();
             m_snakePosition.push_back(foodPosition);
             break;
         }
         if (snakePosition == snakeHead && &snakePosition != &snakeHead)
         {
-            m_isGameOver = true;
+            m_gameState = GameState::Over;
+            std::thread thread_obj(&GameManager::PlayGameOverSound, this);
+            thread_obj.detach();
+            break;
         }
     }
 }
@@ -106,7 +114,11 @@ void GameManager::HandleInput()
     {
     case Direction::Up:
         if (front.second <= 0)
-            m_isGameOver = true;
+        {
+            m_gameState = GameState::Over;
+            std::thread thread_obj(&GameManager::PlayGameOverSound, this);
+            thread_obj.detach();
+        }
 
         if (front.second - 1 < 0)
             return;
@@ -117,7 +129,11 @@ void GameManager::HandleInput()
 
     case Direction::Down:
         if (front.second >= m_gridHeight - 1)
-            m_isGameOver = true;
+        {
+            m_gameState = GameState::Over;
+            std::thread thread_obj(&GameManager::PlayGameOverSound, this);
+            thread_obj.detach();
+        }
 
         if (front.second + 1 >= m_gridHeight)
             return;
@@ -128,7 +144,11 @@ void GameManager::HandleInput()
 
     case Direction::Left:
         if (front.first <= 0)
-            m_isGameOver = true;
+        {
+            m_gameState = GameState::Over;
+            std::thread thread_obj(&GameManager::PlayGameOverSound, this);
+            thread_obj.detach();
+        }
 
         if (front.first - 1 < 0)
             return;
@@ -139,7 +159,11 @@ void GameManager::HandleInput()
 
     case Direction::Right:
         if (front.first >= m_gridWidth - 1)
-            m_isGameOver = true;
+        {
+            m_gameState = GameState::Over;
+            std::thread thread_obj(&GameManager::PlayGameOverSound, this);
+            thread_obj.detach();
+        }
 
         if (front.first + 1 >= m_gridWidth)
             return;
@@ -183,6 +207,14 @@ void GameManager::GenerateFood()
     m_foodPosition.push_back(std::make_pair(foodInitWidth, foodInitHeight));
 }
 
+void GameManager::ResetGame()
+{
+    m_gameState = GameState::MainMenu;
+    m_currentDirection = Direction::None;
+    m_foodPosition.clear();
+    m_snakePosition.clear();
+}
+
 void GameManager::SetDirectionUp()
 {
     if (m_currentDirection == Direction::Down && m_snakePosition.size() > 1)
@@ -217,4 +249,25 @@ void GameManager::SetDirectionRight()
         return;
     }
     m_currentDirection = Direction::Right;
+}
+
+void GameManager::PlayUpgradeSound()
+{
+    SoundDevice *soundDevice = SoundDevice::get();
+    uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/power_up.wav");
+    SoundSource mySpeaker;
+    mySpeaker.Play(sound1);
+}
+
+void GameManager::PlayGameOverSound()
+{
+    SoundDevice *soundDevice = SoundDevice::get();
+    uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/death.wav");
+    SoundSource mySpeaker;
+    mySpeaker.Play(sound1);
+}
+
+const std::vector<UserInterface> &GameManager::GetUserInterfaces()
+{
+    return m_userInterfaces;
 }
