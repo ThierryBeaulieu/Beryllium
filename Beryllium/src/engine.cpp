@@ -1,4 +1,5 @@
 #include "engine.h"
+#include <iostream>
 
 Engine::Engine(uint32_t *imageData, GLFWwindow *window)
     : m_imageData(imageData), m_gameManager(GameManager()), m_pixelWidth(30), m_paddingWidth(2), m_window(window)

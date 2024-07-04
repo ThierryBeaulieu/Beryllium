@@ -1,7 +1,7 @@
 #include "gamemanager.h"
 
 GameManager::GameManager()
-    : m_gridWidth(0), m_gridHeight(0), m_currentDirection(Direction::None), m_gameState(GameState::MainMenu)
+    : m_gridWidth(0), m_gridHeight(0), m_currentDirection(Direction::None), m_gameState(GameState::MainMenu), m_snakeSpeed(0.05)
 {
     srand(time(0));
 }
@@ -36,7 +36,7 @@ void GameManager::SetGridHeight(int gridHeight)
     m_gridHeight = gridHeight;
 }
 
-void GameManager::Update()
+void GameManager::Update(const std::chrono::duration<double>& elapsedTime)
 {
     m_userInterfaces.clear();
     /*if (m_gameState == GameState::MainMenu)

@@ -56,7 +56,7 @@ public:
     void SetGridWidth(int gridWidth);
     void SetGridHeight(int gridHeight);
 
-    void Update();
+    void Update(const std::chrono::duration<double>& elapsedTime);
     void HandleInput();
 
     void InitializeFood();
@@ -93,6 +93,9 @@ private:
     GameState m_gameState;
 
     std::vector<UserInterface> m_userInterfaces;
+
+    float m_snakeSpeed;
+    const float m_SNAKE_SPEED = 0.05;
 
     // tbeaulieu 2 end;
 };
