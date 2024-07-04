@@ -23,7 +23,7 @@ enum class Direction
     None
 };
 
-enum class GameState
+enum class GameUI
 {
     MainMenu,
     WaitingForGameStart,
@@ -90,12 +90,12 @@ private:
     std::list<std::pair<int, int>> m_snakePosition;
 
     Direction m_currentDirection;
-    GameState m_gameState;
+    GameUI m_gameUI;
 
     std::vector<UserInterface> m_userInterfaces;
 
-    float m_snakeSpeed;
-    const float m_SNAKE_SPEED = 0.05;
+    double m_snakeSpeed;
+    const double m_SNAKE_SPEED = 0.05;
 
     // tbeaulieu 2 end;
 };

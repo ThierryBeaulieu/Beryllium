@@ -1,7 +1,7 @@
 #include "gamemanager.h"
 
 GameManager::GameManager()
-    : m_gridWidth(0), m_gridHeight(0), m_currentDirection(Direction::None), m_gameState(GameState::MainMenu), m_snakeSpeed(0.05)
+    : m_gridWidth(0), m_gridHeight(0), m_currentDirection(Direction::None), m_gameUI(GameUI::MainMenu), m_snakeSpeed(0.05)
 {
     srand(time(0));
 }
@@ -39,7 +39,7 @@ void GameManager::SetGridHeight(int gridHeight)
 void GameManager::Update(const std::chrono::duration<double>& elapsedTime)
 {
     m_userInterfaces.clear();
-    /*if (m_gameState == GameState::MainMenu)
+    /*if (m_gameUI == GameUI::MainMenu)
     {
         //UserInterface mainMenu {"Main Menu", g_imageWidth/2, g_imageHeight, 200.0f, 200.0f};
         //m_userInterfaces.push_back(mainMenu);
@@ -49,16 +49,16 @@ void GameManager::Update(const std::chrono::duration<double>& elapsedTime)
 
     if (m_snakePosition.size() == m_gridHeight * m_gridWidth)
     {
-        m_gameState = GameState::Victory;
+        m_gameUI = GameUI::Victory;
     }
 
-    if (m_gameState == GameState::Victory)
+    if (m_gameUI == GameUI::Victory)
     {
         // todo: display ui
         return;
     }
 
-    if (m_gameState == GameState::Over)
+    if (m_gameUI == GameUI::Over)
     {
         if (m_snakePosition.size() > 0 || m_foodPosition.size() > 0)
         {
@@ -95,7 +95,7 @@ void GameManager::Update(const std::chrono::duration<double>& elapsedTime)
         }
         if (snakePosition == snakeHead && &snakePosition != &snakeHead)
         {
-            m_gameState = GameState::Over;
+            m_gameUI = GameUI::Over;
             std::thread thread_obj(&GameManager::PlayGameOverSound, this);
             thread_obj.detach();
             break;
@@ -115,7 +115,7 @@ void GameManager::HandleInput()
     case Direction::Up:
         if (front.second <= 0)
         {
-            m_gameState = GameState::Over;
+            m_gameUI = GameUI::Over;
             std::thread thread_obj(&GameManager::PlayGameOverSound, this);
             thread_obj.detach();
         }
@@ -130,7 +130,7 @@ void GameManager::HandleInput()
     case Direction::Down:
         if (front.second >= m_gridHeight - 1)
         {
-            m_gameState = GameState::Over;
+            m_gameUI = GameUI::Over;
             std::thread thread_obj(&GameManager::PlayGameOverSound, this);
             thread_obj.detach();
         }
@@ -145,7 +145,7 @@ void GameManager::HandleInput()
     case Direction::Left:
         if (front.first <= 0)
         {
-            m_gameState = GameState::Over;
+            m_gameUI = GameUI::Over;
             std::thread thread_obj(&GameManager::PlayGameOverSound, this);
             thread_obj.detach();
         }
@@ -160,7 +160,7 @@ void GameManager::HandleInput()
     case Direction::Right:
         if (front.first >= m_gridWidth - 1)
         {
-            m_gameState = GameState::Over;
+            m_gameUI = GameUI::Over;
             std::thread thread_obj(&GameManager::PlayGameOverSound, this);
             thread_obj.detach();
         }
@@ -209,7 +209,7 @@ void GameManager::GenerateFood()
 
 void GameManager::ResetGame()
 {
-    m_gameState = GameState::MainMenu;
+    m_gameUI = GameUI::MainMenu;
     m_currentDirection = Direction::None;
     m_foodPosition.clear();
     m_snakePosition.clear();

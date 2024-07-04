@@ -100,7 +100,7 @@ int main(int, char **)
     std::chrono::duration<double> accumulator = std::chrono::milliseconds(0);
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    GameState gameState;
+    GameUI gameState;
 
     // Main loop
     while (!glfwWindowShouldClose(window))

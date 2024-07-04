@@ -13,15 +13,14 @@ class Engine
 public:
     Engine(uint32_t *imageData, GLFWwindow *m_window);
 
-    void Render(GameState &gameState);
-    void Update(GameState &gameState, const std::chrono::duration<double> &elapsedTime);
+    void Render(GameUI &gameState);
+    void Update(GameUI &gameState, const std::chrono::duration<double> &elapsedTime);
 
 private:
     void HandleInput();
 
     void RenderSquare(int x, int y, uint32_t color);
     void RenderBackground(uint32_t color);
-    void RenderUI();
 
     void SetPixel(int x, int y, uint32_t color);
     uint32_t GetPixel(int x, int y);
@@ -42,7 +41,6 @@ private:
     }
 
     GLFWwindow *m_window;
-    GameManager m_gameManager;
     GLuint m_imageTexture;
 
     uint32_t *m_imageData;
