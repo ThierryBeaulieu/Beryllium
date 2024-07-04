@@ -7,14 +7,15 @@
 
 #include "constants.h"
 #include "gamemanager.h"
+#include "gamestate.h"
 
 class Engine
 {
 public:
     Engine(uint32_t *imageData, GLFWwindow *m_window);
 
-    void Render(GameUI &gameState);
-    void Update(GameUI &gameState, const std::chrono::duration<double> &elapsedTime);
+    void Render(GameState &gameState);
+    void Update(GameState &gameState, const std::chrono::duration<double> &elapsedTime);
 
 private:
     void HandleInput();

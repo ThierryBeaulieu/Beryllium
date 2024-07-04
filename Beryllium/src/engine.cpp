@@ -102,7 +102,7 @@ void Engine::Render(GameUI& gameState)
     ImGui::End();
 }
 
-void Engine::Update(GameUI& gameState, const std::chrono::duration<double>& elapsedTime)
+void Engine::Update(GameState& gameState, const std::chrono::duration<double>& elapsedTime)
 {
     HandleInput();
     //m_gameManager.Update(elapsedTime);

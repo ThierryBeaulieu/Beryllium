@@ -5,8 +5,9 @@
 #include <cstdint>
 #include <thread>
 
-#include "engine.h"
 #include "constants.h"
+#include "engine.h"
+#include "gamestate.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -100,7 +101,7 @@ int main(int, char **)
     std::chrono::duration<double> accumulator = std::chrono::milliseconds(0);
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    GameUI gameState;
+    GameState gameState;
 
     // Main loop
     while (!glfwWindowShouldClose(window))

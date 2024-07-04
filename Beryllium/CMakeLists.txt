@@ -35,6 +35,7 @@ set(SRC_FILES
     ${CMAKE_SOURCE_DIR}/src/engine.cpp
     ${CMAKE_SOURCE_DIR}/src/button.cpp
     ${CMAKE_SOURCE_DIR}/src/gamemanager.cpp
+    ${CMAKE_SOURCE_DIR}/src/gamestate.cpp
     ${CMAKE_SOURCE_DIR}/src/soundbuffer.cpp
     ${CMAKE_SOURCE_DIR}/src/sounddevice.cpp
     ${CMAKE_SOURCE_DIR}/src/soundsource.cpp
@@ -46,6 +47,7 @@ set(HEADER_FILES
     ${CMAKE_SOURCE_DIR}/src/button.h
     ${CMAKE_SOURCE_DIR}/src/constants.h
     ${CMAKE_SOURCE_DIR}/src/gamemanager.h
+    ${CMAKE_SOURCE_DIR}/src/gamestate.h
     ${CMAKE_SOURCE_DIR}/src/soundbuffer.h
     ${CMAKE_SOURCE_DIR}/src/sounddevice.h
     ${CMAKE_SOURCE_DIR}/src/soundsource.h
