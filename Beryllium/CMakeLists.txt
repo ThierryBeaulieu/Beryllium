@@ -35,6 +35,7 @@ set(SRC_FILES
     ${CMAKE_SOURCE_DIR}/src/engine.cpp
     ${CMAKE_SOURCE_DIR}/src/button.cpp
     ${CMAKE_SOURCE_DIR}/src/gamemanager.cpp
+    ${CMAKE_SOURCE_DIR}/src/shader.cpp
     ${CMAKE_SOURCE_DIR}/src/soundbuffer.cpp
     ${CMAKE_SOURCE_DIR}/src/sounddevice.cpp
     ${CMAKE_SOURCE_DIR}/src/soundsource.cpp
@@ -47,6 +48,7 @@ set(HEADER_FILES
     ${CMAKE_SOURCE_DIR}/src/button.h
     ${CMAKE_SOURCE_DIR}/src/constants.h
     ${CMAKE_SOURCE_DIR}/src/gamemanager.h
+    ${CMAKE_SOURCE_DIR}/src/shader.h
     ${CMAKE_SOURCE_DIR}/src/soundbuffer.h
     ${CMAKE_SOURCE_DIR}/src/sounddevice.h
     ${CMAKE_SOURCE_DIR}/src/soundsource.h
@@ -112,3 +114,8 @@ file(MAKE_DIRECTORY ${SOUNDS_OUTPUT_DIR})
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/death.wav ${SOUNDS_OUTPUT_DIR}/death.wav COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/begin_game.wav ${SOUNDS_OUTPUT_DIR}/begin_game.wav COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/power_up.wav ${SOUNDS_OUTPUT_DIR}/power_up.wav COPYONLY)
+
+set(SHADERS_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/shaders)
+file(MAKE_DIRECTORY ${SHADERS_OUTPUT_DIR})
+configure_file(${CMAKE_SOURCE_DIR}/assets/shaders/shader.fs ${SOUNDS_OUTPUT_DIR}/shader.fs COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/assets/shaders/shader.vs ${SOUNDS_OUTPUT_DIR}/shader.vs COPYONLY)

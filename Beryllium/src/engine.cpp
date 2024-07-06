@@ -99,34 +99,6 @@ void Engine::HandleInput()
     }
 }
 
-bool Engine::LoadTextureFromFile(const char *filename, GLuint *out_texture, int *out_width, int *out_height)
-{
-    // Load image data
-    int width, height, channels;
-    unsigned char *data = stbi_load(filename, &width, &height, &channels, 4);
-    if (data == nullptr)
-    {
-        return false;
-    }
-
-    // Create OpenGL texture
-    GLuint texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-
-    // Cleanup
-    stbi_image_free(data);
-
-    *out_texture = texture;
-    *out_width = width;
-    *out_height = height;
-
-    return true;
-}
-
 void Engine::Render()
 {
     uint32_t backgroundColor = Engine::GetColorBlack(255);
@@ -159,23 +131,25 @@ void Engine::Render()
     // Load the button texture
     GLuint buttonTexture;
     int buttonWidth, buttonHeight;
-    if (!LoadTextureFromFile("assets/sprites/start_button.png", &buttonTexture, &buttonWidth, &buttonHeight))
-    {
-        // Handle error...
-    }
 
     ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
     ImGui::Begin("Render", &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
 
-    // Render the button
-    if (ImGui::ImageButton((void *)(intptr_t)buttonTexture, ImVec2(buttonWidth, buttonHeight)))
-    {
-        // Handle button click...
-    }
+    // todo bind another texture but on top of the first one?
 
+    // background texture
+    glBindTexture(GL_TEXTURE_2D, m_imageTexture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, g_imageWidth, g_imageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_imageData);
+
+    // add the button texture here
+
+    ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
+    ImGui::Begin("Render", &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+    ImGui::Image((void *)(intptr_t)m_imageTexture, ImVec2(g_imageWidth, g_imageHeight));
     ImGui::End();
-
-    // RenderUI();
 }
 
 void Engine::Update()
