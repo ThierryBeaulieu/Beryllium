@@ -38,6 +38,7 @@ set(SRC_FILES
     ${CMAKE_SOURCE_DIR}/src/soundbuffer.cpp
     ${CMAKE_SOURCE_DIR}/src/sounddevice.cpp
     ${CMAKE_SOURCE_DIR}/src/soundsource.cpp
+    ${CMAKE_SOURCE_DIR}/src/stb_image.cpp
 )
 
 # Add header files for the main project
@@ -49,6 +50,7 @@ set(HEADER_FILES
     ${CMAKE_SOURCE_DIR}/src/soundbuffer.h
     ${CMAKE_SOURCE_DIR}/src/sounddevice.h
     ${CMAKE_SOURCE_DIR}/src/soundsource.h
+    ${CMAKE_SOURCE_DIR}/src/stb_image.h
 )
 
 # Include directories (avoid writing it every time)

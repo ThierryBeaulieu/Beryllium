@@ -10,6 +10,7 @@
 
 #include "constants.h"
 #include "gamemanager.h"
+#include "stb_image.h"
 
 class Engine
 {
