@@ -36,18 +36,6 @@ void Engine::RenderBackground(uint32_t color)
     }
 }
 
-void Engine::RenderUI()
-{
-    bool showWindow = true;
-    for (const UserInterface &ui : m_gameManager.GetUserInterfaces())
-    {
-        ImGui::SetNextWindowPos(ImVec2(ui.coord_x, ui.coord_y), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
-        ImGui::Begin(ui.name, &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
-        ImGui::Button("click me", ImVec2(200, 100));
-        ImGui::End();
-    }
-}
-
 void Engine::HandleInput()
 {
     if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -112,23 +100,24 @@ void Engine::Render()
 
     ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
     ImGui::Begin("Render", &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+
     ImGui::Image((void *)(intptr_t)m_imageTexture, ImVec2(g_imageWidth, g_imageHeight));
 
-    // Calculate the center position
-    ImVec2 image_center = ImVec2(g_imageWidth * 0.5f, g_imageHeight * 0.5f);
-    ImVec2 button_size = ImVec2(158.0f, 68.0f); // Adjust button size as needed
-    ImVec2 button_pos = ImVec2(image_center.x - button_size.x * 0.5f, image_center.y - button_size.y * 0.5f);
+    ImVec2 imageStartPos = ImGui::GetItemRectMin();
+    ImVec2 imageEndPos = ImGui::GetItemRectMax();
+    ImVec2 imageSize = ImVec2(imageEndPos.x - imageStartPos.x, imageEndPos.y - imageStartPos.y);
 
-    // Set cursor position to the calculated center position for the button
-    ImGui::SetCursorPos(button_pos);
+    ImVec2 buttonSize = ImVec2(200, 100);
 
-    GLuint buttonDefaultTexture = LoadTexture("sprites/button_start_dark_red.png");
-    GLuint buttonHoverTexture = LoadTexture("sprites/button_start_light_red.png");
-    GLuint buttonPressedTexture = LoadTexture("sprites/button_start_dark_red.png");
+    ImVec2 buttonPos = ImVec2(
+        imageStartPos.x + (imageSize.x - buttonSize.x) / 2.0f,
+        imageStartPos.y + (imageSize.y - buttonSize.y) / 2.0f);
 
-    if (ImageButtonWithTextures((void *)(intptr_t)buttonDefaultTexture, (void *)(intptr_t)buttonHoverTexture, (void *)(intptr_t)buttonPressedTexture, button_size))
+    ImGui::SetCursorPos(buttonPos);
+
+    if (ImGui::Button("click me", buttonSize))
     {
-        // Button clicked
+        // Button pressed logic
     }
 
     ImGui::End();
@@ -185,11 +174,13 @@ bool Engine::ImageButtonWithTextures(ImTextureID defaultTexture, ImTextureID hov
 
     ImTextureID textureToUse = defaultTexture;
     if (ImGui::IsItemActive())
+        textureToUse = defaultTexture;
+    else if (ImGui::IsItemActivated())
         textureToUse = pressedTexture;
     else if (ImGui::IsItemHovered())
         textureToUse = hoverTexture;
 
-    bool pressed = ImGui::ImageButton(textureToUse, size);
+    bool pressed = ImGui::ImageButton(textureToUse, size, ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f), 1, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
 
     ImGui::PopStyleColor(3);
     ImGui::EndGroup();

@@ -24,7 +24,6 @@ private:
 
     void RenderSquare(int x, int y, uint32_t color);
     void RenderBackground(uint32_t color);
-    void RenderUI();
 
     void SetPixel(int x, int y, uint32_t color);
     uint32_t GetPixel(int x, int y);
