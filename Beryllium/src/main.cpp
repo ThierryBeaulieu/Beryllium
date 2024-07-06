@@ -1,5 +1,8 @@
-#include <stdio.h>
+
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
+#include <stdio.h>
 #include <chrono>
 #include <cstdlib>
 #include <cstdint>
@@ -10,7 +13,6 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-
 // This example can also compile and run with Emscripten! See 'Makefile.emscripten' for details.
 #ifdef __EMSCRIPTEN__
 #include "../libs/emscripten/emscripten_mainloop_stub.h"
@@ -98,7 +100,6 @@ int main(int, char **)
     // io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
     // ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());
     // IM_ASSERT(font != nullptr);
-
 
     float constexpr fimageWidth = static_cast<float>(g_imageWidth);
     float constexpr fimageHeight = static_cast<float>(g_imageHeight);

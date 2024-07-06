@@ -1,9 +1,12 @@
 #pragma once
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 #include <chrono>
 #include <cstdint>
-#include <GLFW/glfw3.h>
 #include <vector>
+#include <iostream>
 
 #include "constants.h"
 #include "gamemanager.h"
@@ -17,7 +20,6 @@ public:
     void Update();
 
 private:
-
     void HandleInput();
 
     void RenderSquare(int x, int y, uint32_t color);
@@ -49,5 +51,4 @@ private:
     uint32_t *m_imageData;
     int m_pixelWidth;
     int m_paddingWidth;
-
 };

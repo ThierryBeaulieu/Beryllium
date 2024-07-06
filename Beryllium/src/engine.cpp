@@ -38,14 +38,6 @@ void Engine::RenderBackground(uint32_t color)
 
 void Engine::RenderUI()
 {
-    bool showWindow = true;
-    for (const UserInterface &ui : m_gameManager.GetUserInterfaces())
-    {
-        ImGui::SetNextWindowPos(ImVec2(ui.coord_x, ui.coord_y), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
-        ImGui::Begin(ui.name, &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
-        ImGui::Button("click me", ImVec2(200, 100));
-        ImGui::End();
-    }
 }
 
 void Engine::HandleInput()

@@ -97,7 +97,8 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                         
 # Link OpenGL (platform-dependent)
 find_package(OpenGL REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL)
+find_package(GLEW REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL GLEW::GLEW)
 
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/power_up.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/power_up.wav COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/death.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/death.wav COPYONLY)
