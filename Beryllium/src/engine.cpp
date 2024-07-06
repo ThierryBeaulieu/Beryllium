@@ -116,15 +116,15 @@ void Engine::Render()
 
     // Calculate the center position
     ImVec2 image_center = ImVec2(g_imageWidth * 0.5f, g_imageHeight * 0.5f);
-    ImVec2 button_size = ImVec2(50.0f, 50.0f); // Adjust button size as needed
+    ImVec2 button_size = ImVec2(158.0f, 68.0f); // Adjust button size as needed
     ImVec2 button_pos = ImVec2(image_center.x - button_size.x * 0.5f, image_center.y - button_size.y * 0.5f);
 
     // Set cursor position to the calculated center position for the button
     ImGui::SetCursorPos(button_pos);
 
-    GLuint buttonDefaultTexture = LoadTexture("assets/sprite/button_start_mid_grey.png");
-    GLuint buttonHoverTexture = LoadTexture("assets/sprite/button_start_light_grey.png");
-    GLuint buttonPressedTexture = LoadTexture("assets/sprite/button_start_dark_grey.png");
+    GLuint buttonDefaultTexture = LoadTexture("sprites/button_start_mid_grey.png");
+    GLuint buttonHoverTexture = LoadTexture("sprites/button_start_pale_grey.png");
+    GLuint buttonPressedTexture = LoadTexture("sprites/button_start_dark_grey.png");
 
     if (ImageButtonWithTextures((void *)(intptr_t)buttonDefaultTexture, (void *)(intptr_t)buttonHoverTexture, (void *)(intptr_t)buttonPressedTexture, button_size))
     {
