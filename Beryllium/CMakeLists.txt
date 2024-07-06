@@ -107,7 +107,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL GLEW::GLEW)
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/power_up.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/power_up.wav COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/death.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/death.wav COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/begin_game.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/begin_game.wav COPYONLY)
-
+configure_file(${CMAKE_SOURCE_DIR}/assets/shaders/shader.vs ${CMAKE_CURRENT_BINARY_DIR}/assets/shaders/shader.vs COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/assets/shaders/shader.fs ${CMAKE_CURRENT_BINARY_DIR}/assets/shaders/shader.fs COPYONLY)
 
 set(SOUNDS_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/sounds)
 file(MAKE_DIRECTORY ${SOUNDS_OUTPUT_DIR})
@@ -117,5 +118,5 @@ configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/power_up.wav ${SOUNDS_OUTPUT_DI
 
 set(SHADERS_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/shaders)
 file(MAKE_DIRECTORY ${SHADERS_OUTPUT_DIR})
-configure_file(${CMAKE_SOURCE_DIR}/assets/shaders/shader.fs ${SOUNDS_OUTPUT_DIR}/shader.fs COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/assets/shaders/shader.vs ${SOUNDS_OUTPUT_DIR}/shader.vs COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/assets/shaders/shader.fs ${SHADERS_OUTPUT_DIR}/shader.fs COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/assets/shaders/shader.vs ${SHADERS_OUTPUT_DIR}/shader.vs COPYONLY)
