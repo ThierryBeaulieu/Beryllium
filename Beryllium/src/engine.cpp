@@ -107,7 +107,7 @@ void Engine::Render()
     ImVec2 imageEndPos = ImGui::GetItemRectMax();
     ImVec2 imageSize = ImVec2(imageEndPos.x - imageStartPos.x, imageEndPos.y - imageStartPos.y);
 
-    ImVec2 buttonSize = ImVec2(200, 100);
+    ImVec2 buttonSize = ImVec2(168.0f, 68.0f);
 
     ImVec2 buttonPos = ImVec2(
         imageStartPos.x + (imageSize.x - buttonSize.x) / 2.0f,
@@ -115,10 +115,12 @@ void Engine::Render()
 
     ImGui::SetCursorPos(buttonPos);
 
-    if (ImGui::Button("click me", buttonSize))
-    {
-        // Button pressed logic
-    }
+    if (ImageButtonWithTextures(texture), )
+
+        if (ImGui::Button("click me", buttonSize))
+        {
+            // Button pressed logic
+        }
 
     ImGui::End();
 }
