@@ -38,6 +38,7 @@ set(SRC_FILES
     ${CMAKE_SOURCE_DIR}/src/soundbuffer.cpp
     ${CMAKE_SOURCE_DIR}/src/sounddevice.cpp
     ${CMAKE_SOURCE_DIR}/src/soundsource.cpp
+    ${CMAKE_SOURCE_DIR}/src/stb_image.cpp
 )
 
 # Add header files for the main project
@@ -49,6 +50,7 @@ set(HEADER_FILES
     ${CMAKE_SOURCE_DIR}/src/soundbuffer.h
     ${CMAKE_SOURCE_DIR}/src/sounddevice.h
     ${CMAKE_SOURCE_DIR}/src/soundsource.h
+    ${CMAKE_SOURCE_DIR}/src/stb_image.h
 )
 
 # Include directories (avoid writing it every time)
@@ -86,6 +88,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
 target_link_libraries(${PROJECT_NAME} PRIVATE OpenAL)
 target_link_libraries(${PROJECT_NAME} PRIVATE sndfile)
 
+
 # Specify additional include directories for the main executable
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/vendor/ImGui)
 
@@ -97,7 +100,9 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                         
 # Link OpenGL (platform-dependent)
 find_package(OpenGL REQUIRED)
+find_package(GLEW REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL)
+target_link_libraries(${PROJECT_NAME} PRIVATE GLEW::GLEW)
 
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/power_up.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/power_up.wav COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/death.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/death.wav COPYONLY)

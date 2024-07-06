@@ -113,9 +113,21 @@ void Engine::Render()
     ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
     ImGui::Begin("Render", &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
     ImGui::Image((void *)(intptr_t)m_imageTexture, ImVec2(g_imageWidth, g_imageHeight));
-    ImGui::End();
 
-    RenderUI();
+    // Calculate the center position
+    ImVec2 image_center = ImVec2(g_imageWidth * 0.5f, g_imageHeight * 0.5f);
+    ImVec2 button_size = ImVec2(50.0f, 50.0f); // Adjust button size as needed
+    ImVec2 button_pos = ImVec2(image_center.x - button_size.x * 0.5f, image_center.y - button_size.y * 0.5f);
+
+    // Set cursor position to the calculated center position for the button
+    ImGui::SetCursorPos(button_pos);
+
+    if (ImGui::Button("Button", button_size))
+    {
+        // Button clicked
+    }
+
+    ImGui::End();
 }
 
 void Engine::Update()
@@ -132,4 +144,52 @@ void Engine::SetPixel(int x, int y, uint32_t color)
 uint32_t Engine::GetPixel(int x, int y)
 {
     return m_imageData[g_imageWidth * y + x];
+}
+
+GLuint Engine::LoadTexture(const char *filename)
+{
+    int width, height, channels;
+    unsigned char *data = stbi_load(filename, &width, &height, &channels, 4);
+    if (!data)
+    {
+        std::cerr << "Failed to load texture: " << filename << std::endl;
+        return 0;
+    }
+
+    GLuint textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    stbi_image_free(data);
+    return textureID;
+}
+
+bool Engine::ImageButtonWithTextures(ImTextureID defaultTexture, ImTextureID hoverTexture, ImTextureID pressedTexture, const ImVec2 &size)
+{
+    ImGuiIO &io = ImGui::GetIO();
+    ImGui::PushID((void *)(intptr_t)defaultTexture);
+
+    ImGui::BeginGroup();
+
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0, 0, 0, 0));
+
+    ImTextureID textureToUse = defaultTexture;
+    if (ImGui::IsItemActive())
+        textureToUse = pressedTexture;
+    else if (ImGui::IsItemHovered())
+        textureToUse = hoverTexture;
+
+    bool pressed = ImGui::ImageButton(textureToUse, size);
+
+    ImGui::PopStyleColor(3);
+    ImGui::EndGroup();
+    ImGui::PopID();
+
+    return pressed;
 }
