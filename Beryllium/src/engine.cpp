@@ -122,7 +122,11 @@ void Engine::Render()
     // Set cursor position to the calculated center position for the button
     ImGui::SetCursorPos(button_pos);
 
-    if (ImGui::Button("Button", button_size))
+    GLuint buttonDefaultTexture = LoadTexture("assets/sprite/button_start_mid_grey.png");
+    GLuint buttonHoverTexture = LoadTexture("assets/sprite/button_start_light_grey.png");
+    GLuint buttonPressedTexture = LoadTexture("assets/sprite/button_start_dark_grey.png");
+
+    if (ImageButtonWithTextures((void *)(intptr_t)buttonDefaultTexture, (void *)(intptr_t)buttonHoverTexture, (void *)(intptr_t)buttonPressedTexture, button_size))
     {
         // Button clicked
     }

@@ -114,3 +114,10 @@ file(MAKE_DIRECTORY ${SOUNDS_OUTPUT_DIR})
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/death.wav ${SOUNDS_OUTPUT_DIR}/death.wav COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/begin_game.wav ${SOUNDS_OUTPUT_DIR}/begin_game.wav COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/power_up.wav ${SOUNDS_OUTPUT_DIR}/power_up.wav COPYONLY)
+
+
+set(SPRITE_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/sprites)
+file(MAKE_DIRECTORY ${SPRITE_OUTPUT_DIR})
+configure_file(${CMAKE_SOURCE_DIR}/assets/sprites/button_start_pale_grey.png ${SPRITE_OUTPUT_DIR}/button_start_pale_grey.png COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/assets/sprites/button_start_mid_grey.png ${SPRITE_OUTPUT_DIR}/button_start_mid_grey.png COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/assets/sprites/button_start_dark_grey.png ${SPRITE_OUTPUT_DIR}/button_start_dark_grey.png COPYONLY)
