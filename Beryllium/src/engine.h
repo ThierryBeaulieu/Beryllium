@@ -27,6 +27,8 @@ private:
     void RenderBackground(uint32_t color);
     void RenderUI();
 
+    bool LoadTextureFromFile(const char *filename, GLuint *out_texture, int *out_width, int *out_height);
+
     void SetPixel(int x, int y, uint32_t color);
     uint32_t GetPixel(int x, int y);
 

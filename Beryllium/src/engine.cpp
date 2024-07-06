@@ -38,6 +38,38 @@ void Engine::RenderBackground(uint32_t color)
 
 void Engine::RenderUI()
 {
+    unsigned int texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    // set the texture wrapping/filtering options (on the currently bound texture object)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load and generate the texture
+    int width, height, nrChannels;
+    unsigned char *data = stbi_load("container.jpg", &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+
+    float vertices[] = {
+        // positions          // colors           // texture coords
+        0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // top right
+        0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,  // bottom right
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom left
+        -0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f   // top left
+    };
+
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
 }
 
 void Engine::HandleInput()
@@ -65,6 +97,34 @@ void Engine::HandleInput()
     {
         m_gameManager.ResetGame();
     }
+}
+
+bool Engine::LoadTextureFromFile(const char *filename, GLuint *out_texture, int *out_width, int *out_height)
+{
+    // Load image data
+    int width, height, channels;
+    unsigned char *data = stbi_load(filename, &width, &height, &channels, 4);
+    if (data == nullptr)
+    {
+        return false;
+    }
+
+    // Create OpenGL texture
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+
+    // Cleanup
+    stbi_image_free(data);
+
+    *out_texture = texture;
+    *out_width = width;
+    *out_height = height;
+
+    return true;
 }
 
 void Engine::Render()
@@ -96,18 +156,26 @@ void Engine::Render()
 
     bool showWindow = true;
 
-    glBindTexture(GL_TEXTURE_2D, m_imageTexture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, g_imageWidth, g_imageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_imageData);
+    // Load the button texture
+    GLuint buttonTexture;
+    int buttonWidth, buttonHeight;
+    if (!LoadTextureFromFile("assets/sprites/start_button.png", &buttonTexture, &buttonWidth, &buttonHeight))
+    {
+        // Handle error...
+    }
 
     ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
     ImGui::Begin("Render", &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
-    ImGui::Image((void *)(intptr_t)m_imageTexture, ImVec2(g_imageWidth, g_imageHeight));
+
+    // Render the button
+    if (ImGui::ImageButton((void *)(intptr_t)buttonTexture, ImVec2(buttonWidth, buttonHeight)))
+    {
+        // Handle button click...
+    }
+
     ImGui::End();
 
-    RenderUI();
+    // RenderUI();
 }
 
 void Engine::Update()
