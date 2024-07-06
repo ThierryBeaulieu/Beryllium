@@ -119,5 +119,7 @@ configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/power_up.wav ${SOUNDS_OUTPUT_DI
 set(SPRITE_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/sprites)
 file(MAKE_DIRECTORY ${SPRITE_OUTPUT_DIR})
 configure_file(${CMAKE_SOURCE_DIR}/assets/sprites/button_start_pale_grey.png ${SPRITE_OUTPUT_DIR}/button_start_pale_grey.png COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/assets/sprites/button_start_mid_grey.png ${SPRITE_OUTPUT_DIR}/button_start_mid_grey.png COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/assets/sprites/button_start_light_grey.png ${SPRITE_OUTPUT_DIR}/button_start_light_grey.png COPYONLY)
 configure_file(${CMAKE_SOURCE_DIR}/assets/sprites/button_start_dark_grey.png ${SPRITE_OUTPUT_DIR}/button_start_dark_grey.png COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/assets/sprites/button_start_light_red.png ${SPRITE_OUTPUT_DIR}/button_start_light_red.png COPYONLY)
+configure_file(${CMAKE_SOURCE_DIR}/assets/sprites/button_start_dark_red.png ${SPRITE_OUTPUT_DIR}/button_start_dark_red.png COPYONLY)
