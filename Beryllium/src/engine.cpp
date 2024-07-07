@@ -104,7 +104,8 @@ void Engine::Render()
     ImGui::Image((void *)(intptr_t)m_imageTexture, ImVec2(g_imageWidth, g_imageHeight));
 
     UIManager &uiManager = UIManager::GetInstance();
-    uiManager.DisplayUI(UI::BeginGame);
+
+    uiManager.RenderUIs();
 
     ImGui::End();
 }

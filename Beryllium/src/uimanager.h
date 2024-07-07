@@ -1,14 +1,21 @@
 #pragma once
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <map>
 
 #include "imgui.h"
 
 enum class UI
 {
-    BeginGame,
+    MainMenu,
     GameOver,
     None,
+};
+
+struct ButtonState
+{
+    bool isButtonShown;
+    bool isButtonActive;
 };
 
 class UIManager
@@ -23,7 +30,31 @@ public:
     UIManager(const UIManager &) = delete;
     UIManager &operator=(const UIManager &) = delete;
 
-    void DisplayUI(const UI &ui)
+    bool &DisplayUI(const UI &ui)
+    {
+        m_UIs[ui].isButtonShown = true;
+        return m_UIs[ui].isButtonActive;
+    }
+
+    void RemoveUI(const UI &ui)
+    {
+        m_UIs[ui].isButtonActive = false;
+        m_UIs[ui].isButtonShown = false;
+    }
+
+    void RenderUIs()
+    {
+        for (const auto &[key, value] : m_UIs)
+        {
+            if (key == UI::MainMenu && value.isButtonShown)
+                DisplayButton(UI::MainMenu, "Start Game");
+            if (key == UI::GameOver && value.isButtonShown)
+                DisplayButton(UI::GameOver, "Game Over");
+        }
+    }
+
+private:
+    void DisplayButton(UI ui, const char *buttonName)
     {
         ImVec2 imageStartPos = ImGui::GetItemRectMin();
         ImVec2 imageEndPos = ImGui::GetItemRectMax();
@@ -37,20 +68,11 @@ public:
 
         ImGui::SetCursorPos(buttonPos);
 
-        const char *buttonContent = "Start Game";
-
-        if (ImGui::Button(buttonContent, buttonSize))
+        if (ImGui::Button(buttonName, buttonSize))
         {
-            // m_gameManager.StartGame();
+            m_UIs[ui].isButtonActive = true;
         }
     }
-
-    void
-    RemoveUI(const UI &ui)
-    {
-    }
-
-private:
     UIManager()
     {
     }
@@ -58,4 +80,6 @@ private:
     ~UIManager()
     {
     }
+
+    std::map<UI, ButtonState> m_UIs;
 };

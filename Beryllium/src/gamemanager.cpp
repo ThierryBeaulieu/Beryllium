@@ -38,14 +38,15 @@ void GameManager::SetGridHeight(int gridHeight)
 
 void GameManager::Update()
 {
-    m_userInterfaces.clear();
-    /*if (m_gameState == GameState::MainMenu)
+    if (m_gameState == GameState::MainMenu)
     {
-        //UserInterface mainMenu {"Main Menu", g_imageWidth/2, g_imageHeight, 200.0f, 200.0f};
-        //m_userInterfaces.push_back(mainMenu);
-        return;
+        bool &buttonState = uiManager.DisplayUI(UI::MainMenu);
+        if (buttonState)
+        {
+            m_gameState = GameState::Playing;
+            uiManager.RemoveUI(UI::MainMenu);
+        }
     }
-     */
 
     if (m_snakePosition.size() == m_gridHeight * m_gridWidth)
     {
@@ -60,6 +61,7 @@ void GameManager::Update()
 
     if (m_gameState == GameState::Over)
     {
+
         if (m_snakePosition.size() > 0 || m_foodPosition.size() > 0)
         {
             m_snakePosition.clear();
@@ -270,9 +272,4 @@ void GameManager::PlayGameOverSound()
     uint32_t sound1 = SoundBuffer::get()->addSoundEffect("sounds/death.wav");
     SoundSource mySpeaker;
     mySpeaker.Play(sound1);
-}
-
-const std::vector<UserInterface> &GameManager::GetUserInterfaces()
-{
-    return m_userInterfaces;
 }

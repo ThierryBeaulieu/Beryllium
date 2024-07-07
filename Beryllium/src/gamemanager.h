@@ -13,6 +13,7 @@
 #include "soundbuffer.h"
 #include "sounddevice.h"
 #include "soundsource.h"
+#include "uimanager.h"
 
 enum class Direction
 {
@@ -80,8 +81,6 @@ public:
 
     void ResetGame();
 
-    const std::vector<UserInterface> &GetUserInterfaces();
-
 private:
     // tbeaulieu2 todo: change the norma from m_gridWidth to m_GridWidth
     int m_gridWidth;
@@ -92,8 +91,6 @@ private:
 
     Direction m_currentDirection;
     GameState m_gameState;
-
-    std::vector<UserInterface> m_userInterfaces;
-
+    UIManager &uiManager = UIManager::GetInstance();
     // tbeaulieu 2 end;
 };
