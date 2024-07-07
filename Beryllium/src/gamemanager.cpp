@@ -70,7 +70,7 @@ void GameManager::Update()
         if (buttonState)
         {
             m_UIManager.RemoveUI(UI::GameOver);
-            GameState::Playing;
+            m_GameState = GameState::Playing;
             ResetGame();
             StartGame();
         }
@@ -78,6 +78,7 @@ void GameManager::Update()
         return;
     }
 
+    InitGame();
     HandleInput();
 
     std::pair<int, int> foodPosition = m_FoodPosition.front();
@@ -213,7 +214,6 @@ void GameManager::GenerateFood()
 
 void GameManager::StartGame()
 {
-
     if (m_FoodPosition.size() == 0)
         InitializeFood();
 
@@ -224,6 +224,15 @@ void GameManager::StartGame()
     m_UIManager.RemoveUI(UI::MainMenu);
     m_UIManager.RemoveUI(UI::GameOver);
     SetInitDirection();
+}
+
+void GameManager::InitGame()
+{
+    if (m_FoodPosition.size() == 0)
+        InitializeFood();
+
+    if (m_SnakePosition.size() == 0)
+        InitializeSnake();
 }
 
 void GameManager::SetInitDirection()

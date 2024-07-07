@@ -56,6 +56,7 @@ public:
 
     void GenerateFood();
     void StartGame();
+    void InitGame();
     void SetInitDirection();
 
     // tbeaulieu2 : handle the input in a different way?
