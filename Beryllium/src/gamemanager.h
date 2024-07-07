@@ -63,6 +63,7 @@ public:
     void InitializeSnake();
 
     void GenerateFood();
+    void StartGame();
 
     // tbeaulieu2 : handle the input in a different way?
     void SetDirectionUp();

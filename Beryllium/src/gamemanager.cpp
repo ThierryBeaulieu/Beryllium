@@ -207,6 +207,11 @@ void GameManager::GenerateFood()
     m_foodPosition.push_back(std::make_pair(foodInitWidth, foodInitHeight));
 }
 
+void GameManager::StartGame()
+{
+    m_currentDirection = Direction::Down;
+}
+
 void GameManager::ResetGame()
 {
     m_gameState = GameState::MainMenu;

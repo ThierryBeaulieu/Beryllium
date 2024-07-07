@@ -53,4 +53,5 @@ private:
     uint32_t *m_imageData;
     int m_pixelWidth;
     int m_paddingWidth;
+    bool m_showMenuButton;
 };

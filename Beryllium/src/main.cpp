@@ -193,7 +193,7 @@ int main(int, char **)
 
         glfwSwapBuffers(window);
         glfwPollEvents();
-        // std::this_thread::sleep_until(next_update);
+        std::this_thread::sleep_until(next_update);
     }
 #ifdef __EMSCRIPTEN__
     EMSCRIPTEN_MAINLOOP_END;
