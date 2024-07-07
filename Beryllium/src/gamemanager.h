@@ -34,15 +34,6 @@ enum class GameState
     Over,
 };
 
-struct UserInterface
-{
-    const char *name;
-    int coord_x;
-    int coord_y;
-    int width;
-    int height;
-};
-
 class GameManager
 {
 public:
