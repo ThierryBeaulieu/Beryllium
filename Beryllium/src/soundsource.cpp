@@ -31,7 +31,6 @@ void SoundSource::Play(const ALuint buffer_to_play)
 	std::cout << "playing sound\n";
 	while (state == AL_PLAYING && alGetError() == AL_NO_ERROR)
 	{
-		std::cout << "currently playing sound\n";
 		alGetSourcei(m_Source, AL_SOURCE_STATE, &state);
 	}
 	std::cout << "done playing sound\n";
