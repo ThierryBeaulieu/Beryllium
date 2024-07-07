@@ -35,3 +35,23 @@ void SoundSource::Play(const ALuint buffer_to_play)
 	}
 	std::cout << "done playing sound\n";
 }
+
+void SoundSource::PlayLoop(const ALuint buffer_to_play)
+{
+	if (buffer_to_play != m_Buffer)
+	{
+		m_Buffer = buffer_to_play;
+		alSourcei(m_Source, AL_BUFFER, (ALint)m_Buffer);
+	}
+
+	alSourcePlay(m_Source);
+	alSourcei(m_Source, AL_LOOPING, 1);
+
+	ALint state = AL_PLAYING;
+	std::cout << "playing sound\n";
+	while (state == AL_PLAYING && alGetError() == AL_NO_ERROR)
+	{
+		alGetSourcei(m_Source, AL_SOURCE_STATE, &state);
+	}
+	std::cout << "done playing sound\n";
+}

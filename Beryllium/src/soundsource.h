@@ -8,6 +8,7 @@ public:
 	~SoundSource();
 
 	void Play(const ALuint buffer_to_play);
+	void PlayLoop(const ALuint buffer_to_play);
 
 private:
 	ALuint m_Source;

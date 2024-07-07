@@ -322,5 +322,5 @@ void GameManager::PlayBackgroundSound()
     SoundDevice *soundDevice = SoundDevice::get();
     uint32_t sound1 = SoundBuffer::get()->AddSoundEffect("sounds/danger.wav");
     SoundSource mySpeaker;
-    mySpeaker.Play(sound1);
+    mySpeaker.PlayLoop(sound1);
 }
