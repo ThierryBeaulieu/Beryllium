@@ -9,7 +9,7 @@ SoundBuffer *SoundBuffer::get()
 	return sndbuf;
 }
 
-ALuint SoundBuffer::addSoundEffect(const char *filename)
+ALuint SoundBuffer::AddSoundEffect(const char *filename)
 {
 
 	ALenum err, format;
@@ -90,21 +90,21 @@ ALuint SoundBuffer::addSoundEffect(const char *filename)
 		return 0;
 	}
 
-	p_SoundEffectBuffers.push_back(buffer); // add to the list of known buffers
+	m_SoundEffectBuffers.push_back(buffer); // add to the list of known buffers
 
 	return buffer;
 }
 
-bool SoundBuffer::removeSoundEffect(const ALuint &buffer)
+bool SoundBuffer::RemoveSoundEffect(const ALuint &buffer)
 {
-	auto it = p_SoundEffectBuffers.begin();
-	while (it != p_SoundEffectBuffers.end())
+	auto it = m_SoundEffectBuffers.begin();
+	while (it != m_SoundEffectBuffers.end())
 	{
 		if (*it == buffer)
 		{
 			alDeleteBuffers(1, &*it);
 
-			it = p_SoundEffectBuffers.erase(it);
+			it = m_SoundEffectBuffers.erase(it);
 
 			return true;
 		}
@@ -118,12 +118,12 @@ bool SoundBuffer::removeSoundEffect(const ALuint &buffer)
 
 SoundBuffer::SoundBuffer()
 {
-	p_SoundEffectBuffers.clear();
+	m_SoundEffectBuffers.clear();
 }
 
 SoundBuffer::~SoundBuffer()
 {
-	alDeleteBuffers(p_SoundEffectBuffers.size(), p_SoundEffectBuffers.data());
+	alDeleteBuffers(m_SoundEffectBuffers.size(), m_SoundEffectBuffers.data());
 
-	p_SoundEffectBuffers.clear();
+	m_SoundEffectBuffers.clear();
 }

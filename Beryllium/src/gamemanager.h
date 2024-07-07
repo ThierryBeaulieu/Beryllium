@@ -74,15 +74,13 @@ public:
     void ResetGame();
 
 private:
-    // tbeaulieu2 todo: change the norma from m_gridWidth to m_GridWidth
-    int m_gridWidth;
-    int m_gridHeight;
+    int m_GridWidth;
+    int m_GridHeight;
 
-    std::list<std::pair<int, int>> m_foodPosition;
-    std::list<std::pair<int, int>> m_snakePosition;
+    std::list<std::pair<int, int>> m_FoodPosition;
+    std::list<std::pair<int, int>> m_SnakePosition;
 
-    Direction m_currentDirection;
-    GameState m_gameState;
-    UIManager &m_uiManager = UIManager::GetInstance();
-    // tbeaulieu 2 end;
+    Direction m_CurrentDirection;
+    GameState m_GameState;
+    UIManager &m_UIManager = UIManager::GetInstance();
 };

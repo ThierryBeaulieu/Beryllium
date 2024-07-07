@@ -10,6 +10,6 @@ private:
 	SoundDevice();
 	~SoundDevice();
 
-	ALCdevice *p_ALCDevice;
-	ALCcontext *p_ALCContext;
+	ALCdevice *m_ALCDevice;
+	ALCcontext *m_ALCContext;
 };

@@ -33,7 +33,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(SRC_FILES
     ${CMAKE_SOURCE_DIR}/src/main.cpp
     ${CMAKE_SOURCE_DIR}/src/engine.cpp
-    ${CMAKE_SOURCE_DIR}/src/button.cpp
     ${CMAKE_SOURCE_DIR}/src/gamemanager.cpp
     ${CMAKE_SOURCE_DIR}/src/soundbuffer.cpp
     ${CMAKE_SOURCE_DIR}/src/sounddevice.cpp
@@ -45,7 +44,6 @@ set(SRC_FILES
 # Add header files for the main project
 set(HEADER_FILES
     ${CMAKE_SOURCE_DIR}/src/engine.h
-    ${CMAKE_SOURCE_DIR}/src/button.h
     ${CMAKE_SOURCE_DIR}/src/constants.h
     ${CMAKE_SOURCE_DIR}/src/gamemanager.h
     ${CMAKE_SOURCE_DIR}/src/soundbuffer.h

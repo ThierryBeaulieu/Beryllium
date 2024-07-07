@@ -47,11 +47,11 @@ private:
     GLuint LoadTexture(const char *filename);
     bool ImageButtonWithTextures(ImTextureID defaultTexture, ImTextureID hoverTexture, ImTextureID pressedTexture, const ImVec2 &size);
 
-    GLFWwindow *m_window;
-    GameManager m_gameManager;
-    GLuint m_imageTexture;
+    GLFWwindow *m_Window;
+    GameManager m_GameManager;
+    GLuint m_ImageTexture;
 
-    uint32_t *m_imageData;
-    int m_pixelWidth;
-    int m_paddingWidth;
+    uint32_t *m_ImageData;
+    int m_PixelWidth;
+    int m_PaddingWidth;
 };
