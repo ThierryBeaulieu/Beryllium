@@ -49,7 +49,7 @@ public:
             if (key == UI::MainMenu && value.isButtonShown)
                 DisplayButton(UI::MainMenu, "Start Game");
             if (key == UI::GameOver && value.isButtonShown)
-                DisplayButton(UI::GameOver, "Game Over");
+                DisplayButton(UI::GameOver, "Try Again");
         }
     }
 
@@ -67,11 +67,7 @@ private:
             imageStartPos.y + (imageSize.y - buttonSize.y) / 2.0f);
 
         ImGui::SetCursorPos(buttonPos);
-
-        if (ImGui::Button(buttonName, buttonSize))
-        {
-            m_UIs[ui].isButtonActive = true;
-        }
+        m_UIs[ui].isButtonActive = ImGui::Button(buttonName, buttonSize)
     }
     UIManager()
     {
