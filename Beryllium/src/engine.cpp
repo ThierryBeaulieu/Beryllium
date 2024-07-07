@@ -1,7 +1,7 @@
 #include "engine.h"
 
 Engine::Engine(uint32_t *imageData, GLFWwindow *window)
-    : m_imageData(imageData), m_gameManager(GameManager()), m_pixelWidth(30), m_paddingWidth(2), m_window(window), m_showMenuButton(true)
+    : m_imageData(imageData), m_gameManager(GameManager()), m_pixelWidth(30), m_paddingWidth(2), m_window(window), m_menu(Menu::BeginGame)
 {
     glGenTextures(1, &m_imageTexture);
     int nbPixelsWidth = (g_imageWidth - (g_imageWidth % m_pixelWidth)) / m_pixelWidth;
@@ -103,7 +103,7 @@ void Engine::Render()
 
     ImGui::Image((void *)(intptr_t)m_imageTexture, ImVec2(g_imageWidth, g_imageHeight));
 
-    if (m_showMenuButton)
+    if (m_menu == Menu::BeginGame || m_menu == Menu::GameOver)
     {
 
         ImVec2 imageStartPos = ImGui::GetItemRectMin();
@@ -118,9 +118,23 @@ void Engine::Render()
 
         ImGui::SetCursorPos(buttonPos);
 
-        if (ImGui::Button("Start Game", buttonSize))
+        std::string buttonContent;
+
+        switch (m_menu)
         {
-            m_showMenuButton = false;
+        case Menu::BeginGame:
+            buttonContent = "Start Game";
+            break;
+        case Menu::GameOver:
+            buttonContent = "Start Again";
+            break;
+        default:
+            break;
+        }
+
+        if (ImGui::Button(buttonContent.c_str(), buttonSize))
+        {
+            m_menu = Menu::None;
             m_gameManager.StartGame();
         }
     }

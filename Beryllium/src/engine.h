@@ -11,6 +11,13 @@
 #include "constants.h"
 #include "gamemanager.h"
 
+enum class Menu
+{
+    BeginGame,
+    GameOver,
+    None,
+};
+
 class Engine
 {
 public:
@@ -53,5 +60,6 @@ private:
     uint32_t *m_imageData;
     int m_pixelWidth;
     int m_paddingWidth;
-    bool m_showMenuButton;
+
+    Menu m_menu;
 };
