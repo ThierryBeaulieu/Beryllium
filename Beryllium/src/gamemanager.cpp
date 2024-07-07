@@ -3,6 +3,8 @@
 GameManager::GameManager()
     : m_GridWidth(0), m_GridHeight(0), m_CurrentDirection(Direction::None), m_GameState(GameState::MainMenu)
 {
+    std::thread thread_obj(&GameManager::PlayBackgroundSound, this);
+    thread_obj.detach();
     srand(time(0));
 }
 
@@ -311,6 +313,14 @@ void GameManager::PlayGameOverSound()
 {
     SoundDevice *soundDevice = SoundDevice::get();
     uint32_t sound1 = SoundBuffer::get()->AddSoundEffect("sounds/death.wav");
+    SoundSource mySpeaker;
+    mySpeaker.Play(sound1);
+}
+
+void GameManager::PlayBackgroundSound()
+{
+    SoundDevice *soundDevice = SoundDevice::get();
+    uint32_t sound1 = SoundBuffer::get()->AddSoundEffect("sounds/danger.wav");
     SoundSource mySpeaker;
     mySpeaker.Play(sound1);
 }

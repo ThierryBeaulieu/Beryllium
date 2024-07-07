@@ -68,6 +68,7 @@ public:
 
     // tbeaulieu2 : todo put in another place
     void PlayUpgradeSound();
+    void PlayBackgroundSound();
     void PlayGameOverSound();
     void PlayBeginSound();
     // end todo
