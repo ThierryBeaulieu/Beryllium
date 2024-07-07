@@ -40,11 +40,11 @@ void GameManager::Update()
 {
     if (m_gameState == GameState::MainMenu)
     {
-        bool &buttonState = uiManager.DisplayUI(UI::MainMenu);
+        bool buttonState = m_uiManager.DisplayUI(UI::MainMenu);
         if (buttonState)
         {
             m_gameState = GameState::Playing;
-            uiManager.RemoveUI(UI::MainMenu);
+            m_uiManager.RemoveUI(UI::MainMenu);
         }
     }
 
@@ -61,14 +61,20 @@ void GameManager::Update()
 
     if (m_gameState == GameState::Over)
     {
-
         if (m_snakePosition.size() > 0 || m_foodPosition.size() > 0)
         {
             m_snakePosition.clear();
             m_foodPosition.clear();
         }
 
-        // todo : Display UI to start the game again
+        bool buttonState = m_uiManager.DisplayUI(UI::GameOver);
+        if (buttonState)
+        {
+            m_uiManager.RemoveUI(UI::GameOver);
+            GameState::Playing;
+            ResetGame();
+            StartGame();
+        }
 
         return;
     }
@@ -111,6 +117,9 @@ void GameManager::HandleInput()
         return;
 
     std::pair<int, int> front = m_snakePosition.front();
+
+    if (m_gameState == GameState::MainMenu)
+        return;
 
     switch (m_currentDirection)
     {

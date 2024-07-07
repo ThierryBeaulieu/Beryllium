@@ -91,6 +91,6 @@ private:
 
     Direction m_currentDirection;
     GameState m_gameState;
-    UIManager &uiManager = UIManager::GetInstance();
+    UIManager &m_uiManager = UIManager::GetInstance();
     // tbeaulieu 2 end;
 };
