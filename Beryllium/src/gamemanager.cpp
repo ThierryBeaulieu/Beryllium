@@ -3,8 +3,6 @@
 GameManager::GameManager()
     : m_gridWidth(0), m_gridHeight(0), m_currentDirection(Direction::None), m_gameState(GameState::MainMenu)
 {
-    m_uiManager.LoadTexture("sprites/button_start_dark_grey.png", UI::MainMenu);
-    m_uiManager.LoadTexture("sprites/button_start_dark_grey.png", UI::GameOver);
     srand(time(0));
 }
 

@@ -67,7 +67,7 @@ private:
             imageStartPos.y + (imageSize.y - buttonSize.y) / 2.0f);
 
         ImGui::SetCursorPos(buttonPos);
-        m_UIs[ui].isButtonActive = ImGui::Button(buttonName, buttonSize)
+        m_UIs[ui].isButtonActive = ImGui::Button(buttonName, buttonSize);
     }
     UIManager()
     {
