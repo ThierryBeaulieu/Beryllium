@@ -43,8 +43,8 @@ void GameManager::Update()
         bool buttonState = m_uiManager.DisplayUI(UI::MainMenu);
         if (buttonState)
         {
-            m_gameState = GameState::Playing;
-            m_uiManager.RemoveUI(UI::MainMenu);
+
+            StartGame();
         }
     }
 
@@ -220,6 +220,9 @@ void GameManager::GenerateFood()
 
 void GameManager::StartGame()
 {
+    m_gameState = GameState::Playing;
+    m_uiManager.RemoveUI(UI::MainMenu);
+    m_uiManager.RemoveUI(UI::GameOver);
     m_currentDirection = Direction::Down;
 }
 
