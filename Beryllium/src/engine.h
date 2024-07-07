@@ -10,13 +10,7 @@
 #include "stb_image.h"
 #include "constants.h"
 #include "gamemanager.h"
-
-enum class Menu
-{
-    BeginGame,
-    GameOver,
-    None,
-};
+#include "uimanager.h"
 
 class Engine
 {
@@ -60,6 +54,4 @@ private:
     uint32_t *m_imageData;
     int m_pixelWidth;
     int m_paddingWidth;
-
-    Menu m_menu;
 };
