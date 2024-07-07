@@ -36,18 +36,6 @@ void Engine::RenderBackground(uint32_t color)
     }
 }
 
-void Engine::RenderUI()
-{
-    bool showWindow = true;
-    for (const UserInterface &ui : m_gameManager.GetUserInterfaces())
-    {
-        ImGui::SetNextWindowPos(ImVec2(ui.coord_x, ui.coord_y), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
-        ImGui::Begin(ui.name, &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
-        ImGui::Button("click me", ImVec2(200, 100));
-        ImGui::End();
-    }
-}
-
 void Engine::HandleInput()
 {
     if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -112,10 +100,14 @@ void Engine::Render()
 
     ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
     ImGui::Begin("Render", &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
-    ImGui::Image((void *)(intptr_t)m_imageTexture, ImVec2(g_imageWidth, g_imageHeight));
-    ImGui::End();
 
-    RenderUI();
+    ImGui::Image((void *)(intptr_t)m_imageTexture, ImVec2(g_imageWidth, g_imageHeight));
+
+    UIManager &uiManager = UIManager::GetInstance();
+
+    uiManager.RenderUIs();
+
+    ImGui::End();
 }
 
 void Engine::Update()
@@ -132,4 +124,54 @@ void Engine::SetPixel(int x, int y, uint32_t color)
 uint32_t Engine::GetPixel(int x, int y)
 {
     return m_imageData[g_imageWidth * y + x];
+}
+
+GLuint Engine::LoadTexture(const char *filename)
+{
+    int width, height, channels;
+    unsigned char *data = stbi_load(filename, &width, &height, &channels, 4);
+    if (!data)
+    {
+        std::cerr << "Failed to load texture: " << filename << std::endl;
+        return 0;
+    }
+
+    GLuint textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    stbi_image_free(data);
+    return textureID;
+}
+
+bool Engine::ImageButtonWithTextures(ImTextureID defaultTexture, ImTextureID hoverTexture, ImTextureID pressedTexture, const ImVec2 &size)
+{
+    ImGuiIO &io = ImGui::GetIO();
+    ImGui::PushID((void *)(intptr_t)defaultTexture);
+
+    ImGui::BeginGroup();
+
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0, 0, 0, 0));
+
+    ImTextureID textureToUse = defaultTexture;
+    if (ImGui::IsItemActive())
+        textureToUse = defaultTexture;
+    else if (ImGui::IsItemActivated())
+        textureToUse = pressedTexture;
+    else if (ImGui::IsItemHovered())
+        textureToUse = hoverTexture;
+
+    bool pressed = ImGui::ImageButton(textureToUse, size, ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f), 1, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+
+    ImGui::PopStyleColor(3);
+    ImGui::EndGroup();
+    ImGui::PopID();
+
+    return pressed;
 }

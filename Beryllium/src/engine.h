@@ -1,12 +1,16 @@
 #pragma once
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 #include <chrono>
 #include <cstdint>
-#include <GLFW/glfw3.h>
+#include <iostream>
 #include <vector>
 
+#include "stb_image.h"
 #include "constants.h"
 #include "gamemanager.h"
+#include "uimanager.h"
 
 class Engine
 {
@@ -17,12 +21,10 @@ public:
     void Update();
 
 private:
-
     void HandleInput();
 
     void RenderSquare(int x, int y, uint32_t color);
     void RenderBackground(uint32_t color);
-    void RenderUI();
 
     void SetPixel(int x, int y, uint32_t color);
     uint32_t GetPixel(int x, int y);
@@ -42,6 +44,9 @@ private:
         return (0 | 0 << 8 | 0 << 16 | brightness << 24);
     }
 
+    GLuint LoadTexture(const char *filename);
+    bool ImageButtonWithTextures(ImTextureID defaultTexture, ImTextureID hoverTexture, ImTextureID pressedTexture, const ImVec2 &size);
+
     GLFWwindow *m_window;
     GameManager m_gameManager;
     GLuint m_imageTexture;
@@ -49,5 +54,4 @@ private:
     uint32_t *m_imageData;
     int m_pixelWidth;
     int m_paddingWidth;
-
 };
