@@ -30,7 +30,7 @@ public:
     UIManager(const UIManager &) = delete;
     UIManager &operator=(const UIManager &) = delete;
 
-    bool &DisplayUI(const UI &ui)
+    bool DisplayUI(const UI &ui)
     {
         m_UIs[ui].isButtonShown = true;
         return m_UIs[ui].isButtonActive;
