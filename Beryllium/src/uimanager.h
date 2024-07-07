@@ -69,6 +69,7 @@ private:
         ImGui::SetCursorPos(buttonPos);
         m_UIs[ui].isButtonActive = ImGui::Button(buttonName, buttonSize);
     }
+
     UIManager()
     {
     }
