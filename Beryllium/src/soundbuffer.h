@@ -6,12 +6,12 @@ class SoundBuffer
 public:
 	static SoundBuffer *get();
 
-	ALuint addSoundEffect(const char *filename);
-	bool removeSoundEffect(const ALuint &buffer);
+	ALuint AddSoundEffect(const char *filename);
+	bool RemoveSoundEffect(const ALuint &buffer);
 
 private:
 	SoundBuffer();
 	~SoundBuffer();
 
-	std::vector<ALuint> p_SoundEffectBuffers;
+	std::vector<ALuint> m_SoundEffectBuffers;
 };

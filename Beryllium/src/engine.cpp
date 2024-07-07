@@ -1,24 +1,24 @@
 #include "engine.h"
 
 Engine::Engine(uint32_t *imageData, GLFWwindow *window)
-    : m_imageData(imageData), m_gameManager(GameManager()), m_pixelWidth(30), m_paddingWidth(2), m_window(window)
+    : m_ImageData(imageData), m_GameManager(GameManager()), m_PixelWidth(30), m_PaddingWidth(2), m_Window(window)
 {
-    glGenTextures(1, &m_imageTexture);
-    int nbPixelsWidth = (g_imageWidth - (g_imageWidth % m_pixelWidth)) / m_pixelWidth;
-    int nbPixelsHeight = (g_imageHeight - (g_imageHeight % m_pixelWidth)) / m_pixelWidth;
+    glGenTextures(1, &m_ImageTexture);
+    int nbPixelsWidth = (g_ImageWidth - (g_ImageWidth % m_PixelWidth)) / m_PixelWidth;
+    int nbPixelsHeight = (g_ImageHeight - (g_ImageHeight % m_PixelWidth)) / m_PixelWidth;
 
-    m_gameManager.SetGridHeight(nbPixelsHeight);
-    m_gameManager.SetGridWidth(nbPixelsWidth);
+    m_GameManager.SetGridHeight(nbPixelsHeight);
+    m_GameManager.SetGridWidth(nbPixelsWidth);
 }
 
 void Engine::RenderSquare(int x, int y, uint32_t color)
 {
-    for (int i = 0; i < m_pixelWidth; ++i)
+    for (int i = 0; i < m_PixelWidth; ++i)
     {
-        for (int j = 0; j < m_pixelWidth; ++j)
+        for (int j = 0; j < m_PixelWidth; ++j)
         {
-            if (i < m_paddingWidth || i > (m_pixelWidth - m_paddingWidth) ||
-                j < m_paddingWidth || j > (m_pixelWidth - m_paddingWidth))
+            if (i < m_PaddingWidth || i > (m_PixelWidth - m_PaddingWidth) ||
+                j < m_PaddingWidth || j > (m_PixelWidth - m_PaddingWidth))
                 continue;
             SetPixel(x + i, y + j, color);
         }
@@ -27,9 +27,9 @@ void Engine::RenderSquare(int x, int y, uint32_t color)
 
 void Engine::RenderBackground(uint32_t color)
 {
-    for (int i = 0; i < g_imageWidth; ++i)
+    for (int i = 0; i < g_ImageWidth; ++i)
     {
-        for (int j = 0; j < g_imageHeight; ++j)
+        for (int j = 0; j < g_ImageHeight; ++j)
         {
             SetPixel(i, j, color);
         }
@@ -38,28 +38,28 @@ void Engine::RenderBackground(uint32_t color)
 
 void Engine::HandleInput()
 {
-    if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(m_window, true);
+    if (glfwGetKey(m_Window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(m_Window, true);
 
-    if (glfwGetKey(m_window, GLFW_KEY_W) == GLFW_PRESS || glfwGetKey(m_window, GLFW_KEY_UP) == GLFW_PRESS)
+    if (glfwGetKey(m_Window, GLFW_KEY_W) == GLFW_PRESS || glfwGetKey(m_Window, GLFW_KEY_UP) == GLFW_PRESS)
     {
-        m_gameManager.SetDirectionUp();
+        m_GameManager.SetDirectionUp();
     }
-    else if (glfwGetKey(m_window, GLFW_KEY_S) == GLFW_PRESS || glfwGetKey(m_window, GLFW_KEY_DOWN) == GLFW_PRESS)
+    else if (glfwGetKey(m_Window, GLFW_KEY_S) == GLFW_PRESS || glfwGetKey(m_Window, GLFW_KEY_DOWN) == GLFW_PRESS)
     {
-        m_gameManager.SetDirectionDown();
+        m_GameManager.SetDirectionDown();
     }
-    else if (glfwGetKey(m_window, GLFW_KEY_A) == GLFW_PRESS || glfwGetKey(m_window, GLFW_KEY_LEFT) == GLFW_PRESS)
+    else if (glfwGetKey(m_Window, GLFW_KEY_A) == GLFW_PRESS || glfwGetKey(m_Window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {
-        m_gameManager.SetDirectionLeft();
+        m_GameManager.SetDirectionLeft();
     }
-    else if (glfwGetKey(m_window, GLFW_KEY_D) == GLFW_PRESS || glfwGetKey(m_window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+    else if (glfwGetKey(m_Window, GLFW_KEY_D) == GLFW_PRESS || glfwGetKey(m_Window, GLFW_KEY_RIGHT) == GLFW_PRESS)
     {
-        m_gameManager.SetDirectionRight();
+        m_GameManager.SetDirectionRight();
     }
-    else if (glfwGetKey(m_window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    else if (glfwGetKey(m_Window, GLFW_KEY_SPACE) == GLFW_PRESS)
     {
-        m_gameManager.ResetGame();
+        m_GameManager.ResetGame();
     }
 }
 
@@ -70,38 +70,38 @@ void Engine::Render()
 
     uint32_t tileColor = Engine::GetColorWhite(200);
 
-    for (int i = 0; i < m_gameManager.GetGridWidth(); ++i)
+    for (int i = 0; i < m_GameManager.GetGridWidth(); ++i)
     {
-        for (int j = 0; j < m_gameManager.GetGridHeight(); ++j)
+        for (int j = 0; j < m_GameManager.GetGridHeight(); ++j)
         {
-            RenderSquare(i * m_pixelWidth, j * m_pixelWidth, tileColor);
+            RenderSquare(i * m_PixelWidth, j * m_PixelWidth, tileColor);
         }
     }
 
     uint32_t foodColor = Engine::GetColorRed(255);
-    for (std::pair<int, int> foodCoord : m_gameManager.GetFoodPosition())
+    for (std::pair<int, int> foodCoord : m_GameManager.GetFoodPosition())
     {
-        RenderSquare(foodCoord.first * m_pixelWidth, foodCoord.second * m_pixelWidth, foodColor);
+        RenderSquare(foodCoord.first * m_PixelWidth, foodCoord.second * m_PixelWidth, foodColor);
     }
 
     uint32_t snakeColor = Engine::GetColorWhite(255);
-    for (std::pair<int, int> snakeCoord : m_gameManager.GetSnakePosition())
+    for (std::pair<int, int> snakeCoord : m_GameManager.GetSnakePosition())
     {
-        RenderSquare(snakeCoord.first * m_pixelWidth, snakeCoord.second * m_pixelWidth, snakeColor);
+        RenderSquare(snakeCoord.first * m_PixelWidth, snakeCoord.second * m_PixelWidth, snakeColor);
     }
 
     bool showWindow = true;
 
-    glBindTexture(GL_TEXTURE_2D, m_imageTexture);
+    glBindTexture(GL_TEXTURE_2D, m_ImageTexture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, g_imageWidth, g_imageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_imageData);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, g_ImageWidth, g_ImageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_ImageData);
 
     ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
     ImGui::Begin("Render", &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
 
-    ImGui::Image((void *)(intptr_t)m_imageTexture, ImVec2(g_imageWidth, g_imageHeight));
+    ImGui::Image((void *)(intptr_t)m_ImageTexture, ImVec2(g_ImageWidth, g_ImageHeight));
 
     UIManager &uiManager = UIManager::GetInstance();
 
@@ -113,17 +113,17 @@ void Engine::Render()
 void Engine::Update()
 {
     HandleInput();
-    m_gameManager.Update();
+    m_GameManager.Update();
 }
 
 void Engine::SetPixel(int x, int y, uint32_t color)
 {
-    m_imageData[g_imageWidth * y + x] = color;
+    m_ImageData[g_ImageWidth * y + x] = color;
 }
 
 uint32_t Engine::GetPixel(int x, int y)
 {
-    return m_imageData[g_imageWidth * y + x];
+    return m_ImageData[g_ImageWidth * y + x];
 }
 
 GLuint Engine::LoadTexture(const char *filename)

@@ -34,15 +34,6 @@ enum class GameState
     Over,
 };
 
-struct UserInterface
-{
-    const char *name;
-    int coord_x;
-    int coord_y;
-    int width;
-    int height;
-};
-
 class GameManager
 {
 public:
@@ -65,6 +56,7 @@ public:
 
     void GenerateFood();
     void StartGame();
+    void InitGame();
     void SetInitDirection();
 
     // tbeaulieu2 : handle the input in a different way?
@@ -83,15 +75,12 @@ public:
     void ResetGame();
 
 private:
-    // tbeaulieu2 todo: change the norma from m_gridWidth to m_GridWidth
-    int m_gridWidth;
-    int m_gridHeight;
+    int m_GridWidth;
+    int m_GridHeight;
 
-    std::list<std::pair<int, int>> m_foodPosition;
-    std::list<std::pair<int, int>> m_snakePosition;
+    std::list<std::pair<int, int>> m_FoodPosition;
+    std::list<std::pair<int, int>> m_SnakePosition;
 
-    Direction m_currentDirection;
-    GameState m_gameState;
-    UIManager &m_uiManager = UIManager::GetInstance();
-    // tbeaulieu 2 end;
+    Direction m_CurrentDirection;
+    GameState m_GameState;
 };

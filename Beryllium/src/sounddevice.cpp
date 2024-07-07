@@ -10,34 +10,40 @@ SoundDevice *SoundDevice::get()
 
 SoundDevice::SoundDevice()
 {
-	p_ALCDevice = alcOpenDevice(nullptr); // nullptr = get default device
-	if (!p_ALCDevice)
+	m_ALCDevice = alcOpenDevice(nullptr); // nullptr = get default device
+	if (!m_ALCDevice)
 		throw("failed to get sound device");
 
-	p_ALCContext = alcCreateContext(p_ALCDevice, nullptr); // create context
-	if (!p_ALCContext)
+	m_ALCContext = alcCreateContext(m_ALCDevice, nullptr); // create context
+	if (!m_ALCContext)
 		throw("Failed to set sound context");
 
-	if (!alcMakeContextCurrent(p_ALCContext)) // make context current
+	if (!alcMakeContextCurrent(m_ALCContext)) // make context current
 		throw("failed to make context current");
 
 	const ALCchar *name = nullptr;
-	if (alcIsExtensionPresent(p_ALCDevice, "ALC_ENUMERATE_ALL_EXT"))
-		name = alcGetString(p_ALCDevice, ALC_ALL_DEVICES_SPECIFIER);
-	if (!name || alcGetError(p_ALCDevice) != AL_NO_ERROR)
-		name = alcGetString(p_ALCDevice, ALC_DEVICE_SPECIFIER);
+	if (alcIsExtensionPresent(m_ALCDevice, "ALC_ENUMERATE_ALL_EXT"))
+		name = alcGetString(m_ALCDevice, ALC_ALL_DEVICES_SPECIFIER);
+	if (!name || alcGetError(m_ALCDevice) != AL_NO_ERROR)
+		name = alcGetString(m_ALCDevice, ALC_DEVICE_SPECIFIER);
 	printf("Opened \"%s\"\n", name);
 }
 
 SoundDevice::~SoundDevice()
 {
 	if (!alcMakeContextCurrent(nullptr))
-		throw("failed to set context to nullptr");
+	{
+		// todo : log error
+	}
 
-	alcDestroyContext(p_ALCContext);
-	if (p_ALCContext)
-		throw("failed to unset during close");
+	alcDestroyContext(m_ALCContext);
+	if (m_ALCContext)
+	{
+		// todo : log error
+	}
 
-	if (!alcCloseDevice(p_ALCDevice))
-		throw("failed to close sound device");
+	if (!alcCloseDevice(m_ALCDevice))
+	{
+		// todo : log error
+	}
 }
