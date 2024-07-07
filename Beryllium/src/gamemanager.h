@@ -83,5 +83,4 @@ private:
 
     Direction m_CurrentDirection;
     GameState m_GameState;
-    UIManager &m_UIManager = UIManager::GetInstance();
 };

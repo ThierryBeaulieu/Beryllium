@@ -40,7 +40,8 @@ void GameManager::Update()
 {
     if (m_GameState == GameState::MainMenu)
     {
-        bool buttonState = m_UIManager.DisplayUI(UI::MainMenu);
+        UIManager &uiManager = UIManager::GetInstance();
+        bool buttonState = uiManager.DisplayUI(UI::MainMenu);
         if (buttonState)
         {
             StartGame();
@@ -66,10 +67,11 @@ void GameManager::Update()
             m_FoodPosition.clear();
         }
 
-        bool buttonState = m_UIManager.DisplayUI(UI::GameOver);
+        UIManager &uiManager = UIManager::GetInstance();
+        bool buttonState = uiManager.DisplayUI(UI::GameOver);
         if (buttonState)
         {
-            m_UIManager.RemoveUI(UI::GameOver);
+            uiManager.RemoveUI(UI::GameOver);
             m_GameState = GameState::Playing;
             ResetGame();
             StartGame();
@@ -221,8 +223,10 @@ void GameManager::StartGame()
         InitializeSnake();
 
     m_GameState = GameState::Playing;
-    m_UIManager.RemoveUI(UI::MainMenu);
-    m_UIManager.RemoveUI(UI::GameOver);
+
+    UIManager &uiManager = UIManager::GetInstance();
+    uiManager.RemoveUI(UI::MainMenu);
+    uiManager.RemoveUI(UI::GameOver);
     SetInitDirection();
 }
 
