@@ -21,14 +21,14 @@ Score::Score(const std::vector<std::string> &content)
 }
 
 Score::Score(const std::string &id, const std::string &lastName, const std::string &firstName, const std::string &score)
-    : m_id(id),
+    : m_Id(id),
       m_LastName(lastName),
       m_FirstName(firstName)
 {
     try
     {
         int number = std::stoi(score);
-        m_value = number;
+        m_Value = number;
         std::cout << "The number is: " << number << std::endl;
     }
     catch (const std::invalid_argument &e)
@@ -41,14 +41,53 @@ Score::Score(const std::string &id, const std::string &lastName, const std::stri
     }
 }
 
+const std::string &Score::GetID() const
+{
+    return m_Id;
+}
+
+const std::string &Score::GetLastName() const
+{
+    return m_LastName;
+}
+
+const std::string &Score::GetFirstName() const
+{
+    return m_FirstName;
+}
+
+int Score::GetValue() const
+{
+    return m_Value;
+}
+
 bool Score::operator<(const Score &score) const
 {
-    return score.m_value < m_value;
+    return score.m_Value < m_Value;
 }
 
 ScoreManager::ScoreManager()
 {
-    // Todo: create a high score file if it doesn't exists.
+    std::ifstream file(HIGH_SCORES_FILE_NAME);
+
+    if (file.good())
+    {
+        file.close();
+    }
+    else
+    {
+        file.close();
+        std::cout << "File '" << HIGH_SCORES_FILE_NAME << "' does not exist. Creating it..." << std::endl;
+        std::ofstream newFile(HIGH_SCORES_FILE_NAME);
+        if (newFile.is_open())
+        {
+            newFile.close();
+        }
+        else
+        {
+            std::cerr << "Failed to create file '" << HIGH_SCORES_FILE_NAME << "'." << std::endl;
+        }
+    }
 }
 
 std::vector<std::string> ScoreManager::Split(const std::string &s, char delimiter)
@@ -67,9 +106,18 @@ std::vector<std::string> ScoreManager::Split(const std::string &s, char delimite
 
 void ScoreManager::AddScore(const Score &score)
 {
+    std::ofstream file(HIGH_SCORES_FILE_NAME, std::ios::app);
 
+    if (!file.is_open())
+    {
+        std::cerr << "Unable to open high score file for appending" << std::endl;
+        return;
+    }
+
+    file << score.GetID() << "," << score.GetValue() << "," << score.GetLastName() << "," << score.GetFirstName() << std::endl;
+
+    file.close();
 }
-
 std::vector<Score> ScoreManager::GetHighScores()
 {
     std::ifstream file;

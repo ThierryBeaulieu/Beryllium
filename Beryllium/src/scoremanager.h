@@ -18,11 +18,16 @@ public:
 
     bool operator<(const Score &score) const;
 
+    const std::string &GetID() const;
+    const std::string &GetLastName() const;
+    const std::string &GetFirstName() const;
+    int GetValue() const;
+
 private:
-    std::string m_id;
+    std::string m_Id;
     std::string m_LastName;
     std::string m_FirstName;
-    int m_value;
+    int m_Value;
 };
 
 class ScoreManager
