@@ -12,6 +12,7 @@ static const std::string HIGH_SCORES_FILE_NAME = "scores.txt";
 class Score
 {
 public:
+    Score();
     Score(const std::vector<std::string> &content);
     Score(const std::string &id, const std::string &lastName, const std::string &firstName, const std::string &score);
 

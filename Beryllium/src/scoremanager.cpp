@@ -1,5 +1,10 @@
 #include "scoremanager.h"
 
+Score::Score()
+{
+    Score("---", "---", "---", "0");
+}
+
 Score::Score(const std::vector<std::string> &content)
 {
     // Files contains oldest to newest score
@@ -69,8 +74,7 @@ std::vector<Score> ScoreManager::GetHighScores()
     if (!file.is_open())
     {
         std::cerr << "Unable to open high score file" << std::endl;
-        const std::vector<Score> noScoreFound;
-        return noScoreFound;
+        return;
     }
 
     std::string line;
@@ -85,6 +89,15 @@ std::vector<Score> ScoreManager::GetHighScores()
     std::sort(scores.begin(), scores.end(), [](const Score &a, const Score &b)
               { return a < b; });
 
+    if (scores.size() < 3)
+    {
+        for (int i = 0; i < 3 - scores.size(); ++i)
+        {
+            scores.push_back(Score());
+        }
+    }
+
     std::vector<Score> highestScores(scores.begin(), scores.begin() + 2);
+
     return highestScores;
 }
