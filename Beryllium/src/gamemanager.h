@@ -39,8 +39,10 @@ class GameManager
 public:
     GameManager();
 
+    // tbeaulieu2 todo:
     std::list<std::pair<int, int>> GetFoodPosition();
     std::list<std::pair<int, int>> GetSnakePosition();
+    // tbeaulieu2 todo return reference
 
     int GetGridWidth();
     int GetGridHeight();
