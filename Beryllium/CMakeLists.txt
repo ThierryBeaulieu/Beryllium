@@ -34,6 +34,7 @@ set(SRC_FILES
     ${CMAKE_SOURCE_DIR}/src/main.cpp
     ${CMAKE_SOURCE_DIR}/src/engine.cpp
     ${CMAKE_SOURCE_DIR}/src/gamemanager.cpp
+    ${CMAKE_SOURCE_DIR}/src/scoremanager.cpp
     ${CMAKE_SOURCE_DIR}/src/soundbuffer.cpp
     ${CMAKE_SOURCE_DIR}/src/sounddevice.cpp
     ${CMAKE_SOURCE_DIR}/src/soundsource.cpp
@@ -46,6 +47,7 @@ set(HEADER_FILES
     ${CMAKE_SOURCE_DIR}/src/engine.h
     ${CMAKE_SOURCE_DIR}/src/constants.h
     ${CMAKE_SOURCE_DIR}/src/gamemanager.h
+    ${CMAKE_SOURCE_DIR}/src/scoremanager.h
     ${CMAKE_SOURCE_DIR}/src/soundbuffer.h
     ${CMAKE_SOURCE_DIR}/src/sounddevice.h
     ${CMAKE_SOURCE_DIR}/src/soundsource.h
