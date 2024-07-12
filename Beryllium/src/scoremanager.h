@@ -7,16 +7,15 @@
 #include <sstream>
 #include <string>
 
+static const std::string HIGH_SCORES_FILE_NAME = "scores.txt";
+
 class Score
 {
 public:
     Score(const std::vector<std::string> &content);
     Score(const std::string &id, const std::string &lastName, const std::string &firstName, const std::string &score);
 
-    bool operator<(const Score &score) const
-    {
-        return score.m_value < m_value;
-    }
+    bool operator<(const Score &score) const;
 
 private:
     std::string m_id;
@@ -24,8 +23,6 @@ private:
     std::string m_FirstName;
     int m_value;
 };
-
-static const std::string HIGH_SCORES_FILE_NAME = "scores.txt";
 
 class ScoreManager
 {

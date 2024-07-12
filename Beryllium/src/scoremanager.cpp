@@ -36,6 +36,11 @@ Score::Score(const std::string &id, const std::string &lastName, const std::stri
     }
 }
 
+bool Score::operator<(const Score &score) const
+{
+    return score.m_value < m_value;
+}
+
 ScoreManager::ScoreManager()
 {
     // Todo: create a high score file if it doesn't exists.
