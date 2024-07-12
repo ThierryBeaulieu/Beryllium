@@ -23,7 +23,7 @@ Score::Score(const std::string &id, const std::string &lastName, const std::stri
     try
     {
         int number = std::stoi(score);
-        m_score = number;
+        m_value = number;
         std::cout << "The number is: " << number << std::endl;
     }
     catch (const std::invalid_argument &e)
@@ -55,7 +55,7 @@ std::vector<std::string> ScoreManager::Split(const std::string &s, char delimite
     return tokens;
 }
 
-std::list<Score> ScoreManager::GetHighScores()
+std::vector<Score> ScoreManager::GetHighScores()
 {
     std::ifstream file;
 
@@ -64,7 +64,7 @@ std::list<Score> ScoreManager::GetHighScores()
     if (!file.is_open())
     {
         std::cerr << "Unable to open high score file" << std::endl;
-        const std::list<Score> noScoreFound;
+        const std::vector<Score> noScoreFound;
         return noScoreFound;
     }
 
@@ -77,11 +77,9 @@ std::list<Score> ScoreManager::GetHighScores()
     }
     file.close();
 
-    return FilterHighestScores(scores);
-}
+    std::sort(scores.begin(), scores.end(), [](const Score &a, const Score &b)
+              { return a < b; });
 
-std::list<Score> FilterHighestScores(const std::vector<Score> &scores)
-{
-    // ma solution
-    //
+    std::vector<Score> highestScores(scores.begin(), scores.begin() + 2);
+    return highestScores;
 }

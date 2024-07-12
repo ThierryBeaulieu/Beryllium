@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <list>
@@ -12,11 +13,16 @@ public:
     Score(const std::vector<std::string> &content);
     Score(const std::string &id, const std::string &lastName, const std::string &firstName, const std::string &score);
 
+    bool operator<(const Score &score) const
+    {
+        return score.m_value < m_value;
+    }
+
 private:
     std::string m_id;
     std::string m_LastName;
     std::string m_FirstName;
-    int m_score;
+    int m_value;
 };
 
 static const std::string HIGH_SCORES_FILE_NAME = "scores.txt";
@@ -33,7 +39,7 @@ public:
     ScoreManager(const ScoreManager &) = delete;
     ScoreManager &operator=(const ScoreManager &) = delete;
 
-    std::list<Score> GetHighScores();
+    std::vector<Score> GetHighScores();
 
 private:
     ScoreManager();
@@ -41,5 +47,4 @@ private:
     // tbeaulieu 2: todo place in its own util file
     std::vector<std::string> Split(const std::string &s, char delimiter);
     // tbeaulieu end
-    std::list<Score> FilterHighestScores(const std::vector<Score> &scores);
 };
