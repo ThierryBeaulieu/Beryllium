@@ -118,6 +118,7 @@ void ScoreManager::AddScore(const Score &score)
 
     file.close();
 }
+
 std::vector<Score> ScoreManager::GetHighScores()
 {
     std::ifstream file;
