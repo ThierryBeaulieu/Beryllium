@@ -11,6 +11,7 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "scoremanager.h"
 
 // This example can also compile and run with Emscripten! See 'Makefile.emscripten' for details.
 #ifdef __EMSCRIPTEN__
@@ -168,6 +169,22 @@ int main(int, char **)
             float constexpr ema_coefficient = 0.05f;
             float const updateMs = static_cast<float>(updateUs.count()) / 1000.0f;
             float const renderMs = static_cast<float>(renderUs.count()) / 1000.0f;
+
+            ImGui::End();
+        }
+
+        {
+            bool showScoreWindow = true;
+            ImGui::SetNextWindowPos(ImVec2(fimageWidth + 30.0f, 50.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
+            ImGui::Begin("Scores", &showScoreWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+
+            ScoreManager &scoreManager = ScoreManager::GetInstance();
+            std::vector<Score> highScores = scoreManager.GetHighScores();
+
+            for (const auto &score : highScores)
+            {
+                ImGui::Text("%s, %s Score: %d", score.GetFirstName().c_str(), score.GetLastName().c_str(), score.GetValue());
+            }
 
             ImGui::End();
         }

@@ -2,7 +2,7 @@
 
 Score::Score()
 {
-    Score("---", "---", "---", "0");
+    *this = Score("---", "---", "---", "0");
 }
 
 Score::Score(const std::vector<std::string> &content)
@@ -12,12 +12,12 @@ Score::Score(const std::vector<std::string> &content)
     // takes the most recent score
     //
     // score format : id,score,LastName,FirstName,jjmmyyyy
-    if (content.size() != 5)
+    if (content.size() != 4)
     {
         std::cerr << "Error the high score file is unreadable" << std::endl;
     }
 
-    Score(content[0], content[1], content[2], content[3]);
+    *this = Score(content[0], content[1], content[2], content[3]);
 }
 
 Score::Score(const std::string &id, const std::string &lastName, const std::string &firstName, const std::string &score)
@@ -29,7 +29,6 @@ Score::Score(const std::string &id, const std::string &lastName, const std::stri
     {
         int number = std::stoi(score);
         m_Value = number;
-        std::cout << "The number is: " << number << std::endl;
     }
     catch (const std::invalid_argument &e)
     {
@@ -124,22 +123,15 @@ std::vector<Score> ScoreManager::GetHighScores()
     std::ifstream file;
 
     file.open(HIGH_SCORES_FILE_NAME);
-    std::vector<Score> scores;
-
-    if (scores.size() < 3)
-    {
-        for (int i = 0; i < 3 - scores.size(); ++i)
-        {
-            scores.push_back(Score());
-        }
-    }
 
     if (!file.is_open())
     {
         std::cerr << "Unable to open high score file" << std::endl;
-        return scores;
+        std::vector<Score> emptyScores;
+        return emptyScores;
     }
 
+    std::vector<Score> scores;
     std::string line;
     while (std::getline(file, line))
     {
@@ -151,6 +143,5 @@ std::vector<Score> ScoreManager::GetHighScores()
     std::sort(scores.begin(), scores.end(), [](const Score &a, const Score &b)
               { return a < b; });
 
-    std::vector<Score> highestScores(scores.begin(), scores.begin() + 2);
-    return highestScores;
+    return scores;
 }
