@@ -34,11 +34,12 @@ public:
     ScoreManager &operator=(const ScoreManager &) = delete;
 
     std::list<Score> GetHighScores();
-    // tbeaulieu 2: todo place in its own util file
-    std::vector<std::string> Split(const std::string &s, char delimiter);
-    // tbeaulieu end
 
 private:
     ScoreManager();
     ~ScoreManager() = default;
+    // tbeaulieu 2: todo place in its own util file
+    std::vector<std::string> Split(const std::string &s, char delimiter);
+    // tbeaulieu end
+    std::list<Score> FilterHighestScores(const std::vector<Score> &scores);
 };

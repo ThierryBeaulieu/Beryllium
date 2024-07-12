@@ -68,17 +68,20 @@ std::list<Score> ScoreManager::GetHighScores()
         return noScoreFound;
     }
 
-    std::list<Score> highScores;
     std::string line;
-
     std::vector<Score> scores;
     while (std::getline(file, line))
     {
         const std::vector<std::string> &content = Split(line, ',');
         scores.push_back(Score(content));
     }
-
     file.close();
 
-    return highScores;
+    return FilterHighestScores(scores);
+}
+
+std::list<Score> FilterHighestScores(const std::vector<Score> &scores)
+{
+    // ma solution
+    //
 }
