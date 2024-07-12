@@ -38,6 +38,7 @@ public:
     ScoreManager &operator=(const ScoreManager &) = delete;
 
     std::vector<Score> GetHighScores();
+    void AddScore(const Score &score);
 
 private:
     ScoreManager();

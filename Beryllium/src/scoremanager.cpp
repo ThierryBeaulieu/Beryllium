@@ -65,6 +65,11 @@ std::vector<std::string> ScoreManager::Split(const std::string &s, char delimite
     return tokens;
 }
 
+void ScoreManager::AddScore(const Score &score)
+{
+
+}
+
 std::vector<Score> ScoreManager::GetHighScores()
 {
     std::ifstream file;
