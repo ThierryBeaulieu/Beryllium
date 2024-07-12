@@ -70,15 +70,23 @@ std::vector<Score> ScoreManager::GetHighScores()
     std::ifstream file;
 
     file.open(HIGH_SCORES_FILE_NAME);
+    std::vector<Score> scores;
+
+    if (scores.size() < 3)
+    {
+        for (int i = 0; i < 3 - scores.size(); ++i)
+        {
+            scores.push_back(Score());
+        }
+    }
 
     if (!file.is_open())
     {
         std::cerr << "Unable to open high score file" << std::endl;
-        return;
+        return scores;
     }
 
     std::string line;
-    std::vector<Score> scores;
     while (std::getline(file, line))
     {
         const std::vector<std::string> &content = Split(line, ',');
@@ -89,15 +97,6 @@ std::vector<Score> ScoreManager::GetHighScores()
     std::sort(scores.begin(), scores.end(), [](const Score &a, const Score &b)
               { return a < b; });
 
-    if (scores.size() < 3)
-    {
-        for (int i = 0; i < 3 - scores.size(); ++i)
-        {
-            scores.push_back(Score());
-        }
-    }
-
     std::vector<Score> highestScores(scores.begin(), scores.begin() + 2);
-
     return highestScores;
 }
