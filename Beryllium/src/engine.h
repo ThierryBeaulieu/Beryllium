@@ -16,7 +16,7 @@ public:
     Engine(uint32_t *imageData, GLFWwindow *m_window);
 
     void Render();
-    void Update();
+    void Update(const std::chrono::duration<double> &elapsedTime);
 
 private:
     void HandleInput();

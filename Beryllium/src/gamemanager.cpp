@@ -57,7 +57,6 @@ void GameManager::Update()
 
     if (m_GameState == GameState::Victory)
     {
-        // todo: display ui
         return;
     }
 

@@ -124,20 +124,16 @@ int main(int, char **)
     }
 #endif
 
+    Engine engine(imageData, window);
+    std::chrono::duration<double> dt = std::chrono::milliseconds(1000) / 60.0;
+    auto previous = std::chrono::steady_clock::now();
+    std::chrono::duration<double> accumulator = std::chrono::milliseconds(0);
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    Engine engine(imageData, window);
-    auto next_update = std::chrono::steady_clock::now();
+    GameState gameState;
 
     // Main loop
-#ifdef __EMSCRIPTEN__
-    // For an Emscripten build we are disabling file-system access, so let's not attempt to do a fopen() of the imgui.ini file.
-    // You may manually call LoadIniSettingsFromMemory() to load settings from your own storage.
-    io.IniFilename = nullptr;
-    EMSCRIPTEN_MAINLOOP_BEGIN
-#else
     while (!glfwWindowShouldClose(window))
-#endif
     {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -146,20 +142,26 @@ int main(int, char **)
         std::chrono::microseconds updateUs;
         std::chrono::microseconds renderUs;
 
-        next_update += std::chrono::milliseconds(150);
+        const std::chrono::time_point<std::chrono::high_resolution_clock> current = std::chrono::steady_clock::now();
+        const std::chrono::duration<double> frame = current - previous;
+        previous = current;
+        accumulator += frame;
 
+        std::chrono::time_point<std::chrono::high_resolution_clock> const beginUpdate = std::chrono::high_resolution_clock::now();
+        while (accumulator >= dt)
         {
-            std::chrono::time_point<std::chrono::high_resolution_clock> const beginUpdate = std::chrono::high_resolution_clock::now();
-            engine.Update();
-            // add a window here
-            std::chrono::time_point<std::chrono::high_resolution_clock> const endUpdate = std::chrono::high_resolution_clock::now();
-            updateUs = std::chrono::duration_cast<std::chrono::microseconds>(endUpdate - beginUpdate);
-
-            std::chrono::time_point<std::chrono::high_resolution_clock> const beginRender = std::chrono::high_resolution_clock::now();
-            engine.Render();
-            std::chrono::time_point<std::chrono::high_resolution_clock> const endRender = std::chrono::high_resolution_clock::now();
-            renderUs = std::chrono::duration_cast<std::chrono::microseconds>(endRender - beginRender);
+            engine.Update(dt);
+            accumulator -= dt;
         }
+
+        std::chrono::time_point<std::chrono::high_resolution_clock> const endUpdate = std::chrono::high_resolution_clock::now();
+        updateUs = std::chrono::duration_cast<std::chrono::microseconds>(endUpdate - beginUpdate);
+
+        std::chrono::time_point<std::chrono::high_resolution_clock> const beginRender = std::chrono::high_resolution_clock::now();
+        engine.Render();
+        std::chrono::time_point<std::chrono::high_resolution_clock> const endRender = std::chrono::high_resolution_clock::now();
+
+        renderUs = std::chrono::duration_cast<std::chrono::seconds>(endRender - beginRender);
 
         // {
         //     bool showPerformanceWindow = true;
@@ -255,7 +257,6 @@ int main(int, char **)
 
         glfwSwapBuffers(window);
         glfwPollEvents();
-        std::this_thread::sleep_until(next_update);
     }
 #ifdef __EMSCRIPTEN__
     EMSCRIPTEN_MAINLOOP_END;
