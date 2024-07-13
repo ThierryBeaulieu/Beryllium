@@ -6,6 +6,7 @@
 #include <list>
 #include <sstream>
 #include <string>
+#include <vector>
 
 static const std::string HIGH_SCORES_FILE_NAME = "scores.txt";
 
