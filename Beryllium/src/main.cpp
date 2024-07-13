@@ -192,7 +192,8 @@ int main(int, char **)
             float lineHeight = ImGui::GetTextLineHeightWithSpacing();
             float windowPadding = 10.0f; // Padding around the text
 
-            float windowHeight = (highScores.size() + 1) * lineHeight + windowPadding * 2; // +1 for "Leader board" text
+            int minHeight = highScores.size() == 0 ? 1 : highScores.size();
+            float windowHeight = (minHeight + 1) * lineHeight + windowPadding * 2; // +1 for "Leader board" text
 
             ImGui::SetNextWindowSize(ImVec2(210.0f, windowHeight), ImGuiCond_Always);
             ImGui::SetNextWindowPos(ImVec2(fimageWidth + 50.0f, 60.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
@@ -201,10 +202,17 @@ int main(int, char **)
             ImGui::Text("Leader board");
             ImGui::Separator();
 
-            for (const auto &score : highScores)
+            if (highScores.size() == 0)
             {
-                std::string scoreText = score.GetFirstName() + " " + score.GetLastName() + " : " + std::to_string(score.GetValue());
-                ImGui::Text("%s", scoreText.c_str());
+                ImGui::Text("No score available");
+            }
+            else
+            {
+                for (const auto &score : highScores)
+                {
+                    std::string scoreText = score.GetFirstName() + " " + score.GetLastName() + " : " + std::to_string(score.GetValue());
+                    ImGui::Text("%s", scoreText.c_str());
+                }
             }
 
             ImGui::End();
