@@ -92,6 +92,12 @@ void UIManager::DisplayButton(UI ui, const char *buttonName, ImTextureID texture
     ImGui::SetCursorPos(buttonPos);
     m_UIs[ui].isButtonActive = ImGui::ImageButton(textureID, buttonSize);
 
+    // Change cursor to pointer if hovered
+    if (ImGui::IsItemHovered())
+        ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
+    else
+        ImGui::SetMouseCursor(ImGuiMouseCursor_Arrow);
+
     // Restore original style
     style.Colors[ImGuiCol_Button] = originalColor;
     style.Colors[ImGuiCol_ButtonHovered] = originalHoveredColor;
