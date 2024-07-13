@@ -2,11 +2,6 @@
 
 Score::Score(const std::vector<std::string> &content)
 {
-    // Files contains oldest to newest score
-    //
-    // takes the most recent score
-    //
-    // score format : id,score,LastName,FirstName,jjmmyyyy
     if (content.size() != 4)
     {
         std::cerr << "Error the high score file is unreadable" << std::endl;
