@@ -11,6 +11,7 @@ enum class UI
     MainMenu,
     GameOver,
     AskingForPlayerName,
+    Victory,
     None,
 };
 
@@ -48,6 +49,7 @@ public:
 private:
     void DisplayButton(UI ui, const char *buttonName, ImTextureID textureId);
     void DisplayInputField(UI ui);
+    void DisplayVictory(UI ui);
 
     UIManager();
     ~UIManager();

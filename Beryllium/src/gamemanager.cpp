@@ -57,6 +57,8 @@ void GameManager::Update(const std::chrono::duration<double> &elapsedTime)
 
     if (m_GameState == GameState::Victory)
     {
+        UIManager &uiManager = UIManager::GetInstance();
+        uiManager.DisplayUI(UI::Victory);
         return;
     }
 
