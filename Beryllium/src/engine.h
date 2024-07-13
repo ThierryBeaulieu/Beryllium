@@ -16,7 +16,7 @@ public:
     Engine(uint32_t *imageData, GLFWwindow *m_window);
 
     void Render();
-    void Update();
+    void Update(const std::chrono::duration<double> &elapsedTime);
 
 private:
     void HandleInput();
@@ -41,9 +41,6 @@ private:
     {
         return (0 | 0 << 8 | 0 << 16 | brightness << 24);
     }
-
-    GLuint LoadTexture(const char *filename);
-    bool ImageButtonWithTextures(ImTextureID defaultTexture, ImTextureID hoverTexture, ImTextureID pressedTexture, const ImVec2 &size);
 
     GLFWwindow *m_Window;
     GameManager m_GameManager;

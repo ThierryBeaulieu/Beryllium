@@ -124,20 +124,16 @@ int main(int, char **)
     }
 #endif
 
+    Engine engine(imageData, window);
+    std::chrono::duration<double> dt = std::chrono::milliseconds(1000) / 60.0;
+    auto previous = std::chrono::steady_clock::now();
+    std::chrono::duration<double> accumulator = std::chrono::milliseconds(0);
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    Engine engine(imageData, window);
-    auto next_update = std::chrono::steady_clock::now();
+    GameState gameState;
 
     // Main loop
-#ifdef __EMSCRIPTEN__
-    // For an Emscripten build we are disabling file-system access, so let's not attempt to do a fopen() of the imgui.ini file.
-    // You may manually call LoadIniSettingsFromMemory() to load settings from your own storage.
-    io.IniFilename = nullptr;
-    EMSCRIPTEN_MAINLOOP_BEGIN
-#else
     while (!glfwWindowShouldClose(window))
-#endif
     {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -146,36 +142,19 @@ int main(int, char **)
         std::chrono::microseconds updateUs;
         std::chrono::microseconds renderUs;
 
-        next_update += std::chrono::milliseconds(150);
+        const std::chrono::time_point<std::chrono::high_resolution_clock> current = std::chrono::steady_clock::now();
+        const std::chrono::duration<double> frame = current - previous;
+        previous = current;
 
-        {
-            std::chrono::time_point<std::chrono::high_resolution_clock> const beginUpdate = std::chrono::high_resolution_clock::now();
-            engine.Update();
-            // add a window here
-            std::chrono::time_point<std::chrono::high_resolution_clock> const endUpdate = std::chrono::high_resolution_clock::now();
-            updateUs = std::chrono::duration_cast<std::chrono::microseconds>(endUpdate - beginUpdate);
+        engine.Update(dt);
+        engine.Render();
 
-            std::chrono::time_point<std::chrono::high_resolution_clock> const beginRender = std::chrono::high_resolution_clock::now();
-            engine.Render();
-            std::chrono::time_point<std::chrono::high_resolution_clock> const endRender = std::chrono::high_resolution_clock::now();
-            renderUs = std::chrono::duration_cast<std::chrono::microseconds>(endRender - beginRender);
-        }
-
-        // {
-        //     bool showPerformanceWindow = true;
-        //     ImGui::SetNextWindowPos(ImVec2(fimageWidth + 30.0f, 20.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
-        //     ImGui::Begin("Performance", &showPerformanceWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
-        //     ImGui::Text("Average Framerate: %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-
-        //     float constexpr ema_coefficient = 0.05f;
-        //     float const updateMs = static_cast<float>(updateUs.count()) / 1000.0f;
-        //     float const renderMs = static_cast<float>(renderUs.count()) / 1000.0f;
-
-        //     ImGui::End();
-        // }
+        float lineHeight = ImGui::GetTextLineHeightWithSpacing();
+        float windowPadding = 10.0f; // Padding around the text
 
         {
             bool showScoreWindow = true;
+            ImGui::SetNextWindowSize(ImVec2(210.0f, lineHeight + windowPadding), ImGuiCond_Always);
             ImGui::SetNextWindowPos(ImVec2(fimageWidth + 50.0f, 20.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
             ImGui::Begin("Current Score", &showScoreWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
             ScoreManager &scoreManager = ScoreManager::GetInstance();
@@ -189,15 +168,13 @@ int main(int, char **)
 
             ScoreManager &scoreManager = ScoreManager::GetInstance();
             std::vector<Score> highScores = scoreManager.GetHighScores();
-            float lineHeight = ImGui::GetTextLineHeightWithSpacing();
-            float windowPadding = 10.0f; // Padding around the text
 
             int nbScoresToDisplay = highScores.size() < 5 ? highScores.size() : 5;
 
             int minHeight = 0;
             if (highScores.size() == 0)
             {
-                minHeight = 0;
+                minHeight = 1;
             }
             else if (highScores.size() > 5)
             {
@@ -208,7 +185,6 @@ int main(int, char **)
                 minHeight = highScores.size();
             }
 
-            highScores.size() == 0 ? 1 : highScores.size();
             float windowHeight = (minHeight + 1) * lineHeight + windowPadding * 2; // +1 for "Leader board" text
 
             ImGui::SetNextWindowSize(ImVec2(210.0f, windowHeight), ImGuiCond_Always);
@@ -255,7 +231,6 @@ int main(int, char **)
 
         glfwSwapBuffers(window);
         glfwPollEvents();
-        std::this_thread::sleep_until(next_update);
     }
 #ifdef __EMSCRIPTEN__
     EMSCRIPTEN_MAINLOOP_END;

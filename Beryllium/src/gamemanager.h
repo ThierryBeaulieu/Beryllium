@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdlib>
+#include <cstring>
 #include <future>
 #include <time.h>
 #include <random>
@@ -51,7 +52,7 @@ public:
     void SetGridWidth(int gridWidth);
     void SetGridHeight(int gridHeight);
 
-    void Update();
+    void Update(const std::chrono::duration<double> &elapsedTime);
     void HandleInput();
 
     void InitializeFood();
@@ -90,4 +91,6 @@ private:
     Direction m_CurrentDirection;
     GameState m_GameState;
     bool *m_SendForm;
+    std::chrono::duration<double> m_TimeSinceLastMove{0.0};
+    std::chrono::duration<double> m_SnakeSpeed{0.2};
 };

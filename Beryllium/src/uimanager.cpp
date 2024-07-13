@@ -116,6 +116,19 @@ void UIManager::DisplayButton(UI ui, const char *buttonName, ImTextureID texture
     style.FrameBorderSize = originalFrameBorderSize;
 }
 
+void UIManager::DisplayVictory(UI ui)
+{
+    ImVec2 windowSize = ImGui::GetWindowSize();
+    ImVec2 buttonSize = ImVec2(210.0f, 62.0f);
+
+    ImVec2 buttonPos = ImVec2(
+        (windowSize.x - buttonSize.x) / 2.0f,
+        (windowSize.y - buttonSize.y) / 2.0f);
+
+    ImGui::SetCursorPos(buttonPos);
+    ImGui::Text("Congratulations! 🎉");
+}
+
 void UIManager::DisplayInputField(UI ui)
 {
     ImGui::Begin("Player Information");
