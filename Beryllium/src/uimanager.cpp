@@ -66,6 +66,28 @@ void UIManager::DisplayButton(UI ui, const char *buttonName, ImTextureID texture
         (windowSize.x - buttonSize.x) / 2.0f,
         (windowSize.y - buttonSize.y) / 2.0f);
 
+    // Save current style
+    ImGuiStyle &style = ImGui::GetStyle();
+    ImVec4 originalColor = style.Colors[ImGuiCol_Button];
+    ImVec4 originalHoveredColor = style.Colors[ImGuiCol_ButtonHovered];
+    ImVec4 originalActiveColor = style.Colors[ImGuiCol_ButtonActive];
+    float originalFrameRounding = style.FrameRounding;
+    float originalFrameBorderSize = style.FrameBorderSize;
+
+    // Set new style
+    style.Colors[ImGuiCol_Button] = ImVec4(0, 0, 0, 0);        // Transparent background
+    style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0, 0, 0, 0); // Transparent hovered background
+    style.Colors[ImGuiCol_ButtonActive] = ImVec4(0, 0, 0, 0);  // Transparent active background
+    style.FrameRounding = 0.0f;                                // No rounding
+    style.FrameBorderSize = 0.0f;                              // No border
+
     ImGui::SetCursorPos(buttonPos);
     m_UIs[ui].isButtonActive = ImGui::ImageButton(textureID, buttonSize);
+
+    // Restore original style
+    style.Colors[ImGuiCol_Button] = originalColor;
+    style.Colors[ImGuiCol_ButtonHovered] = originalHoveredColor;
+    style.Colors[ImGuiCol_ButtonActive] = originalActiveColor;
+    style.FrameRounding = originalFrameRounding;
+    style.FrameBorderSize = originalFrameBorderSize;
 }
