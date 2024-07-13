@@ -1,7 +1,7 @@
 #include "gamemanager.h"
 
 GameManager::GameManager()
-    : m_GridWidth(0), m_GridHeight(0), m_CurrentDirection(Direction::None), m_GameState(GameState::MainMenu), m_score(0)
+    : m_GridWidth(0), m_GridHeight(0), m_CurrentDirection(Direction::None), m_GameState(GameState::MainMenu)
 {
     std::thread thread_obj(&GameManager::PlayBackgroundSound, this);
     thread_obj.detach();
@@ -69,11 +69,6 @@ void GameManager::Update()
             m_FoodPosition.clear();
         }
 
-        ScoreManager &scoreManager = ScoreManager::GetInstance();
-        // todo ask user for fname and lname
-        scoreManager.AddScore(Score("Beaulieu", "Thierry", m_score));
-        m_score = 0;
-
         UIManager &uiManager = UIManager::GetInstance();
         bool buttonState = uiManager.DisplayUI(UI::GameOver);
         if (buttonState)
@@ -100,7 +95,9 @@ void GameManager::Update()
             std::thread thread_obj(&GameManager::PlayUpgradeSound, this);
             thread_obj.detach();
 
-            m_score++;
+            ScoreManager &scoreManager = ScoreManager::GetInstance();
+            scoreManager.IncrementPlayerScore();
+
             m_FoodPosition.pop_back();
             m_SnakePosition.push_back(foodPosition);
             break;
@@ -113,6 +110,17 @@ void GameManager::Update()
             break;
         }
     }
+}
+
+void GameManager::HandleDeath()
+{
+    m_GameState = GameState::Over;
+    std::thread thread_obj(&GameManager::PlayGameOverSound, this);
+    thread_obj.detach();
+
+    ScoreManager &scoreManager = ScoreManager::GetInstance();
+    scoreManager.AddScore(Score("Beaulieu", "Thierry", scoreManager.GetPlayerScore()));
+    scoreManager.SetPlayerScore(0);
 }
 
 void GameManager::HandleInput()
@@ -130,9 +138,7 @@ void GameManager::HandleInput()
     case Direction::Up:
         if (front.second <= 0)
         {
-            m_GameState = GameState::Over;
-            std::thread thread_obj(&GameManager::PlayGameOverSound, this);
-            thread_obj.detach();
+            HandleDeath();
         }
 
         if (front.second - 1 < 0)
@@ -145,9 +151,7 @@ void GameManager::HandleInput()
     case Direction::Down:
         if (front.second >= m_GridHeight - 1)
         {
-            m_GameState = GameState::Over;
-            std::thread thread_obj(&GameManager::PlayGameOverSound, this);
-            thread_obj.detach();
+            HandleDeath();
         }
 
         if (front.second + 1 >= m_GridHeight)
@@ -160,9 +164,7 @@ void GameManager::HandleInput()
     case Direction::Left:
         if (front.first <= 0)
         {
-            m_GameState = GameState::Over;
-            std::thread thread_obj(&GameManager::PlayGameOverSound, this);
-            thread_obj.detach();
+            HandleDeath();
         }
 
         if (front.first - 1 < 0)
@@ -175,9 +177,7 @@ void GameManager::HandleInput()
     case Direction::Right:
         if (front.first >= m_GridWidth - 1)
         {
-            m_GameState = GameState::Over;
-            std::thread thread_obj(&GameManager::PlayGameOverSound, this);
-            thread_obj.detach();
+            HandleDeath();
         }
 
         if (front.first + 1 >= m_GridWidth)

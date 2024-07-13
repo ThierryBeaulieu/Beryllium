@@ -62,6 +62,8 @@ public:
     void InitGame();
     void SetInitDirection();
 
+    void HandleDeath();
+
     // tbeaulieu2 : handle the input in a different way?
     void SetDirectionUp();
     void SetDirectionDown();
@@ -87,5 +89,4 @@ private:
 
     Direction m_CurrentDirection;
     GameState m_GameState;
-    int m_score;
 };

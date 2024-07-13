@@ -56,7 +56,7 @@ bool Score::operator<(const Score &score) const
     return score.m_Value < m_Value;
 }
 
-ScoreManager::ScoreManager()
+ScoreManager::ScoreManager() : m_PlayerScore(0)
 {
     std::ifstream file(HIGH_SCORES_FILE_NAME);
 
@@ -135,4 +135,19 @@ std::vector<Score> ScoreManager::GetHighScores()
               { return a < b; });
 
     return scores;
+}
+
+int ScoreManager::GetPlayerScore()
+{
+    return m_PlayerScore;
+}
+
+void ScoreManager::SetPlayerScore(int playerScore)
+{
+    m_PlayerScore = playerScore;
+}
+
+void ScoreManager::IncrementPlayerScore()
+{
+    m_PlayerScore++;
 }

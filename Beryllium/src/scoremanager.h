@@ -43,10 +43,15 @@ public:
     std::vector<Score> GetHighScores();
     void AddScore(const Score &score);
 
+    int GetPlayerScore();
+    void SetPlayerScore(int playerScore);
+    void IncrementPlayerScore();
+
 private:
     ScoreManager();
     ~ScoreManager() = default;
     // tbeaulieu 2: todo place in its own util file
     std::vector<std::string> Split(const std::string &s, char delimiter);
     // tbeaulieu end
+    int m_PlayerScore;
 };
