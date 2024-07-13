@@ -13,17 +13,15 @@ class Score
 {
 public:
     Score(const std::vector<std::string> &content);
-    Score(const std::string &id, const std::string &lastName, const std::string &firstName, const std::string &score);
+    Score(const std::string &lastName, const std::string &firstName, const std::string &score);
 
     bool operator<(const Score &score) const;
 
-    const std::string &GetID() const;
     const std::string &GetLastName() const;
     const std::string &GetFirstName() const;
     int GetValue() const;
 
 private:
-    std::string m_Id;
     std::string m_LastName;
     std::string m_FirstName;
     int m_Value;

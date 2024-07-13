@@ -2,17 +2,16 @@
 
 Score::Score(const std::vector<std::string> &content)
 {
-    if (content.size() != 4)
+    if (content.size() != 3)
     {
         std::cerr << "Error the high score file is unreadable" << std::endl;
     }
 
-    *this = Score(content[0], content[1], content[2], content[3]);
+    *this = Score(content[0], content[1], content[2]);
 }
 
-Score::Score(const std::string &id, const std::string &lastName, const std::string &firstName, const std::string &score)
-    : m_Id(id),
-      m_LastName(lastName),
+Score::Score(const std::string &lastName, const std::string &firstName, const std::string &score)
+    : m_LastName(lastName),
       m_FirstName(firstName)
 {
     std::cout << "Debug: score string is '" << score << "'" << std::endl;
@@ -30,11 +29,6 @@ Score::Score(const std::string &id, const std::string &lastName, const std::stri
     {
         std::cerr << "Out of range: " << e.what() << std::endl;
     }
-}
-
-const std::string &Score::GetID() const
-{
-    return m_Id;
 }
 
 const std::string &Score::GetLastName() const
@@ -105,7 +99,7 @@ void ScoreManager::AddScore(const Score &score)
         return;
     }
 
-    file << score.GetID() << "," << score.GetLastName() << "," << score.GetFirstName() << "," << score.GetValue() << std::endl;
+    file << score.GetLastName() << "," << score.GetFirstName() << "," << score.GetValue() << std::endl;
 
     file.close();
 }
