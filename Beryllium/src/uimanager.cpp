@@ -115,8 +115,13 @@ void UIManager::DisplayInputField(UI ui)
 {
     ImGui::Begin("Player Information");
 
-    ImGui::InputText("First Name", m_UserData.firstName, IM_ARRAYSIZE(m_UserData.firstName));
-    ImGui::InputText("Last Name", m_UserData.lastName, IM_ARRAYSIZE(m_UserData.lastName));
+    ImGui::Text("First Name:");
+    ImGui::SameLine();
+    ImGui::InputText("##firstName", m_UserData.firstName, IM_ARRAYSIZE(m_UserData.firstName));
+
+    ImGui::Text("Last Name: ");
+    ImGui::SameLine();
+    ImGui::InputText("##lastName", m_UserData.lastName, IM_ARRAYSIZE(m_UserData.lastName));
 
     m_UIs[ui].isButtonActive = ImGui::Button("Submit");
 
