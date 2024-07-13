@@ -1,10 +1,5 @@
 #include "scoremanager.h"
 
-Score::Score()
-{
-    *this = Score("---", "---", "---", "0");
-}
-
 Score::Score(const std::vector<std::string> &content)
 {
     // Files contains oldest to newest score
