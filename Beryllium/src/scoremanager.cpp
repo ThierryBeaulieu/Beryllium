@@ -14,8 +14,6 @@ Score::Score(const std::string &lastName, const std::string &firstName, const st
     : m_LastName(lastName),
       m_FirstName(firstName)
 {
-    std::cout << "Debug: score string is '" << score << "'" << std::endl;
-
     try
     {
         int number = std::stoi(score);
