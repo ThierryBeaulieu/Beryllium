@@ -20,7 +20,14 @@ I would also use Dispatcher to handle the UI. In terms of the rendering pipeline
 
 ## How to build locally
 
-This project uses `CMake`. I personally used the `CMake GUI` to `Configure` and `Generate` the project. By the end of the project I realized that the integration of the OpenAL library broke the command line `mkdir build && cd build && cmake .. && make`. This might be fixed later, but at the moment, I suggest you use `CMake GUI`. Just select `Berylllium/Berrylium` as the source directory and `Beryllium/Beryllium/build` as the output directory, press `Configure` and then `Generate`. You should now have a project that works on all platforms. I never tried it on Linux, but it technically should.
+This project uses `CMake`. I personally used the `CMake GUI` to `Configure` and `Generate` the project. By the end of the project I realized that the integration of the OpenAL library broke the command line `mkdir build && cd build && cmake .. && make`. This might be fixed later, but at the moment, I suggest you use the `CMake GUI`.
+
+1. Select `Berylllium/Berrylium` as the source directory
+2. Select `Beryllium/Beryllium/build` as the output directory
+3. Press on the `Configure` button (don't touch to the configuration macros)
+4. Press on the `Generate` button.
+
+You should now have a project that works on all platforms..
 
 
 
