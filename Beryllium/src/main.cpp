@@ -183,7 +183,6 @@ int main(int, char **)
                 minHeight = highScores.size();
             }
 
-            highScores.size() == 0 ? 1 : highScores.size();
             float windowHeight = (minHeight + 1) * lineHeight + windowPadding * 2; // +1 for "Leader board" text
 
             ImGui::SetNextWindowSize(ImVec2(210.0f, windowHeight), ImGuiCond_Always);
