@@ -192,7 +192,23 @@ int main(int, char **)
             float lineHeight = ImGui::GetTextLineHeightWithSpacing();
             float windowPadding = 10.0f; // Padding around the text
 
-            int minHeight = highScores.size() == 0 ? 1 : highScores.size();
+            int nbScoresToDisplay = highScores.size() < 5 ? highScores.size() : 5;
+
+            int minHeight = 0;
+            if (highScores.size() == 0)
+            {
+                minHeight = 0;
+            }
+            else if (highScores.size() > 5)
+            {
+                minHeight = 5;
+            }
+            else
+            {
+                minHeight = highScores.size();
+            }
+
+            highScores.size() == 0 ? 1 : highScores.size();
             float windowHeight = (minHeight + 1) * lineHeight + windowPadding * 2; // +1 for "Leader board" text
 
             ImGui::SetNextWindowSize(ImVec2(210.0f, windowHeight), ImGuiCond_Always);
@@ -208,8 +224,9 @@ int main(int, char **)
             }
             else
             {
-                for (const auto &score : highScores)
+                for (int i = 0; i < nbScoresToDisplay; ++i)
                 {
+                    const auto &score = highScores[i];
                     std::string scoreText = score.GetFirstName() + " " + score.GetLastName() + " : " + std::to_string(score.GetValue());
                     ImGui::Text("%s", scoreText.c_str());
                 }
