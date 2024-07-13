@@ -52,7 +52,7 @@ int main(int, char **)
 #endif
 
     // Create window with graphics context
-    GLFWwindow *window = glfwCreateWindow(1600, 980, "Snake", nullptr, nullptr);
+    GLFWwindow *window = glfwCreateWindow(1175, 650, "Snake", nullptr, nullptr);
     if (window == nullptr)
         return 1;
     glfwMakeContextCurrent(window);
