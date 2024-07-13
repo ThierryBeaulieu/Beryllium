@@ -201,14 +201,12 @@ int main(int, char **)
             ImGui::Text("Leader board");
             ImGui::Separator();
 
-            // Display each score
             for (const auto &score : highScores)
             {
                 std::string scoreText = score.GetFirstName() + " " + score.GetLastName() + " : " + std::to_string(score.GetValue());
                 ImGui::Text("%s", scoreText.c_str());
             }
 
-            // End the ImGui window
             ImGui::End();
         }
 
