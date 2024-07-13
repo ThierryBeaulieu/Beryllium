@@ -185,20 +185,30 @@ int main(int, char **)
 
         {
             bool showScoreWindow = true;
-            // ImGui::SetNextWindowSize(ImVec2(210.0f, 150.0f), ImGuiCond_FirstUseEver); // Set a fixed window size
-            ImGui::SetNextWindowPos(ImVec2(fimageWidth + 50.0f, 60.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
-            ImGui::Begin("Highest scores", &showScoreWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
-            ImGui::Text("Leader board");
-            ImGui::Separator();
+            ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings;
 
             ScoreManager &scoreManager = ScoreManager::GetInstance();
             std::vector<Score> highScores = scoreManager.GetHighScores();
+            float lineHeight = ImGui::GetTextLineHeightWithSpacing();
+            float windowPadding = 10.0f; // Padding around the text
 
+            float windowHeight = (highScores.size() + 1) * lineHeight + windowPadding * 2; // +1 for "Leader board" text
+
+            ImGui::SetNextWindowSize(ImVec2(210.0f, windowHeight), ImGuiCond_Always);
+            ImGui::SetNextWindowPos(ImVec2(fimageWidth + 50.0f, 60.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
+
+            ImGui::Begin("Highest scores", &showScoreWindow, windowFlags);
+            ImGui::Text("Leader board");
+            ImGui::Separator();
+
+            // Display each score
             for (const auto &score : highScores)
             {
-                std::string scoreText = score.GetFirstName() + ": " + std::to_string(score.GetValue());
+                std::string scoreText = score.GetFirstName() + " " + score.GetLastName() + " : " + std::to_string(score.GetValue());
                 ImGui::Text("%s", scoreText.c_str());
             }
+
+            // End the ImGui window
             ImGui::End();
         }
 
