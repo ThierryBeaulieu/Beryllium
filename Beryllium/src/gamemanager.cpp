@@ -38,7 +38,7 @@ void GameManager::SetGridHeight(int gridHeight)
     m_GridHeight = gridHeight;
 }
 
-void GameManager::Update()
+void GameManager::Update(const std::chrono::duration<double> &elapsedTime)
 {
     if (m_GameState == GameState::MainMenu)
     {
@@ -95,6 +95,15 @@ void GameManager::Update()
     }
 
     InitGame();
+
+    m_TimeSinceLastMove += elapsedTime;
+
+    if (m_TimeSinceLastMove < m_SnakeSpeed)
+    {
+        return;
+    }
+    m_TimeSinceLastMove -= m_SnakeSpeed;
+
     HandleInput();
 
     std::pair<int, int> foodPosition = m_FoodPosition.front();

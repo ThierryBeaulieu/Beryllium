@@ -109,7 +109,7 @@ void Engine::Render()
 void Engine::Update(const std::chrono::duration<double> &elapsedTime)
 {
     HandleInput();
-    m_GameManager.Update();
+    m_GameManager.Update(elapsedTime);
 }
 
 void Engine::SetPixel(int x, int y, uint32_t color)
