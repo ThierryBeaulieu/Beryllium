@@ -9,9 +9,9 @@ OpenGL and GLFW based game engine with rendering performance
 
 Hi! Thanks for taking a look at this project. This project took me about three weeks to make.
 
-My goal doing this project was to build a game without a game engine from scratch. I honestly didn't expect that it was going to be this complicated. A game as simple as this one contains sound, input handling, rendering, state management, UIs, a game loop, cross-compatibility etc.
+My goal doing this project was to build a game without a game engine. I honestly didn't expect that it was going to be this complicated. A game as simple as this one contains sound, input handling, rendering, state management, UIs, a game loop, cross-compatibility etc.
 
-I had to make difficult choices during the process. I didn't have that much experience with game engine architecture so my mindset was "let's just do something that works and then fix it later". However, because of this, I made terrible architectural mistakes at the beginning that made it super hard to continue the developpement at the end.
+I had to make difficult choices during the process. I didn't have that much experience with game engine architectures so my mindset was "let's just do something that works and then fix it later". However, because of this, I made terrible architectural mistakes at the beginning it made it super hard to continue the developpement.
 
 I'm also using cpp which makes things a whole lot more complicated. I wanted to make this project cross-compatible, and every time that I would switch between platforms, I would find new issues with the project. Anyway, in terms of code quality, it's probably the thing that I'm the least proud of.
 
