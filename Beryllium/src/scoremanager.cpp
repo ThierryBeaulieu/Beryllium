@@ -10,6 +10,13 @@ Score::Score(const std::vector<std::string> &content)
     *this = Score(content[0], content[1], content[2]);
 }
 
+Score::Score(const std::string &lastName, const std::string &firstName, int score)
+    : m_LastName(lastName),
+      m_FirstName(firstName),
+      m_Value(score)
+{
+}
+
 Score::Score(const std::string &lastName, const std::string &firstName, const std::string &score)
     : m_LastName(lastName),
       m_FirstName(firstName)

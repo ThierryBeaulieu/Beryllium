@@ -10,6 +10,7 @@
 
 #include "constants.h"
 #include "imgui.h"
+#include "scoremanager.h"
 #include "soundbuffer.h"
 #include "sounddevice.h"
 #include "soundsource.h"
@@ -86,4 +87,5 @@ private:
 
     Direction m_CurrentDirection;
     GameState m_GameState;
+    int m_score;
 };

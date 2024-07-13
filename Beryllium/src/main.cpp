@@ -160,22 +160,30 @@ int main(int, char **)
             renderUs = std::chrono::duration_cast<std::chrono::microseconds>(endRender - beginRender);
         }
 
+        // {
+        //     bool showPerformanceWindow = true;
+        //     ImGui::SetNextWindowPos(ImVec2(fimageWidth + 30.0f, 20.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
+        //     ImGui::Begin("Performance", &showPerformanceWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+        //     ImGui::Text("Average Framerate: %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+
+        //     float constexpr ema_coefficient = 0.05f;
+        //     float const updateMs = static_cast<float>(updateUs.count()) / 1000.0f;
+        //     float const renderMs = static_cast<float>(renderUs.count()) / 1000.0f;
+
+        //     ImGui::End();
+        // }
+
         {
-            bool showPerformanceWindow = true;
+            bool showScoreWindow = true;
             ImGui::SetNextWindowPos(ImVec2(fimageWidth + 30.0f, 20.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
-            ImGui::Begin("Performance", &showPerformanceWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
-            ImGui::Text("Average Framerate: %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-
-            float constexpr ema_coefficient = 0.05f;
-            float const updateMs = static_cast<float>(updateUs.count()) / 1000.0f;
-            float const renderMs = static_cast<float>(renderUs.count()) / 1000.0f;
-
+            ImGui::Begin("Score", &showScoreWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+            ImGui::Text("Current Score : %d", 10);
             ImGui::End();
         }
 
         {
             bool showScoreWindow = true;
-            ImGui::SetNextWindowPos(ImVec2(fimageWidth + 30.0f, 50.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
+            ImGui::SetNextWindowPos(ImVec2(fimageWidth + 30.0f, 60.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
             ImGui::Begin("Scores", &showScoreWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
 
             ScoreManager &scoreManager = ScoreManager::GetInstance();

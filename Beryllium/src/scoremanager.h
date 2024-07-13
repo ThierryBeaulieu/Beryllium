@@ -13,6 +13,7 @@ class Score
 {
 public:
     Score(const std::vector<std::string> &content);
+    Score(const std::string &lastName, const std::string &firstName, int score);
     Score(const std::string &lastName, const std::string &firstName, const std::string &score);
 
     bool operator<(const Score &score) const;

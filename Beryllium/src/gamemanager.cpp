@@ -1,7 +1,7 @@
 #include "gamemanager.h"
 
 GameManager::GameManager()
-    : m_GridWidth(0), m_GridHeight(0), m_CurrentDirection(Direction::None), m_GameState(GameState::MainMenu)
+    : m_GridWidth(0), m_GridHeight(0), m_CurrentDirection(Direction::None), m_GameState(GameState::MainMenu), m_score(0)
 {
     std::thread thread_obj(&GameManager::PlayBackgroundSound, this);
     thread_obj.detach();
@@ -69,6 +69,10 @@ void GameManager::Update()
             m_FoodPosition.clear();
         }
 
+        ScoreManager &scoreManager = ScoreManager::GetInstance();
+        scoreManager.AddScore(Score("Beaulieu", "Thierry", m_score));
+        m_score = 0;
+
         UIManager &uiManager = UIManager::GetInstance();
         bool buttonState = uiManager.DisplayUI(UI::GameOver);
         if (buttonState)
@@ -95,6 +99,7 @@ void GameManager::Update()
             std::thread thread_obj(&GameManager::PlayUpgradeSound, this);
             thread_obj.detach();
 
+            m_score++;
             m_FoodPosition.pop_back();
             m_SnakePosition.push_back(foodPosition);
             break;
