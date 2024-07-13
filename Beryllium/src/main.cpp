@@ -149,8 +149,12 @@ int main(int, char **)
         engine.Update(dt);
         engine.Render();
 
+        float lineHeight = ImGui::GetTextLineHeightWithSpacing();
+        float windowPadding = 10.0f; // Padding around the text
+
         {
             bool showScoreWindow = true;
+            ImGui::SetNextWindowSize(ImVec2(210.0f, lineHeight + windowPadding), ImGuiCond_Always);
             ImGui::SetNextWindowPos(ImVec2(fimageWidth + 50.0f, 20.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
             ImGui::Begin("Current Score", &showScoreWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
             ScoreManager &scoreManager = ScoreManager::GetInstance();
@@ -164,8 +168,6 @@ int main(int, char **)
 
             ScoreManager &scoreManager = ScoreManager::GetInstance();
             std::vector<Score> highScores = scoreManager.GetHighScores();
-            float lineHeight = ImGui::GetTextLineHeightWithSpacing();
-            float windowPadding = 10.0f; // Padding around the text
 
             int nbScoresToDisplay = highScores.size() < 5 ? highScores.size() : 5;
 
