@@ -6,7 +6,6 @@
 #include <iostream>
 #include <vector>
 
-#include "stb_image.h"
 #include "constants.h"
 #include "gamemanager.h"
 #include "uimanager.h"
