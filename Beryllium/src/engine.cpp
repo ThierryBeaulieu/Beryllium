@@ -57,10 +57,6 @@ void Engine::HandleInput()
     {
         m_GameManager.SetDirectionRight();
     }
-    else if (glfwGetKey(m_Window, GLFW_KEY_SPACE) == GLFW_PRESS)
-    {
-        m_GameManager.ResetGame();
-    }
 }
 
 void Engine::Render()
