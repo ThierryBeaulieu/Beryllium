@@ -38,7 +38,7 @@ public:
     GLuint LoadTexture(const char *filename);
 
 private:
-    void DisplayButton(UI ui, const char *buttonName);
+    void DisplayButton(UI ui, const char *buttonName, ImTextureID textureId);
 
     UIManager();
     ~UIManager();

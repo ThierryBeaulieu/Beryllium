@@ -59,13 +59,13 @@ void UIManager::RenderUIs()
     for (const auto &[key, value] : m_UIs)
     {
         if (key == UI::MainMenu && value.isButtonShown)
-            DisplayButton(UI::MainMenu, "Start Game");
+            DisplayButton(UI::MainMenu, "Start Game", (ImTextureID)(intptr_t)m_textureIdStartNormal);
         if (key == UI::GameOver && value.isButtonShown)
-            DisplayButton(UI::GameOver, "Try Again");
+            DisplayButton(UI::GameOver, "Try Again", (ImTextureID)(intptr_t)m_textureIdTryAgainNormal);
     }
 }
 
-void UIManager::DisplayButton(UI ui, const char *buttonName)
+void UIManager::DisplayButton(UI ui, const char *buttonName, ImTextureID textureId)
 {
     ImVec2 windowSize = ImGui::GetWindowSize();
     ImVec2 buttonSize = ImVec2(210.0f, 62.0f);
@@ -94,8 +94,7 @@ void UIManager::DisplayButton(UI ui, const char *buttonName)
     bool isHovered = ImGui::IsItemHovered();
     bool isActive = ImGui::IsItemActive();
 
-    GLuint currentTexture = m_textureIdStartActive;
-    m_UIs[ui].isButtonActive = ImGui::ImageButton((ImTextureID)(intptr_t)currentTexture, buttonSize);
+    m_UIs[ui].isButtonActive = ImGui::ImageButton(textureId, buttonSize);
 
     if (isHovered)
         ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
