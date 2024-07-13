@@ -15,6 +15,8 @@ Score::Score(const std::string &id, const std::string &lastName, const std::stri
       m_LastName(lastName),
       m_FirstName(firstName)
 {
+    std::cout << "Debug: score string is '" << score << "'" << std::endl;
+
     try
     {
         int number = std::stoi(score);
@@ -103,7 +105,7 @@ void ScoreManager::AddScore(const Score &score)
         return;
     }
 
-    file << score.GetID() << "," << score.GetValue() << "," << score.GetLastName() << "," << score.GetFirstName() << std::endl;
+    file << score.GetID() << "," << score.GetLastName() << "," << score.GetFirstName() << "," << score.GetValue() << std::endl;
 
     file.close();
 }
