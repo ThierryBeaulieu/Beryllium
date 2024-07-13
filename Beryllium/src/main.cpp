@@ -180,7 +180,6 @@ int main(int, char **)
 
             ScoreManager &scoreManager = ScoreManager::GetInstance();
             std::vector<Score> highScores = scoreManager.GetHighScores();
-            scoreManager.AddScore(Score("Clément", "Cappart", "24"));
 
             for (const auto &score : highScores)
             {
