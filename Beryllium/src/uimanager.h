@@ -1,8 +1,10 @@
 #pragma once
 #include <GLFW/glfw3.h>
+#include <iostream>
 #include <map>
 
 #include "imgui.h"
+#include "stb_image.h"
 
 enum class UI
 {
@@ -33,12 +35,19 @@ public:
     void RemoveUI(const UI &ui);
 
     void RenderUIs();
+    GLuint LoadTexture(const char *filename);
 
 private:
-    void DisplayButton(UI ui, const char *buttonName);
+    void DisplayButton(UI ui, const char *buttonName, ImTextureID textureId);
 
     UIManager();
     ~UIManager();
 
     std::map<UI, ButtonState> m_UIs;
+    GLuint m_textureIdStartNormal;
+    GLuint m_textureIdStartHovered;
+    GLuint m_textureIdStartActive;
+    GLuint m_textureIdTryAgainNormal;
+    GLuint m_textureIdTryAgainHovered;
+    GLuint m_textureIdTryAgainActive;
 };
