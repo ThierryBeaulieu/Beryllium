@@ -172,7 +172,7 @@ int main(int, char **)
             int minHeight = 0;
             if (highScores.size() == 0)
             {
-                minHeight = 0;
+                minHeight = 1;
             }
             else if (highScores.size() > 5)
             {

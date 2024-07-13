@@ -76,7 +76,7 @@ void GameManager::Update(const std::chrono::duration<double> &elapsedTime)
         {
             ScoreManager &scoreManager = ScoreManager::GetInstance();
             UserFormData data = uiManager.GetDataForm();
-            if (data.lastName != "" || data.firstName != "")
+            if (data.lastName != "" && data.firstName != "")
             {
                 scoreManager.AddScore(Score(data.lastName, data.firstName, scoreManager.GetLastGameScore()));
             }
