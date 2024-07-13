@@ -194,9 +194,16 @@ int main(int, char **)
 
             int nbHighScore = highScores.size() < 3 ? highScores.size() : 10;
 
-            for (int i = 0; i < nbHighScore; ++i)
+            if (nbHighScore == 0)
             {
-                ImGui::Text("%s, %s Score: %d", highScores[i].GetFirstName().c_str(), highScores[i].GetLastName().c_str(), highScores[i].GetValue());
+                ImGui::Text("No score currently available");
+            }
+            else
+            {
+                for (int i = 0; i < nbHighScore; ++i)
+                {
+                    ImGui::Text("%s, %s Score: %d", highScores[i].GetFirstName().c_str(), highScores[i].GetLastName().c_str(), highScores[i].GetValue());
+                }
             }
 
             ImGui::End();
