@@ -121,6 +121,9 @@ void GameManager::HandleDeath()
     ScoreManager &scoreManager = ScoreManager::GetInstance();
     scoreManager.AddScore(Score("Beaulieu", "Thierry", scoreManager.GetPlayerScore()));
     scoreManager.SetPlayerScore(0);
+
+    UIManager &uiManager = UIManager::GetInstance();
+    bool state = uiManager.DisplayUI(UI::AskingForPlayerName);
 }
 
 void GameManager::HandleInput()

@@ -10,9 +10,15 @@ enum class UI
 {
     MainMenu,
     GameOver,
+    AskingForPlayerName,
     None,
 };
 
+struct UserFormData
+{
+    char firstName[128] = "";
+    char lastName[128] = "";
+};
 struct ButtonState
 {
     bool isButtonShown;
@@ -39,6 +45,7 @@ public:
 
 private:
     void DisplayButton(UI ui, const char *buttonName, ImTextureID textureId);
+    void DisplayInputField(UI ui);
 
     UIManager();
     ~UIManager();
@@ -50,4 +57,5 @@ private:
     GLuint m_textureIdTryAgainNormal;
     GLuint m_textureIdTryAgainHovered;
     GLuint m_textureIdTryAgainActive;
+    UserFormData m_UserData;
 };

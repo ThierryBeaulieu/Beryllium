@@ -62,6 +62,8 @@ void UIManager::RenderUIs()
             DisplayButton(UI::MainMenu, "Start Game", (ImTextureID)(intptr_t)m_textureIdStartNormal);
         if (key == UI::GameOver && value.isButtonShown)
             DisplayButton(UI::GameOver, "Try Again", (ImTextureID)(intptr_t)m_textureIdTryAgainNormal);
+        if (key == UI::AskingForPlayerName && value.isButtonShown)
+            DisplayInputField(UI::AskingForPlayerName);
     }
 }
 
@@ -107,4 +109,16 @@ void UIManager::DisplayButton(UI ui, const char *buttonName, ImTextureID texture
     style.Colors[ImGuiCol_ButtonActive] = originalActiveColor;
     style.FrameRounding = originalFrameRounding;
     style.FrameBorderSize = originalFrameBorderSize;
+}
+
+void UIManager::DisplayInputField(UI ui)
+{
+    ImGui::Begin("Player Information");
+
+    ImGui::InputText("First Name", m_UserData.firstName, IM_ARRAYSIZE(m_UserData.firstName));
+    ImGui::InputText("Last Name", m_UserData.lastName, IM_ARRAYSIZE(m_UserData.lastName));
+
+    m_UIs[ui].isButtonActive = ImGui::Button("Submit");
+
+    ImGui::End();
 }

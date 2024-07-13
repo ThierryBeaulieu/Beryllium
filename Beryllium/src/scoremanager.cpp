@@ -51,6 +51,11 @@ int Score::GetValue() const
     return m_Value;
 }
 
+void Score::SetValue(int newValue)
+{
+    m_Value = newValue;
+}
+
 bool Score::operator<(const Score &score) const
 {
     return score.m_Value < m_Value;

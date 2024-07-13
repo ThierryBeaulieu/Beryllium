@@ -21,6 +21,7 @@ public:
     const std::string &GetLastName() const;
     const std::string &GetFirstName() const;
     int GetValue() const;
+    void SetValue(int newValue);
 
 private:
     std::string m_LastName;
