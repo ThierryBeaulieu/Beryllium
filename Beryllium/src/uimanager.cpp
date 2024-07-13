@@ -2,14 +2,22 @@
 
 UIManager::UIManager()
 {
-    m_textureIdStart = LoadTexture("sprites/button_start_light_red.png");
-    m_textureIdTryAgain = LoadTexture("sprites/button_start_dark_red.png");
+    m_textureIdStartNormal = LoadTexture("sprites/button_start_game_normal_.png");
+    m_textureIdStartHovered = LoadTexture("sprites/button_start_game_hovered.png");
+    m_textureIdStartActive = LoadTexture("sprites/button_start_game_active.png");
+    m_textureIdTryAgainNormal = LoadTexture("sprites/button_try_again_normal.png");
+    m_textureIdTryAgainHovered = LoadTexture("sprites/button_try_again_hovered.png");
+    m_textureIdTryAgainActive = LoadTexture("sprites/button_try_again_active.png");
 }
 
 UIManager::~UIManager()
 {
-    glDeleteTextures(1, &m_textureIdStart);
-    glDeleteTextures(1, &m_textureIdTryAgain);
+    glDeleteTextures(1, &m_textureIdStartNormal);
+    glDeleteTextures(1, &m_textureIdStartHovered);
+    glDeleteTextures(1, &m_textureIdStartActive);
+    glDeleteTextures(1, &m_textureIdTryAgainNormal);
+    glDeleteTextures(1, &m_textureIdTryAgainHovered);
+    glDeleteTextures(1, &m_textureIdTryAgainActive);
 }
 
 bool UIManager::DisplayUI(const UI &ui)
@@ -51,9 +59,9 @@ void UIManager::RenderUIs()
     for (const auto &[key, value] : m_UIs)
     {
         if (key == UI::MainMenu && value.isButtonShown)
-            DisplayButton(UI::MainMenu, "Start Game", (ImTextureID)(intptr_t)m_textureIdStart);
+            DisplayButton(UI::MainMenu, "Start Game", (ImTextureID)(intptr_t)m_textureIdStartNormal);
         if (key == UI::GameOver && value.isButtonShown)
-            DisplayButton(UI::GameOver, "Try Again", (ImTextureID)(intptr_t)m_textureIdTryAgain);
+            DisplayButton(UI::GameOver, "Try Again", (ImTextureID)(intptr_t)m_textureIdTryAgainNormal);
     }
 }
 

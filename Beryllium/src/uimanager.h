@@ -44,6 +44,10 @@ private:
     ~UIManager();
 
     std::map<UI, ButtonState> m_UIs;
-    GLuint m_textureIdStart;
-    GLuint m_textureIdTryAgain;
+    GLuint m_textureIdStartNormal;
+    GLuint m_textureIdStartHovered;
+    GLuint m_textureIdStartActive;
+    GLuint m_textureIdTryAgainNormal;
+    GLuint m_textureIdTryAgainHovered;
+    GLuint m_textureIdTryAgainActive;
 };
