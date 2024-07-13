@@ -52,10 +52,11 @@ int main(int, char **)
 #endif
 
     // Create window with graphics context
-    GLFWwindow *window = glfwCreateWindow(1175, 650, "Snake", nullptr, nullptr);
+    GLFWwindow *window = glfwCreateWindow(1175, 675, "Snake", nullptr, nullptr);
     if (window == nullptr)
         return 1;
     glfwMakeContextCurrent(window);
+    glfwSetWindowAttrib(window, GLFW_RESIZABLE, GLFW_FALSE);
     glfwSwapInterval(1);
 
     // Setup Dear ImGui context
