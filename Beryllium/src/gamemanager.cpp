@@ -1,7 +1,7 @@
 #include "gamemanager.h"
 
 GameManager::GameManager()
-    : m_GridWidth(0), m_GridHeight(0), m_CurrentDirection(Direction::None), m_GameState(GameState::MainMenu)
+    : m_GridWidth(0), m_GridHeight(0), m_CurrentDirection(Direction::None), m_GameState(GameState::MainMenu), m_SendForm(nullptr)
 {
     std::thread thread_obj(&GameManager::PlayBackgroundSound, this);
     thread_obj.detach();
@@ -70,9 +70,19 @@ void GameManager::Update()
         }
 
         UIManager &uiManager = UIManager::GetInstance();
+
+        if (m_SendForm != nullptr && *m_SendForm)
+        {
+            ScoreManager &scoreManager = ScoreManager::GetInstance();
+            UserFormData data = uiManager.GetDataForm();
+            scoreManager.AddScore(Score(data.lastName, data.firstName, scoreManager.GetPlayerScore()));
+            uiManager.RemoveUI(UI::AskingForPlayerName);
+        }
+
         bool buttonState = uiManager.DisplayUI(UI::GameOver);
         if (buttonState)
         {
+            uiManager.RemoveUI(UI::AskingForPlayerName);
             uiManager.RemoveUI(UI::GameOver);
             m_GameState = GameState::Playing;
             ResetGame();
@@ -123,7 +133,7 @@ void GameManager::HandleDeath()
     scoreManager.SetPlayerScore(0);
 
     UIManager &uiManager = UIManager::GetInstance();
-    bool state = uiManager.DisplayUI(UI::AskingForPlayerName);
+    m_SendForm = &uiManager.DisplayUI(UI::AskingForPlayerName);
 }
 
 void GameManager::HandleInput()

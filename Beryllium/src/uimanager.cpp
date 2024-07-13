@@ -20,7 +20,7 @@ UIManager::~UIManager()
     glDeleteTextures(1, &m_textureIdTryAgainActive);
 }
 
-bool UIManager::DisplayUI(const UI &ui)
+bool &UIManager::DisplayUI(const UI &ui)
 {
     m_UIs[ui].isButtonShown = true;
     return m_UIs[ui].isButtonActive;
@@ -52,6 +52,11 @@ GLuint UIManager::LoadTexture(const char *filename)
 
     stbi_image_free(data);
     return textureID;
+}
+
+UserFormData UIManager::GetDataForm()
+{
+    return m_UserData;
 }
 
 void UIManager::RenderUIs()

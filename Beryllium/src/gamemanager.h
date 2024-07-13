@@ -89,4 +89,5 @@ private:
 
     Direction m_CurrentDirection;
     GameState m_GameState;
+    bool *m_SendForm;
 };

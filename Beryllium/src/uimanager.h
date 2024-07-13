@@ -37,11 +37,13 @@ public:
     UIManager(const UIManager &) = delete;
     UIManager &operator=(const UIManager &) = delete;
 
-    bool DisplayUI(const UI &ui);
+    bool &DisplayUI(const UI &ui);
     void RemoveUI(const UI &ui);
 
     void RenderUIs();
     GLuint LoadTexture(const char *filename);
+
+    UserFormData GetDataForm();
 
 private:
     void DisplayButton(UI ui, const char *buttonName, ImTextureID textureId);
