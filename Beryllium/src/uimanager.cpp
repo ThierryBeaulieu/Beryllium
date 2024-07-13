@@ -2,10 +2,14 @@
 
 UIManager::UIManager()
 {
+    m_textureIdStart = LoadTexture("sprites/button_start_light_red.png");
+    m_textureIdTryAgain = LoadTexture("sprites/button_start_dark_red.png");
 }
 
 UIManager::~UIManager()
 {
+    glDeleteTextures(1, &m_textureIdStart);
+    glDeleteTextures(1, &m_textureIdTryAgain);
 }
 
 bool UIManager::DisplayUI(const UI &ui)
@@ -44,30 +48,23 @@ GLuint UIManager::LoadTexture(const char *filename)
 
 void UIManager::RenderUIs()
 {
-
-    GLuint textureId = LoadTexture("sprites/button_start_light_red.png");
-    GLuint textureId2 = LoadTexture("sprites/button_start_dark_red.png");
-
     for (const auto &[key, value] : m_UIs)
     {
         if (key == UI::MainMenu && value.isButtonShown)
-            DisplayButton(UI::MainMenu, "Start Game", (ImTextureID)(intptr_t)textureId);
+            DisplayButton(UI::MainMenu, "Start Game", (ImTextureID)(intptr_t)m_textureIdStart);
         if (key == UI::GameOver && value.isButtonShown)
-            DisplayButton(UI::GameOver, "Try Again", (ImTextureID)(intptr_t)textureId2);
+            DisplayButton(UI::GameOver, "Try Again", (ImTextureID)(intptr_t)m_textureIdTryAgain);
     }
 }
 
 void UIManager::DisplayButton(UI ui, const char *buttonName, ImTextureID textureID)
 {
-    ImVec2 imageStartPos = ImGui::GetItemRectMin();
-    ImVec2 imageEndPos = ImGui::GetItemRectMax();
-    ImVec2 imageSize = ImVec2(imageEndPos.x - imageStartPos.x, imageEndPos.y - imageStartPos.y);
-
+    ImVec2 windowSize = ImGui::GetWindowSize();
     ImVec2 buttonSize = ImVec2(168.0f, 68.0f);
 
     ImVec2 buttonPos = ImVec2(
-        imageStartPos.x + (imageSize.x - buttonSize.x) / 2.0f,
-        imageStartPos.y + (imageSize.y - buttonSize.y) / 2.0f);
+        (windowSize.x - buttonSize.x) / 2.0f,
+        (windowSize.y - buttonSize.y) / 2.0f);
 
     ImGui::SetCursorPos(buttonPos);
     m_UIs[ui].isButtonActive = ImGui::ImageButton(textureID, buttonSize);
