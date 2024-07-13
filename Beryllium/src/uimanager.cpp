@@ -2,7 +2,7 @@
 
 UIManager::UIManager()
 {
-    m_textureIdStartNormal = LoadTexture("sprites/button_start_game_normal_.png");
+    m_textureIdStartNormal = LoadTexture("sprites/button_start_game_normal.png");
     m_textureIdStartHovered = LoadTexture("sprites/button_start_game_hovered.png");
     m_textureIdStartActive = LoadTexture("sprites/button_start_game_active.png");
     m_textureIdTryAgainNormal = LoadTexture("sprites/button_try_again_normal.png");
@@ -68,7 +68,7 @@ void UIManager::RenderUIs()
 void UIManager::DisplayButton(UI ui, const char *buttonName, ImTextureID textureID)
 {
     ImVec2 windowSize = ImGui::GetWindowSize();
-    ImVec2 buttonSize = ImVec2(168.0f, 68.0f);
+    ImVec2 buttonSize = ImVec2(210.0f, 62.0f);
 
     ImVec2 buttonPos = ImVec2(
         (windowSize.x - buttonSize.x) / 2.0f,
