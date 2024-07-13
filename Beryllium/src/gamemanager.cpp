@@ -70,6 +70,7 @@ void GameManager::Update()
         }
 
         ScoreManager &scoreManager = ScoreManager::GetInstance();
+        // todo ask user for fname and lname
         scoreManager.AddScore(Score("Beaulieu", "Thierry", m_score));
         m_score = 0;
 

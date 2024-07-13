@@ -175,23 +175,27 @@ int main(int, char **)
 
         {
             bool showScoreWindow = true;
-            ImGui::SetNextWindowPos(ImVec2(fimageWidth + 30.0f, 20.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
-            ImGui::Begin("Score", &showScoreWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+            ImGui::SetNextWindowPos(ImVec2(fimageWidth + 50.0f, 20.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
+            ImGui::Begin("Current Score", &showScoreWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
             ImGui::Text("Current Score : %d", 10);
             ImGui::End();
         }
 
         {
             bool showScoreWindow = true;
-            ImGui::SetNextWindowPos(ImVec2(fimageWidth + 30.0f, 60.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
-            ImGui::Begin("Scores", &showScoreWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+            ImGui::SetNextWindowPos(ImVec2(fimageWidth + 50.0f, 60.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
+            ImGui::Begin("Highest scores", &showScoreWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+            ImGui::Text("Leader board");
+            ImGui::Separator();
 
             ScoreManager &scoreManager = ScoreManager::GetInstance();
             std::vector<Score> highScores = scoreManager.GetHighScores();
 
-            for (const auto &score : highScores)
+            int nbHighScore = highScores.size() < 3 ? highScores.size() : 10;
+
+            for (int i = 0; i < nbHighScore; ++i)
             {
-                ImGui::Text("%s, %s Score: %d", score.GetFirstName().c_str(), score.GetLastName().c_str(), score.GetValue());
+                ImGui::Text("%s, %s Score: %d", highScores[i].GetFirstName().c_str(), highScores[i].GetLastName().c_str(), highScores[i].GetValue());
             }
 
             ImGui::End();

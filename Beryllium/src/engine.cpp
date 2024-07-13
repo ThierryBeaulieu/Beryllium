@@ -98,7 +98,7 @@ void Engine::Render()
     glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, g_ImageWidth, g_ImageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_ImageData);
 
-    ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
+    ImGui::SetNextWindowPos(ImVec2(20.0f, 20.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
     ImGui::Begin("Render", &showWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
 
     ImGui::Image((void *)(intptr_t)m_ImageTexture, ImVec2(g_ImageWidth, g_ImageHeight));
