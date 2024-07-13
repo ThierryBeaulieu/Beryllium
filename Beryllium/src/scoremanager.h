@@ -47,6 +47,8 @@ public:
     int GetPlayerScore();
     void SetPlayerScore(int playerScore);
     void IncrementPlayerScore();
+    int GetLastGameScore();
+    void ResetPlayerScore();
 
 private:
     ScoreManager();
@@ -55,4 +57,5 @@ private:
     std::vector<std::string> Split(const std::string &s, char delimiter);
     // tbeaulieu end
     int m_PlayerScore;
+    int m_LastGameScore;
 };

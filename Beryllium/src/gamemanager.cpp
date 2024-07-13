@@ -75,7 +75,7 @@ void GameManager::Update()
         {
             ScoreManager &scoreManager = ScoreManager::GetInstance();
             UserFormData data = uiManager.GetDataForm();
-            scoreManager.AddScore(Score(data.lastName, data.firstName, scoreManager.GetPlayerScore()));
+            scoreManager.AddScore(Score(data.lastName, data.firstName, scoreManager.GetLastGameScore()));
             uiManager.RemoveUI(UI::AskingForPlayerName);
         }
 
@@ -129,8 +129,7 @@ void GameManager::HandleDeath()
     thread_obj.detach();
 
     ScoreManager &scoreManager = ScoreManager::GetInstance();
-    scoreManager.AddScore(Score("Beaulieu", "Thierry", scoreManager.GetPlayerScore()));
-    scoreManager.SetPlayerScore(0);
+    scoreManager.ResetPlayerScore();
 
     UIManager &uiManager = UIManager::GetInstance();
     m_SendForm = &uiManager.DisplayUI(UI::AskingForPlayerName);

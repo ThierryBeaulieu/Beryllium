@@ -152,7 +152,19 @@ void ScoreManager::SetPlayerScore(int playerScore)
     m_PlayerScore = playerScore;
 }
 
+void ScoreManager::ResetPlayerScore()
+{
+    m_LastGameScore = m_PlayerScore;
+    m_PlayerScore = 0;
+}
+
 void ScoreManager::IncrementPlayerScore()
 {
     m_PlayerScore++;
+    m_LastGameScore = m_PlayerScore;
+}
+
+int ScoreManager::GetLastGameScore()
+{
+    return m_LastGameScore;
 }
