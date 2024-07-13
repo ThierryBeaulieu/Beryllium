@@ -75,7 +75,10 @@ void GameManager::Update()
         {
             ScoreManager &scoreManager = ScoreManager::GetInstance();
             UserFormData data = uiManager.GetDataForm();
-            scoreManager.AddScore(Score(data.lastName, data.firstName, scoreManager.GetLastGameScore()));
+            if (data.lastName != "" || data.firstName != "")
+            {
+                scoreManager.AddScore(Score(data.lastName, data.firstName, scoreManager.GetLastGameScore()));
+            }
             uiManager.RemoveUI(UI::AskingForPlayerName);
         }
 

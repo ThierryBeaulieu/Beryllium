@@ -53,6 +53,17 @@
         "vector": "cpp",
         "algorithm": "cpp",
         "list": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "__tree": "cpp",
+        "cinttypes": "cpp",
+        "condition_variable": "cpp",
+        "csignal": "cpp",
+        "deque": "cpp",
+        "fstream": "cpp",
+        "future": "cpp",
+        "iomanip": "cpp",
+        "iostream": "cpp",
+        "map": "cpp",
+        "unordered_set": "cpp"
     }
 }
