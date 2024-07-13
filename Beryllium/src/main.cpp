@@ -145,36 +145,9 @@ int main(int, char **)
         const std::chrono::time_point<std::chrono::high_resolution_clock> current = std::chrono::steady_clock::now();
         const std::chrono::duration<double> frame = current - previous;
         previous = current;
-        accumulator += frame;
 
-        std::chrono::time_point<std::chrono::high_resolution_clock> const beginUpdate = std::chrono::high_resolution_clock::now();
-        while (accumulator >= dt)
-        {
-            engine.Update(dt);
-            accumulator -= dt;
-        }
-
-        std::chrono::time_point<std::chrono::high_resolution_clock> const endUpdate = std::chrono::high_resolution_clock::now();
-        updateUs = std::chrono::duration_cast<std::chrono::microseconds>(endUpdate - beginUpdate);
-
-        std::chrono::time_point<std::chrono::high_resolution_clock> const beginRender = std::chrono::high_resolution_clock::now();
+        engine.Update(dt);
         engine.Render();
-        std::chrono::time_point<std::chrono::high_resolution_clock> const endRender = std::chrono::high_resolution_clock::now();
-
-        renderUs = std::chrono::duration_cast<std::chrono::seconds>(endRender - beginRender);
-
-        // {
-        //     bool showPerformanceWindow = true;
-        //     ImGui::SetNextWindowPos(ImVec2(fimageWidth + 30.0f, 20.0f), ImGuiCond_Once, ImVec2(0.0f, 0.0f));
-        //     ImGui::Begin("Performance", &showPerformanceWindow, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
-        //     ImGui::Text("Average Framerate: %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-
-        //     float constexpr ema_coefficient = 0.05f;
-        //     float const updateMs = static_cast<float>(updateUs.count()) / 1000.0f;
-        //     float const renderMs = static_cast<float>(renderUs.count()) / 1000.0f;
-
-        //     ImGui::End();
-        // }
 
         {
             bool showScoreWindow = true;

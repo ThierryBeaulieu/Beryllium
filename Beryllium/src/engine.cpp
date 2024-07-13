@@ -121,31 +121,3 @@ uint32_t Engine::GetPixel(int x, int y)
 {
     return m_ImageData[g_ImageWidth * y + x];
 }
-
-bool Engine::ImageButtonWithTextures(ImTextureID defaultTexture, ImTextureID hoverTexture, ImTextureID pressedTexture, const ImVec2 &size)
-{
-    ImGuiIO &io = ImGui::GetIO();
-    ImGui::PushID((void *)(intptr_t)defaultTexture);
-
-    ImGui::BeginGroup();
-
-    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0, 0, 0, 0));
-    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0, 0, 0, 0));
-
-    ImTextureID textureToUse = defaultTexture;
-    if (ImGui::IsItemActive())
-        textureToUse = defaultTexture;
-    else if (ImGui::IsItemActivated())
-        textureToUse = pressedTexture;
-    else if (ImGui::IsItemHovered())
-        textureToUse = hoverTexture;
-
-    bool pressed = ImGui::ImageButton(textureToUse, size, ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f), 1, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
-
-    ImGui::PopStyleColor(3);
-    ImGui::EndGroup();
-    ImGui::PopID();
-
-    return pressed;
-}
