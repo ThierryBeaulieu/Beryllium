@@ -82,7 +82,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/libsndfile)
 target_link_libraries(ImGui PRIVATE glfw)
 
 # Add the main executable
-add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})
+add_executable(${PROJECT_NAME} WIN32 ${SRC_FILES} ${HEADER_FILES})
 
 # Link the ImGui and GLFW library to the main executable
 target_link_libraries(${PROJECT_NAME} PRIVATE ImGui)
