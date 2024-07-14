@@ -58,6 +58,17 @@ int main(int, char **)
     GLFWwindow *window = glfwCreateWindow(1175, 675, "Snake", nullptr, nullptr);
     if (window == nullptr)
         return 1;
+
+    int iconWidth, iconHeight;
+    int channels;
+    unsigned char* pixels = stbi_load("assets/thumbnails/snake_and_apple_64x64.ico", &iconWidth, &iconHeight, &channels, 4);
+
+    GLFWimage images[1];
+
+    images[0].width = iconWidth;
+    images[0].height = iconHeight;
+    images[0].pixels = pixels;
+
     glfwMakeContextCurrent(window);
     glfwSetWindowAttrib(window, GLFW_RESIZABLE, GLFW_FALSE);
     glfwSwapInterval(1);
