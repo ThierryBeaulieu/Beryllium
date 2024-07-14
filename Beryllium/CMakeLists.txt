@@ -95,32 +95,20 @@ target_link_libraries(${PROJECT_NAME} PRIVATE sndfile)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/vendor/ImGui)
 
 # https://cmake.org/cmake/help/latest/manual/cmake-generator-expressions.7.html#genex:TARGET_RUNTIME_DLLS
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:${PROJECT_NAME}> $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}>
-  COMMAND_EXPAND_LISTS
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy -t
+    $<TARGET_FILE_DIR:${PROJECT_NAME}> $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}>
+    COMMAND_EXPAND_LISTS
 )
                         
 # Link OpenGL (platform-dependent)
 find_package(OpenGL REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL::GL)
 
-configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/power_up.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/power_up.wav COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/death.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/death.wav COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/begin_game.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/begin_game.wav COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/danger.wav ${CMAKE_CURRENT_BINARY_DIR}/assets/sounds/danger.wav COPYONLY)
-
-set(SOUNDS_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/sounds)
-file(MAKE_DIRECTORY ${SOUNDS_OUTPUT_DIR})
-configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/death.wav ${SOUNDS_OUTPUT_DIR}/death.wav COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/begin_game.wav ${SOUNDS_OUTPUT_DIR}/begin_game.wav COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/power_up.wav ${SOUNDS_OUTPUT_DIR}/power_up.wav COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/assets/sounds/danger.wav ${SOUNDS_OUTPUT_DIR}/danger.wav COPYONLY)
-
-set(SPRITE_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/sprites)
-file(MAKE_DIRECTORY ${SPRITE_OUTPUT_DIR})
-configure_file(${CMAKE_SOURCE_DIR}/assets/sprites/button_try_again_active.png ${SPRITE_OUTPUT_DIR}/button_try_again_active.png COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/assets/sprites/button_try_again_hovered.png ${SPRITE_OUTPUT_DIR}/button_try_again_hovered.png COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/assets/sprites/button_try_again_normal.png ${SPRITE_OUTPUT_DIR}/button_try_again_normal.png COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/assets/sprites/button_start_game_active.png ${SPRITE_OUTPUT_DIR}/button_start_game_active.png COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/assets/sprites/button_start_game_hovered.png ${SPRITE_OUTPUT_DIR}/button_tstart_gamehovered.png COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/assets/sprites/button_start_game_normal.png ${SPRITE_OUTPUT_DIR}/button_start_game_normal.png COPYONLY)
+# Copy the assets directory to the build directory
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/assets ${CMAKE_BINARY_DIR}/assets
+)

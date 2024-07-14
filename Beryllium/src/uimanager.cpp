@@ -2,12 +2,12 @@
 
 UIManager::UIManager()
 {
-    m_textureIdStartNormal = LoadTexture("sprites/button_start_game_normal.png");
-    m_textureIdStartHovered = LoadTexture("sprites/button_start_game_hovered.png");
-    m_textureIdStartActive = LoadTexture("sprites/button_start_game_active.png");
-    m_textureIdTryAgainNormal = LoadTexture("sprites/button_try_again_normal.png");
-    m_textureIdTryAgainHovered = LoadTexture("sprites/button_try_again_hovered.png");
-    m_textureIdTryAgainActive = LoadTexture("sprites/button_try_again_active.png");
+    m_textureIdStartNormal = LoadTexture("assets/sprites/button_start_game_normal.png");
+    m_textureIdStartHovered = LoadTexture("assets/sprites/button_start_game_hovered.png");
+    m_textureIdStartActive = LoadTexture("assets/sprites/button_start_game_active.png");
+    m_textureIdTryAgainNormal = LoadTexture("assets/sprites/button_try_again_normal.png");
+    m_textureIdTryAgainHovered = LoadTexture("assets/sprites/button_try_again_hovered.png");
+    m_textureIdTryAgainActive = LoadTexture("assets/sprites/button_try_again_active.png");
 }
 
 UIManager::~UIManager()

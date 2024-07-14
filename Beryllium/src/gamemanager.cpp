@@ -335,7 +335,7 @@ void GameManager::SetDirectionRight()
 void GameManager::PlayUpgradeSound()
 {
     SoundDevice *soundDevice = SoundDevice::get();
-    uint32_t sound1 = SoundBuffer::get()->AddSoundEffect("sounds/power_up.wav");
+    uint32_t sound1 = SoundBuffer::get()->AddSoundEffect("assets/sounds/power_up.wav");
     SoundSource mySpeaker;
     mySpeaker.Play(sound1);
 }
@@ -343,7 +343,7 @@ void GameManager::PlayUpgradeSound()
 void GameManager::PlayGameOverSound()
 {
     SoundDevice *soundDevice = SoundDevice::get();
-    uint32_t sound1 = SoundBuffer::get()->AddSoundEffect("sounds/death.wav");
+    uint32_t sound1 = SoundBuffer::get()->AddSoundEffect("assets/sounds/death.wav");
     SoundSource mySpeaker;
     mySpeaker.Play(sound1);
 }
@@ -351,7 +351,7 @@ void GameManager::PlayGameOverSound()
 void GameManager::PlayBackgroundSound()
 {
     SoundDevice *soundDevice = SoundDevice::get();
-    uint32_t sound1 = SoundBuffer::get()->AddSoundEffect("sounds/danger.wav");
+    uint32_t sound1 = SoundBuffer::get()->AddSoundEffect("assets/sounds/danger.wav");
     SoundSource mySpeaker;
     mySpeaker.PlayLoop(sound1);
 }
